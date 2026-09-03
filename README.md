@@ -93,3 +93,6 @@ families you want yourself, or substitute.
 Read [CONTRIBUTING.md](CONTRIBUTING.md). Short version: copy an existing style, change the tokens,
 run `pnpm run validate`, and open a PR. The preview deployment will render your style on the demo
 page so reviewers can actually see it.
+
+Working with an AI coding agent? [AGENTS.md](AGENTS.md) carries the invariants it needs — which
+files are generated, the layout traps already hit here, and what not to add.
