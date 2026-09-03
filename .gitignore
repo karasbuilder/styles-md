@@ -10,3 +10,5 @@ dist/
 
 # Synced copy of the registry; regenerated on every site build.
 site/public/styles/
+.vercel
+.env*
