@@ -138,6 +138,11 @@ not need Turborepo.
 Conventional commits (`feat:`, `fix:`, `refactor:`, `chore:`). Explain *why* in the body, not just
 what changed. **Do not add `Co-Authored-By` trailers.** Commit and push only when asked.
 
+**Never pass `-c user.name` / `-c user.email` to `git commit`.** The repository has a configured
+identity; overriding it with an address from somewhere else produces commits GitHub cannot
+attribute to the account, and fixing that afterwards means rewriting history and force-pushing.
+Just run `git commit` and let git use the configured identity.
+
 ## Licensing
 
 Tooling is MIT, style specs are CC-BY-4.0 — keep the split, and keep the attribution comment the
