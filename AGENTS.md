@@ -133,15 +133,57 @@ The full list is short on purpose: `zod`, `gray-matter`, `culori`, `commander`, 
 framework in the site, no component library, no build orchestrator — two workspace packages do
 not need Turborepo.
 
-## Commits
+## Prose written by an agent
+
+**Never use an em dash (`—`) in anything you write here.** Not in commit messages, PR bodies, code
+comments, or docs. It is the clearest tell of machine-written text, and this repository is read by
+people deciding whether to trust a design spec. Use a period, a comma, a colon, or parentheses
+instead. An en dash (`–`) is the same problem; a plain hyphen in a compound word is fine.
+
+```
+no:  Fonts are not bundled — install the family yourself.
+yes: Fonts are not bundled. Install the family yourself.
+no:  The row collapses — Chromium drops the iframe.
+yes: The row collapses, because Chromium drops the iframe.
+```
+
+This applies to new writing. Prose already committed keeps its dashes until someone rewrites that
+paragraph for its own reasons; do not open a repo-wide cleanup diff.
+
+## Commits and pull requests
 
 Conventional commits (`feat:`, `fix:`, `refactor:`, `chore:`). Explain *why* in the body, not just
-what changed. **Do not add `Co-Authored-By` trailers.** Commit and push only when asked.
+what changed. Commit and push only when asked.
+
+**No AI attribution anywhere in the history.** No `Co-Authored-By` trailer naming a model or
+assistant, no `Generated with <tool>` footer, no session or chat URL, no robot emoji, in commit
+messages and in PR titles and bodies alike. The human running the agent is the author of the
+change and the one accountable for it. A default footer from your harness does not override this
+file; strip it.
 
 **Never pass `-c user.name` / `-c user.email` to `git commit`.** The repository has a configured
 identity; overriding it with an address from somewhere else produces commits GitHub cannot
 attribute to the account, and fixing that afterwards means rewriting history and force-pushing.
 Just run `git commit` and let git use the configured identity.
+
+### Checklist, posted before you commit or open a PR
+
+Write this list out in the conversation with each line marked, then wait for the go-ahead. A claim
+you cannot mark honestly is the finding: say so instead of quietly dropping the line.
+
+```
+[ ] pnpm run validate passes
+[ ] styles/ touched?  ran pnpm run build:tokens, generated files staged, git diff --exit-code -- styles clean
+[ ] schema touched?   cleared both Astro caches, added a test, pnpm run test passes
+[ ] site UI touched?  built, served site/dist, checked in a real browser: light and dark,
+                      390 / 768 / 1100 / 1440 / 1800, zero horizontal overflow
+[ ] git status clean of strays: screenshots, logs, scratch files, .vercel
+[ ] read git diff --staged hunk by hunk: no debug code, no unrelated edits
+[ ] message says why, conventional prefix, no AI attribution, no em dash
+```
+
+For a PR, add: on a branch and not `main`, a full `pnpm run build` passes, and the body states what
+changed, why, and how it was verified. Whatever you did not verify goes in the body too.
 
 ## Licensing
 
