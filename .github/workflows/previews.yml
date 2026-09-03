@@ -1,0 +1,46 @@
+name: previews
+
+# Re-renders preview images only for styles a pull request actually touched.
+on:
+  pull_request:
+    paths:
+      - "styles/**/DESIGN.md"
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+
+      - name: Determine changed styles
+        id: changed
+        run: |
+          slugs=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'styles/*/DESIGN.md' \
+            | cut -d/ -f2 | sort -u | paste -sd, -)
+          echo "slugs=$slugs" >> "$GITHUB_OUTPUT"
+          echo "rendering: ${slugs:-none}"
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Render previews
+        if: steps.changed.outputs.slugs != ''
+        run: node scripts/screenshots.mjs --only=${{ steps.changed.outputs.slugs }}
+
+      - uses: actions/upload-artifact@v4
+        if: steps.changed.outputs.slugs != ''
+        with:
+          name: style-previews
+          path: styles/*/preview.webp

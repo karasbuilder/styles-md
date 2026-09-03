@@ -1,0 +1,95 @@
+---
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { getCollection, render } from "astro:content";
+import { deriveScales } from "styles-md";
+import Base from "../../layouts/Base.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("styles");
+  return entries.map((entry) => ({ params: { slug: entry.data.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const style = entry.data;
+const { Content } = await render(entry);
+
+// The minified spec is a build artefact of the CLI, not something the site
+// re-derives — showing the real file keeps the site honest about what ships.
+const minPath = join(process.cwd(), "..", "styles", style.id, "DESIGN.min.md");
+const minified = readFileSync(minPath, "utf8");
+
+const scales = deriveScales(style.tokens as never);
+const colors = Object.entries(style.tokens.color).filter(([, v]) => v) as [string, string][];
+---
+
+<Base title={`${style.name} — styles-md`} description={style.summary}>
+  <div class="wrap detail">
+    <div>
+      <a class="back" href="/">← All styles</a>
+      <h1 style="margin-top:12px">{style.name}</h1>
+      <p class="lede">{style.mood}. {style.summary}</p>
+      <div class="tags" style="margin-top:16px;display:flex;gap:6px;flex-wrap:wrap">
+        {style.tags.map((tag: string) => <span class="tag">{tag}</span>)}
+        <span class="tag">v{style.version}</span>
+        <span class="tag">{style.license}</span>
+      </div>
+    </div>
+
+    <iframe class="frame" src={`/demo/${style.id}/`} title={`${style.name} demo`} loading="lazy"
+    ></iframe>
+
+    <div>
+      <h2>Install</h2>
+      <pre>npx styles-md add {style.id}
+npx styles-md add {style.id} --target tailwind
+npx styles-md add {style.id} --target shadcn</pre>
+    </div>
+
+    <div class="cols">
+      <div>
+        <h2>Colour</h2>
+        <table class="tokens">
+          {colors.map(([name, value]) => (
+            <tr>
+              <th>{name}</th>
+              <td><span class="dot" style={`background:${value}`}></span>{value}</td>
+            </tr>
+          ))}
+        </table>
+      </div>
+
+      <div>
+        <h2>Type scale</h2>
+        <table class="tokens">
+          <tr><th>base / ratio</th><td>{style.tokens.font.baseSize} · {style.tokens.font.scale}</td></tr>
+          {scales.type.map((step) => (
+            <tr><th>{step.name}</th><td>{step.size}</td></tr>
+          ))}
+        </table>
+      </div>
+
+      <div>
+        <h2>Space &amp; shape</h2>
+        <table class="tokens">
+          <tr><th>unit</th><td>{style.tokens.space.unit}</td></tr>
+          <tr><th>gutter</th><td>{style.tokens.space.gutter}</td></tr>
+          <tr><th>section</th><td>{style.tokens.space.section}</td></tr>
+          <tr><th>max width</th><td>{style.tokens.space.maxWidth}</td></tr>
+          <tr><th>radius</th><td>{style.tokens.radius.sm} / {style.tokens.radius.md} / {style.tokens.radius.lg}</td></tr>
+          <tr><th>motion</th><td>{style.tokens.motion.duration} {style.tokens.motion.easing}</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <h2>DESIGN.min.md — paste this into your agent</h2>
+      <pre>{minified}</pre>
+    </div>
+
+    <div class="prose">
+      <h2>Full spec</h2>
+      <Content />
+    </div>
+  </div>
+</Base>

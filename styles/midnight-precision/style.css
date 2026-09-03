@@ -1,0 +1,48 @@
+/* Midnight Precision — a precision instrument at midnight
+   styles-md style "midnight-precision" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #0a0b0d;
+  --sm-color-surface: #141519;
+  --sm-color-fg: #f2f3f5;
+  --sm-color-muted: #9ba1ad;
+  --sm-color-accent: #7c8cf8;
+  --sm-color-accent-fg: #0a0b0d;
+  --sm-color-border: #2f333b;
+  --sm-color-success: #4ec9a5;
+  --sm-color-danger: #f2555a;
+  --sm-font-sans: "Inter", "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sm-font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sm-font-weight-body: 400;
+  --sm-font-weight-heading: 560;
+  --sm-heading-tracking: -0.022em;
+  --sm-text-xs: 10.42px;
+  --sm-text-sm: 12.5px;
+  --sm-text-base: 15px;
+  --sm-text-lg: 18px;
+  --sm-text-xl: 21.6px;
+  --sm-text-2xl: 25.92px;
+  --sm-text-3xl: 31.1px;
+  --sm-text-4xl: 37.32px;
+  --sm-space-1: 4px;
+  --sm-space-2: 8px;
+  --sm-space-3: 12px;
+  --sm-space-4: 16px;
+  --sm-space-6: 24px;
+  --sm-space-8: 32px;
+  --sm-space-12: 48px;
+  --sm-space-16: 64px;
+  --sm-space-24: 96px;
+  --sm-gutter: 24px;
+  --sm-section: 96px;
+  --sm-max-width: 1120px;
+  --sm-stroke-width: 1px;
+  --sm-radius-sm: 4px;
+  --sm-radius-md: 8px;
+  --sm-radius-lg: 12px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 160ms;
+  --sm-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --sm-shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --sm-shadow-md: 0 4px 16px rgba(0,0,0,0.45);
+  --sm-shadow-lg: 0 16px 48px rgba(0,0,0,0.55);
+}

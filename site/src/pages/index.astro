@@ -1,0 +1,118 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+
+const entries = (await getCollection("styles")).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+);
+
+const searchDocs = entries.map((entry) => ({
+  id: entry.data.id,
+  name: entry.data.name,
+  mood: entry.data.mood,
+  summary: entry.data.summary,
+  tags: entry.data.tags.join(" "),
+}));
+
+const allTags = [...new Set(entries.flatMap((e) => e.data.tags))].sort();
+---
+
+<Base
+  title="styles-md — design specs your coding agent can actually follow"
+  description="An open library of DESIGN.md style specs. Machine-validated tokens, WCAG-checked palettes, one command to install."
+>
+  <div class="wrap intro">
+    <h1>Design specs your coding agent can actually follow.</h1>
+    <p class="lede">
+      Every style is one Markdown file: hard tokens in the frontmatter, the rules that need judgment
+      in the body. Validated against a schema and WCAG AA before it ships. Install one with a single
+      command — no account, no server, no API.
+    </p>
+    <pre style="margin-top:24px;max-width:520px">npx styles-md add midnight-precision</pre>
+  </div>
+
+  <div class="wrap">
+    <div class="controls">
+      <input
+        id="q"
+        type="search"
+        placeholder="Search by mood, tag or name — try “dark”, “editorial”, “dense”"
+        autocomplete="off"
+      />
+      {allTags.slice(0, 8).map((tag) => (
+        <button class="chip" type="button" data-tag={tag} aria-pressed="false">{tag}</button>
+      ))}
+    </div>
+
+    <div class="grid" id="grid">
+      {entries.map((entry) => (
+        <a class="style-card" href={`/styles/${entry.data.id}/`} data-id={entry.data.id}>
+          <div class="swatches">
+            <span style={`background:${entry.data.tokens.color.bg}`}></span>
+            <span style={`background:${entry.data.tokens.color.surface}`}></span>
+            <span style={`background:${entry.data.tokens.color.fg}`}></span>
+            <span style={`background:${entry.data.tokens.color.muted}`}></span>
+            <span style={`background:${entry.data.tokens.color.accent}`}></span>
+          </div>
+          <div class="meta">
+            <h3>{entry.data.name}</h3>
+            <p>{entry.data.mood}</p>
+            <div class="tags">
+              {entry.data.tags.slice(0, 4).map((tag) => <span class="tag">{tag}</span>)}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+    <p class="empty" id="empty" hidden>Nothing matches that. Try a broader word.</p>
+  </div>
+
+  <script type="application/json" id="search-docs" set:html={JSON.stringify(searchDocs)} />
+
+  <script>
+    import MiniSearch from "minisearch";
+
+    const docs = JSON.parse(document.getElementById("search-docs")!.textContent!);
+    const search = new MiniSearch({
+      fields: ["name", "mood", "summary", "tags"],
+      storeFields: ["id"],
+      searchOptions: { prefix: true, fuzzy: 0.2, boost: { name: 2, tags: 1.5 } },
+    });
+    search.addAll(docs);
+
+    const input = document.getElementById("q") as HTMLInputElement;
+    const grid = document.getElementById("grid")!;
+    const empty = document.getElementById("empty")!;
+    const chips = [...document.querySelectorAll<HTMLButtonElement>(".chip")];
+    const cards = [...grid.querySelectorAll<HTMLElement>(".style-card")];
+    let activeTag: string | null = null;
+
+    function apply() {
+      const query = input.value.trim();
+      const matched = query ? new Set(search.search(query).map((r) => r.id as string)) : null;
+      let visible = 0;
+
+      for (const card of cards) {
+        const id = card.dataset.id!;
+        const doc = docs.find((d: { id: string }) => d.id === id);
+        const okQuery = !matched || matched.has(id);
+        const okTag = !activeTag || doc.tags.split(" ").includes(activeTag);
+        const show = okQuery && okTag;
+        card.hidden = !show;
+        if (show) visible++;
+      }
+      empty.hidden = visible > 0;
+    }
+
+    input.addEventListener("input", apply);
+    for (const chip of chips) {
+      chip.addEventListener("click", () => {
+        activeTag = activeTag === chip.dataset.tag ? null : chip.dataset.tag!;
+        for (const other of chips) {
+          other.setAttribute("aria-pressed", String(other.dataset.tag === activeTag));
+        }
+        apply();
+      });
+    }
+  </script>
+</Base>

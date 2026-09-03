@@ -1,0 +1,231 @@
+---
+/**
+ * The canonical demo page. Every style renders this exact markup, which is what
+ * makes the gallery an honest comparison instead of eight cherry-picked screens.
+ * It reads only --sm-* variables — nothing here is hardcoded.
+ */
+interface Props {
+  name: string;
+  mood: string;
+}
+const { name, mood } = Astro.props;
+// Moods are authored lowercase so they read well mid-sentence in the gallery.
+const lede = mood.charAt(0).toUpperCase() + mood.slice(1);
+
+const rows = [
+  ["Onboarding flow", "Ana Petrova", "Shipped", "12,480"],
+  ["Billing migration", "Tomas Lund", "In review", "8,215"],
+  ["Search relevance", "Wei Chen", "Blocked", "3,902"],
+  ["Mobile nav", "Sam Okafor", "Shipped", "27,144"],
+];
+---
+
+<div class="demo">
+  <header class="nav">
+    <span class="wordmark">{name}</span>
+    <nav>
+      <a href="#" class="active">Overview</a>
+      <a href="#">Projects</a>
+      <a href="#">Reports</a>
+      <a href="#">Settings</a>
+    </nav>
+    <button class="btn btn-primary btn-sm">New project</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <span class="badge">v2.4 released</span>
+      <h1>Everything your team ships, in one place</h1>
+      <p class="lede">{lede}. Track work, review changes and report on outcomes without stitching
+        four tools together.</p>
+      <div class="actions">
+        <button class="btn btn-primary">Start free</button>
+        <button class="btn btn-secondary">Read the docs</button>
+      </div>
+    </section>
+
+    <section class="cards">
+      <article class="card">
+        <h3>Plan</h3>
+        <p>Break work into units small enough to finish in a day, and see the whole quarter at once.</p>
+        <a href="#" class="link">How planning works</a>
+      </article>
+      <article class="card">
+        <h3>Review</h3>
+        <p>Every change carries its own context, so reviewers stop asking what a diff was for.</p>
+        <a href="#" class="link">Review workflow</a>
+      </article>
+      <article class="card">
+        <h3>Report</h3>
+        <p>Numbers that come from the work itself rather than from someone updating a spreadsheet.</p>
+        <a href="#" class="link">Reporting guide</a>
+      </article>
+    </section>
+
+    <section class="split">
+      <form class="panel">
+        <h3>Create a project</h3>
+        <label>
+          Project name
+          <input type="text" value="Payments v2" />
+        </label>
+        <label>
+          Owner
+          <input type="text" value="ana@example.com" />
+        </label>
+        <label class="stack">
+          Visibility
+          <span class="hint">Anyone in the workspace can find a public project.</span>
+        </label>
+        <div class="actions">
+          <button class="btn btn-primary" type="button">Create project</button>
+          <button class="btn btn-secondary" type="button">Cancel</button>
+        </div>
+      </form>
+
+      <div class="panel">
+        <h3>Active work</h3>
+        <table>
+          <thead>
+            <tr><th>Project</th><th>Owner</th><th>Status</th><th class="num">Events</th></tr>
+          </thead>
+          <tbody>
+            {rows.map(([project, owner, status, events]) => (
+              <tr>
+                <td>{project}</td>
+                <td class="muted">{owner}</td>
+                <td><span class="badge">{status}</span></td>
+                <td class="num">{events}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>{name}</span>
+    <span class="muted">Rendered from a styles-md DESIGN.md — no component was restyled by hand.</span>
+  </footer>
+</div>
+
+<style>
+  .demo {
+    background: var(--sm-color-bg);
+    color: var(--sm-color-fg);
+    font-family: var(--sm-font-sans);
+    font-size: var(--sm-text-base);
+    font-weight: var(--sm-font-weight-body);
+    line-height: 1.6;
+    min-height: 100%;
+  }
+
+  .demo :is(h1, h2, h3) {
+    font-family: var(--sm-font-display, var(--sm-font-sans));
+    font-weight: var(--sm-font-weight-heading);
+    letter-spacing: var(--sm-heading-tracking);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--sm-space-6);
+    padding: var(--sm-space-4) var(--sm-gutter);
+    background: var(--sm-color-surface);
+    border-bottom: var(--sm-stroke-width) solid var(--sm-color-border);
+  }
+  .wordmark { font-weight: var(--sm-font-weight-heading); letter-spacing: var(--sm-heading-tracking); }
+  .nav nav { display: flex; gap: var(--sm-space-6); margin-inline-start: auto; }
+  .nav a { color: var(--sm-color-muted); text-decoration: none; font-size: var(--sm-text-sm); }
+  .nav a.active { color: var(--sm-color-accent); }
+
+  main {
+    max-width: var(--sm-max-width);
+    margin: 0 auto;
+    padding: var(--sm-section) var(--sm-gutter);
+    display: grid;
+    gap: var(--sm-section);
+  }
+
+  .hero { display: grid; gap: var(--sm-space-4); justify-items: start; }
+  .hero h1 { font-size: var(--sm-text-4xl); max-width: 18ch; }
+  .lede { color: var(--sm-color-muted); font-size: var(--sm-text-lg); max-width: 58ch; margin: 0; }
+  .actions { display: flex; gap: var(--sm-space-3); flex-wrap: wrap; }
+
+  .btn {
+    font: inherit;
+    font-size: var(--sm-text-sm);
+    padding: var(--sm-space-3) var(--sm-space-6);
+    border-radius: var(--sm-radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all var(--sm-duration) var(--sm-easing);
+  }
+  .btn-sm { padding: var(--sm-space-2) var(--sm-space-4); }
+  .btn-primary {
+    background: var(--sm-color-accent);
+    color: var(--sm-color-accent-fg);
+    box-shadow: var(--sm-shadow-sm, none);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--sm-color-fg);
+    border-color: var(--sm-color-border);
+  }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sm-gutter); }
+  .card, .panel {
+    background: var(--sm-color-surface);
+    border: var(--sm-stroke-width) solid var(--sm-color-border);
+    border-radius: var(--sm-radius-lg);
+    padding: var(--sm-space-6);
+    box-shadow: var(--sm-shadow-sm, none);
+  }
+  .card h3, .panel h3 { font-size: var(--sm-text-lg); margin-bottom: var(--sm-space-3); }
+  .card p { color: var(--sm-color-muted); margin: 0 0 var(--sm-space-4); }
+  .link { color: var(--sm-color-accent); font-size: var(--sm-text-sm); text-underline-offset: 3px; }
+
+  .split { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--sm-gutter); align-items: start; }
+  .panel { display: grid; gap: var(--sm-space-4); }
+  label { display: grid; gap: var(--sm-space-2); font-size: var(--sm-text-sm); color: var(--sm-color-muted); }
+  .hint { color: var(--sm-color-muted); font-size: var(--sm-text-xs); }
+  input {
+    font: inherit;
+    font-size: var(--sm-text-sm);
+    color: var(--sm-color-fg);
+    background: var(--sm-color-bg);
+    border: var(--sm-stroke-width) solid var(--sm-color-border);
+    border-radius: var(--sm-radius-md);
+    padding: var(--sm-space-3);
+  }
+  input:focus-visible { outline: 2px solid var(--sm-color-accent); outline-offset: 2px; border-color: var(--sm-color-accent); }
+
+  table { width: 100%; border-collapse: collapse; font-size: var(--sm-text-sm); }
+  th, td { text-align: left; padding: var(--sm-space-3) var(--sm-space-2); border-bottom: var(--sm-stroke-width) solid var(--sm-color-border); }
+  th { color: var(--sm-color-muted); font-weight: var(--sm-font-weight-heading); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .muted { color: var(--sm-color-muted); }
+
+  .badge {
+    display: inline-block;
+    background: var(--sm-color-bg);
+    border: var(--sm-stroke-width) solid var(--sm-color-border);
+    border-radius: var(--sm-radius-full);
+    padding: var(--sm-space-1) var(--sm-space-3);
+    font-size: var(--sm-text-xs);
+    color: var(--sm-color-muted);
+  }
+
+  .foot {
+    display: flex;
+    gap: var(--sm-space-4);
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: var(--sm-space-8) var(--sm-gutter);
+    border-top: var(--sm-stroke-width) solid var(--sm-color-border);
+    font-size: var(--sm-text-sm);
+  }
+</style>

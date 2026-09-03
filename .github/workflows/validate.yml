@@ -1,0 +1,39 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build tooling
+        run: pnpm --filter styles-md run build
+
+      - name: Unit tests
+        run: pnpm --filter styles-md run test
+
+      # Schema, WCAG AA contrast, required agent sections, context budget.
+      - name: Validate styles
+        run: node packages/styles-md/dist/cli.js validate styles
+
+      # Generated files are committed so the deployed site works as a plain CDN.
+      # This proves they were regenerated rather than hand-edited.
+      - name: Check generated artefacts are current
+        run: |
+          node packages/styles-md/dist/cli.js build styles
+          git diff --exit-code -- styles \
+            || (echo "::error::styles/ artefacts are stale — run 'pnpm run build:tokens' and commit"; exit 1)
+
+      - name: Build site
+        run: pnpm run build:site

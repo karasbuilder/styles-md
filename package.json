@@ -1,0 +1,22 @@
+{
+  "name": "styles-md-monorepo",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.7.0",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "validate": "pnpm --filter styles-md run build && node packages/styles-md/dist/cli.js validate styles",
+    "build:tokens": "node packages/styles-md/dist/cli.js build styles --out styles",
+    "build:site": "pnpm --filter @styles-md/site run build",
+    "build": "pnpm run validate && pnpm run build:tokens && pnpm run build:site",
+    "dev": "pnpm --filter @styles-md/site run dev",
+    "previews": "node scripts/screenshots.mjs",
+    "test": "pnpm --filter styles-md run test"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1",
+    "typescript": "^5.7.3"
+  }
+}

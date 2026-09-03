@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.DS_Store
+*.log
+
+# Local screenshot scratch. Committed previews live at styles/<slug>/preview.webp.
+.preview/
+
+# Synced copy of the registry; regenerated on every site build.
+site/public/styles/

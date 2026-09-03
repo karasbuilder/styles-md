@@ -1,0 +1,215 @@
+[
+  {
+    "id": "brutalist-mono",
+    "name": "Brutalist Mono",
+    "mood": "a specification sheet with opinions",
+    "summary": "Monospace everywhere, hard black rules, zero radius and offset shadows. Loud orange for anything you can click. Structure is visible on purpose.",
+    "tags": [
+      "light",
+      "brutalist",
+      "mono",
+      "high-contrast",
+      "experimental"
+    ],
+    "quality": "featured",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#ffffff",
+      "surface": "#f2f2f0",
+      "fg": "#000000",
+      "muted": "#4a4a4a",
+      "accent": "#ff3b00",
+      "accentFg": "#000000",
+      "border": "#000000",
+      "success": "#007a3d",
+      "danger": "#d40000"
+    }
+  },
+  {
+    "id": "candy-playful",
+    "name": "Candy Playful",
+    "mood": "bright, chunky and pleased to see you",
+    "summary": "Big radii, thick weights, saturated violet and a springy motion curve. Confident and friendly without slipping into childish.",
+    "tags": [
+      "light",
+      "playful",
+      "consumer",
+      "rounded",
+      "bold",
+      "vibrant"
+    ],
+    "quality": "featured",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#fffdf7",
+      "surface": "#ffffff",
+      "fg": "#2a1d33",
+      "muted": "#6b5a75",
+      "accent": "#7b3fe4",
+      "accentFg": "#ffffff",
+      "border": "#dcc9ea",
+      "success": "#1f8a4c",
+      "danger": "#d62839"
+    }
+  },
+  {
+    "id": "midnight-precision",
+    "name": "Midnight Precision",
+    "mood": "a precision instrument at midnight",
+    "summary": "Dark, quiet and exact. Tight tracking, restrained colour, and a single indigo accent that only appears where an action lives.",
+    "tags": [
+      "dark",
+      "minimal",
+      "saas",
+      "product",
+      "high-contrast"
+    ],
+    "quality": "featured",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#0a0b0d",
+      "surface": "#141519",
+      "fg": "#f2f3f5",
+      "muted": "#9ba1ad",
+      "accent": "#7c8cf8",
+      "accentFg": "#0a0b0d",
+      "border": "#2f333b",
+      "success": "#4ec9a5",
+      "danger": "#f2555a"
+    }
+  },
+  {
+    "id": "neon-terminal",
+    "name": "Neon Terminal",
+    "mood": "phosphor green on a dark console",
+    "summary": "Near-black background, monospace type and one electric green that carries every state. Dense, technical, and unmistakably a terminal.",
+    "tags": [
+      "dark",
+      "mono",
+      "terminal",
+      "developer",
+      "technical"
+    ],
+    "quality": "featured",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#05070a",
+      "surface": "#0c1218",
+      "fg": "#d8f5e3",
+      "muted": "#6fae8c",
+      "accent": "#39ff88",
+      "accentFg": "#05070a",
+      "border": "#24352c",
+      "success": "#39ff88",
+      "danger": "#ff5f56"
+    }
+  },
+  {
+    "id": "paper-archive",
+    "name": "Paper Archive",
+    "mood": "a well-kept reference library",
+    "summary": "Warm grey paper, small type, dense information and no ornament. Made for documentation and reference material that people scan rather than read.",
+    "tags": [
+      "light",
+      "docs",
+      "dense",
+      "reference",
+      "neutral",
+      "muted"
+    ],
+    "quality": "featured",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#f4f2ee",
+      "surface": "#fdfcfa",
+      "fg": "#2b2a27",
+      "muted": "#63605a",
+      "accent": "#2f5bd8",
+      "accentFg": "#ffffff",
+      "border": "#cbc6bc",
+      "success": "#3d6b3a",
+      "danger": "#a8322b"
+    }
+  },
+  {
+    "id": "slate-enterprise",
+    "name": "Slate Enterprise",
+    "mood": "quiet authority in a boardroom",
+    "summary": "Cool slate neutrals, a serious blue, small radii and high density. The default for business software that has to look credible before it looks nice.",
+    "tags": [
+      "light",
+      "enterprise",
+      "saas",
+      "dense",
+      "professional",
+      "neutral"
+    ],
+    "quality": "featured",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#ffffff",
+      "surface": "#f8fafc",
+      "fg": "#0f172a",
+      "muted": "#52607a",
+      "accent": "#1d4ed8",
+      "accentFg": "#ffffff",
+      "border": "#cdd5e0",
+      "success": "#15803d",
+      "danger": "#b91c1c"
+    }
+  },
+  {
+    "id": "soft-clinic",
+    "name": "Soft Clinic",
+    "mood": "calm competence, clean light and teal",
+    "summary": "Airy light surfaces, generous radius and a measured teal accent. Trustworthy without being cold — built for products that handle something people care about.",
+    "tags": [
+      "light",
+      "calm",
+      "saas",
+      "healthcare",
+      "rounded",
+      "trustworthy"
+    ],
+    "quality": "featured",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#f6f9fb",
+      "surface": "#ffffff",
+      "fg": "#16242e",
+      "muted": "#566a77",
+      "accent": "#0e7c86",
+      "accentFg": "#ffffff",
+      "border": "#c3d4e0",
+      "success": "#1f7a4d",
+      "danger": "#c0392f"
+    }
+  },
+  {
+    "id": "warm-editorial",
+    "name": "Warm Editorial",
+    "mood": "a printed essay that happens to be a website",
+    "summary": "Cream paper, ink-dark serif headlines and long measured columns. Built for reading, with a rust accent used sparingly for links and pull quotes.",
+    "tags": [
+      "light",
+      "editorial",
+      "serif",
+      "blog",
+      "warm",
+      "content"
+    ],
+    "quality": "featured",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#fbf8f3",
+      "surface": "#ffffff",
+      "fg": "#211d18",
+      "muted": "#6b6259",
+      "accent": "#b4451f",
+      "accentFg": "#fffaf3",
+      "border": "#d5c8b5",
+      "success": "#4a7c3f",
+      "danger": "#b02f2f"
+    }
+  }
+]

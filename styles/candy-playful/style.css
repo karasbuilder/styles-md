@@ -1,0 +1,48 @@
+/* Candy Playful — bright, chunky and pleased to see you
+   styles-md style "candy-playful" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #fffdf7;
+  --sm-color-surface: #ffffff;
+  --sm-color-fg: #2a1d33;
+  --sm-color-muted: #6b5a75;
+  --sm-color-accent: #7b3fe4;
+  --sm-color-accent-fg: #ffffff;
+  --sm-color-border: #dcc9ea;
+  --sm-color-success: #1f8a4c;
+  --sm-color-danger: #d62839;
+  --sm-font-sans: "Nunito", "Inter", system-ui, -apple-system, sans-serif;
+  --sm-font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sm-font-weight-body: 500;
+  --sm-font-weight-heading: 800;
+  --sm-heading-tracking: -0.02em;
+  --sm-text-xs: 9.57px;
+  --sm-text-sm: 12.75px;
+  --sm-text-base: 17px;
+  --sm-text-lg: 22.66px;
+  --sm-text-xl: 30.21px;
+  --sm-text-2xl: 40.27px;
+  --sm-text-3xl: 53.67px;
+  --sm-text-4xl: 71.55px;
+  --sm-space-1: 4px;
+  --sm-space-2: 8px;
+  --sm-space-3: 12px;
+  --sm-space-4: 16px;
+  --sm-space-6: 24px;
+  --sm-space-8: 32px;
+  --sm-space-12: 48px;
+  --sm-space-16: 64px;
+  --sm-space-24: 96px;
+  --sm-gutter: 24px;
+  --sm-section: 104px;
+  --sm-max-width: 1100px;
+  --sm-stroke-width: 2px;
+  --sm-radius-sm: 10px;
+  --sm-radius-md: 16px;
+  --sm-radius-lg: 28px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 260ms;
+  --sm-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --sm-shadow-sm: 0 2px 0 rgba(42,29,51,0.10);
+  --sm-shadow-md: 0 6px 0 rgba(42,29,51,0.12);
+  --sm-shadow-lg: 0 14px 32px rgba(42,29,51,0.16);
+}
