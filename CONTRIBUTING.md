@@ -31,6 +31,33 @@ stylistic disagreement; it is broken. Adjust `muted` and `accentFg` first — th
 **Do not commit generated files by hand.** Run `pnpm run build:tokens` and commit the result. CI
 rebuilds and diffs.
 
+## Linking a real site that uses the style
+
+A style page can show live sites built with it, alongside the built-in demo:
+
+```yaml
+showcase:
+  - label: "Acme Console"
+    url: "https://console.acme.com"
+    embed: true              # only if the site actually allows framing
+    note: "The billing dashboard."
+```
+
+Most sites cannot be framed — `X-Frame-Options` or a CSP `frame-ancestors`
+directive turns an embedded preview into a blank rectangle. So `embed` defaults to
+false, which renders a link card instead. Verify before claiming otherwise:
+
+```bash
+node packages/styles-md/dist/cli.js check-links styles
+```
+
+It fetches each URL, reports whether framing is permitted, and fails if an entry
+declares `embed: true` against a site that forbids it. This is a network call, so
+it is a separate command rather than part of `pnpm run validate`.
+
+Link sites genuinely built with the style. This is not a place to link the brand
+that inspired it — see the naming rule above.
+
 ## Quality levels
 
 New styles land as `quality: draft`. A maintainer moves them to `reviewed` after a visual pass,

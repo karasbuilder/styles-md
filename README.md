@@ -74,6 +74,9 @@ pnpm run validate      # schema + contrast + sections + budget
 pnpm run build         # validate, regenerate artefacts, build the site
 pnpm run dev           # gallery at localhost:4321
 pnpm run previews      # re-render preview images (needs `pnpm exec playwright install chromium`)
+
+# Verify showcase links resolve and that any `embed: true` is really frameable.
+node packages/styles-md/dist/cli.js check-links styles
 ```
 
 The canonical demo page in `site/src/components/Demo.astro` reads only `--sm-*` variables. Nothing

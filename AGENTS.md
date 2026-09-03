@@ -63,6 +63,16 @@ Change `DESIGN.md`, then run `pnpm run build:tokens`. CI runs the build and fail
 
 ## Changing the schema
 
+**Clear the Astro content cache after every schema change**, or the site build
+crashes on styles whose files did not change — the data store still holds entries
+parsed by the old schema, so a newly added field reads as `undefined`. There are
+**two** stores and both must go:
+
+```bash
+rm -rf site/.astro site/node_modules/.astro
+```
+
+
 Adding a required field breaks all eight existing styles. So: new fields are optional or carry a
 default, add a test in `packages/styles-md/src/index.test.ts`, and state in the commit what a
 style can now express that it could not before. `tokens.stroke.width` was added because border

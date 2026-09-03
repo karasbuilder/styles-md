@@ -50,6 +50,21 @@ const shape = [
 ];
 
 const shiki = { light: "github-light", dark: "github-dark" } as const;
+
+/**
+ * The built-in demo always leads — it is the only preview that renders identical
+ * content across every style, which is what makes the gallery comparable. Real
+ * sites built with the style follow.
+ */
+const sources = [
+  { label: "Demo", url: `/demo/${style.id}/`, embed: true, note: "" },
+  ...style.showcase.map((site) => ({
+    label: site.label,
+    url: site.url,
+    embed: site.embed,
+    note: site.note ?? "",
+  })),
+];
 ---
 
 <Base title={`${style.name} — styles-md`} description={style.summary} variant="studio">
@@ -60,10 +75,44 @@ const shiki = { light: "github-light", dark: "github-dark" } as const;
 
       <div class="frame">
         <div class="frame-bar">
-          <span>Live preview</span>
-          <a href={`/demo/${style.id}/`} target="_blank" rel="noreferrer">Open full page ↗</a>
+          {sources.length > 1 ? (
+            <div class="preview-tabs" role="tablist">
+              {sources.map((source, i) => (
+                <button
+                  class="preview-tab"
+                  role="tab"
+                  type="button"
+                  data-source={i}
+                  data-url={source.url}
+                  data-embed={String(source.embed)}
+                  data-note={source.note}
+                  aria-selected={String(i === 0)}
+                >{source.label}</button>
+              ))}
+            </div>
+          ) : (
+            <span>Live preview</span>
+          )}
+          <a id="open-source" href={`/demo/${style.id}/`} target="_blank" rel="noreferrer">
+            Open full page ↗
+          </a>
         </div>
-        <iframe src={`/demo/${style.id}/`} title={`${style.name} demo`} loading="lazy"></iframe>
+
+        <iframe
+          id="preview-frame"
+          src={`/demo/${style.id}/`}
+          title={`${style.name} demo`}
+          loading="lazy"
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+          referrerpolicy="no-referrer"></iframe>
+
+        <!-- Shown for sites that forbid framing, and on narrow screens. -->
+        <div class="offsite" id="offsite" hidden>
+          <p class="who" id="offsite-label"></p>
+          <p class="note" id="offsite-note"></p>
+          <a class="copy" id="offsite-link" href="#" target="_blank" rel="noreferrer">Open site ↗</a>
+        </div>
+
         <img
           class="still"
           src={`/styles/${style.id}/preview.webp`}
@@ -185,6 +234,45 @@ const shiki = { light: "github-light", dark: "github-dark" } as const;
   <script type="application/json" id="sources" set:html={JSON.stringify(files)} />
 
   <script>
+    // Preview sources: the built-in demo plus any real sites built with this style.
+    // A site that forbids framing gets a link card rather than a blank rectangle.
+    const sourceTabs = [...document.querySelectorAll<HTMLButtonElement>(".preview-tab")];
+    if (sourceTabs.length > 0) {
+      const frame = document.getElementById("preview-frame") as HTMLIFrameElement;
+      const offsite = document.getElementById("offsite")!;
+      const offsiteLabel = document.getElementById("offsite-label")!;
+      const offsiteNote = document.getElementById("offsite-note")!;
+      const offsiteLink = document.getElementById("offsite-link") as HTMLAnchorElement;
+      const openLink = document.getElementById("open-source") as HTMLAnchorElement;
+
+      for (const tab of sourceTabs) {
+        tab.addEventListener("click", () => {
+          const url = tab.dataset.url!;
+          const embed = tab.dataset.embed === "true";
+          const external = !url.startsWith("/");
+
+          for (const other of sourceTabs) {
+            other.setAttribute("aria-selected", String(other === tab));
+          }
+          openLink.href = url;
+          openLink.textContent = external ? "Open site ↗" : "Open full page ↗";
+
+          if (embed) {
+            if (frame.getAttribute("src") !== url) frame.setAttribute("src", url);
+            frame.hidden = false;
+            offsite.hidden = true;
+          } else {
+            frame.hidden = true;
+            offsite.hidden = false;
+            offsiteLabel.textContent = tab.textContent;
+            offsiteNote.textContent =
+              tab.dataset.note || "This site does not allow embedding — open it in a new tab.";
+            offsiteLink.href = url;
+          }
+        });
+      }
+    }
+
     const sources: Record<string, string> = JSON.parse(
       document.getElementById("sources")!.textContent!,
     );

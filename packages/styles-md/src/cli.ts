@@ -88,6 +88,51 @@ program
   });
 
 program
+  .command("check-links")
+  .argument("[dir]", "styles directory", "styles")
+  .description("Verify every showcase URL resolves and that `embed: true` is actually frameable")
+  .action(async (dir: string) => {
+    const { styles } = loadStyles(resolve(dir));
+    const entries = styles.flatMap((style) =>
+      style.meta.showcase.map((site) => ({ slug: style.slug, site })),
+    );
+
+    if (entries.length === 0) {
+      console.log(dim("no showcase links declared"));
+      return;
+    }
+
+    let failures = 0;
+    for (const { slug, site } of entries) {
+      const result = await inspectFraming(site.url);
+
+      if (!result.ok) {
+        console.error(`${red("✗")} ${bold(slug)} ${site.label} ${dim(site.url)} — ${result.reason}`);
+        failures++;
+        continue;
+      }
+      // A site that forbids framing is fine; claiming otherwise is not, because
+      // the page would render an empty box with no way to tell it went wrong.
+      if (site.embed && !result.frameable) {
+        console.error(
+          `${red("✗")} ${bold(slug)} ${site.label} — declares embed: true but ${result.blockedBy} forbids framing`,
+        );
+        failures++;
+        continue;
+      }
+      const hint = site.embed
+        ? green("embeddable")
+        : result.frameable
+          ? yellow("frameable — could set embed: true")
+          : dim("link-only");
+      console.log(`${green("✓")} ${bold(slug)} ${site.label} ${hint}`);
+    }
+
+    console.log(`\n${entries.length} link${entries.length === 1 ? "" : "s"}, ${failures} problem${failures === 1 ? "" : "s"}`);
+    if (failures > 0) process.exitCode = 1;
+  });
+
+program
   .command("list")
   .argument("[dir]", "styles directory", "styles")
   .description("List local styles")
@@ -152,6 +197,46 @@ ${green("✓")} installed ${bold(style.meta.name)} ${dim(`(${style.meta.id}@${st
   ${join("styles-md", "DESIGN.md")}      ${dim("full spec, for humans")}
 `);
   });
+
+interface FramingResult {
+  ok: boolean;
+  reason?: string;
+  frameable?: boolean;
+  blockedBy?: string;
+}
+
+/**
+ * Ask the live site whether it permits framing. `X-Frame-Options` and a CSP
+ * `frame-ancestors` directive are the two ways a site says no; either one turns
+ * an embedded preview into a blank rectangle.
+ */
+async function inspectFraming(url: string): Promise<FramingResult> {
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      method: "GET",
+      redirect: "follow",
+      headers: { "user-agent": "styles-md-check-links" },
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch (error) {
+    return { ok: false, reason: `unreachable (${(error as Error).message})` };
+  }
+
+  if (!response.ok) return { ok: false, reason: `HTTP ${response.status}` };
+
+  const xfo = response.headers.get("x-frame-options")?.toLowerCase() ?? "";
+  const csp = response.headers.get("content-security-policy")?.toLowerCase() ?? "";
+  const ancestors = /frame-ancestors\s+([^;]+)/.exec(csp)?.[1]?.trim();
+
+  if (xfo.includes("deny") || xfo.includes("sameorigin")) {
+    return { ok: true, frameable: false, blockedBy: `X-Frame-Options: ${xfo}` };
+  }
+  if (ancestors && (ancestors === "'none'" || ancestors === "'self'")) {
+    return { ok: true, frameable: false, blockedBy: `CSP frame-ancestors ${ancestors}` };
+  }
+  return { ok: true, frameable: true };
+}
 
 /** Walk up from cwd looking for a repo-local styles/<slug>/DESIGN.md. */
 function findLocalStyle(slug: string): string | null {

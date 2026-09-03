@@ -34,6 +34,26 @@ export function buildStyleSchema(z: typeof defaultZ) {
     /** Gallery surfaces `featured` only. Everything lands as `draft`. */
     quality: z.enum(["draft", "reviewed", "featured"]).default("draft"),
 
+    /**
+     * Real sites built with this style, shown alongside the built-in demo.
+     *
+     * `embed` claims the site can be framed. Most cannot — `X-Frame-Options` or
+     * a CSP `frame-ancestors` directive will render a blank box — so it defaults
+     * to false and `styles-md check-links` verifies the claim against the live
+     * headers before anyone trusts it.
+     */
+    showcase: z
+      .array(
+        z.object({
+          label: z.string().min(2).max(40),
+          url: z.string().url().startsWith("https://", "must be an https URL"),
+          embed: z.boolean().default(false),
+          note: z.string().max(120).optional(),
+        }),
+      )
+      .max(6)
+      .default([]),
+
     tokens: z.object({
       color: z.object({
         bg: hex,

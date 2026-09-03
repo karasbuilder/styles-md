@@ -65,6 +65,24 @@ describe("schema", () => {
     expect(style.tokens.stroke.width).toBe("1px");
     expect(style.quality).toBe("draft");
   });
+
+  it("defaults showcase to an empty list so existing styles keep validating", () => {
+    expect(styleFixture().showcase).toEqual([]);
+  });
+
+  it("accepts a showcase entry and defaults embed to false", () => {
+    const style = styleFixture({
+      showcase: [{ label: "Acme Docs", url: "https://docs.example.com" }],
+    });
+    expect(style.showcase[0].embed).toBe(false);
+    expect(style.showcase[0].label).toBe("Acme Docs");
+  });
+
+  it("rejects a showcase URL that is not https", () => {
+    expect(() =>
+      styleFixture({ showcase: [{ label: "Acme", url: "http://example.com" }] }),
+    ).toThrow();
+  });
 });
 
 describe("compile", () => {
