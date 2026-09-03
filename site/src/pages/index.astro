@@ -6,21 +6,43 @@ const entries = (await getCollection("styles")).sort((a, b) =>
   a.data.name.localeCompare(b.data.name),
 );
 
-const searchDocs = entries.map((entry) => ({
-  id: entry.data.id,
-  name: entry.data.name,
-  mood: entry.data.mood,
-  summary: entry.data.summary,
-  tags: entry.data.tags.join(" "),
-}));
+/**
+ * The search index carries more than the prose: font stacks make "serif", "mono"
+ * and "Inter" findable, and the hex values let someone paste a colour they
+ * already have. Both are things people actually search a style library for.
+ */
+const searchDocs = entries.map((entry) => {
+  const { font, color } = entry.data.tokens;
+  return {
+    id: entry.data.id,
+    name: entry.data.name,
+    mood: entry.data.mood,
+    summary: entry.data.summary,
+    tags: entry.data.tags.join(" "),
+    type: [font.sans, font.mono, font.display ?? ""].join(" "),
+    palette: Object.values(color).filter(Boolean).join(" "),
+  };
+});
 
-// Two axes people actually browse by: is it light or dark, and what is it for.
+// Facets are derived from the tags themselves — there is no second taxonomy to
+// keep in sync. Tone is split out because it is the first thing anyone filters on.
 const TONES = ["light", "dark"];
-const useTags = [...new Set(entries.flatMap((e) => e.data.tags))]
-  .filter((tag) => !TONES.includes(tag))
-  .sort()
-  .slice(0, 8);
-const filters = [...TONES, ...useTags];
+
+const tagCounts = new Map<string, number>();
+for (const entry of entries) {
+  for (const tag of entry.data.tags) tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+}
+
+const useTags = [...tagCounts.entries()]
+  .filter(([tag]) => !TONES.includes(tag))
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .map(([tag]) => tag);
+
+const PRIMARY = 10;
+const facets = [
+  { group: "Tone", tags: TONES, rest: [] as string[] },
+  { group: "Use", tags: useTags.slice(0, PRIMARY), rest: useTags.slice(PRIMARY) },
+];
 ---
 
 <Base
@@ -40,16 +62,46 @@ const filters = [...TONES, ...useTags];
   </div>
 
   <div class="wrap">
-    <div class="filters">
-      <input id="q" type="search" placeholder="Search styles" autocomplete="off" />
-      <div class="chips">
-        <span class="label">Filter</span>
-        {filters.map((tag) => (
-          <button class="chip" type="button" data-tag={tag} aria-pressed="false">{tag}</button>
-        ))}
+    <search class="filters">
+      <div class="searchbox">
+        <input
+          id="q"
+          type="search"
+          placeholder="Search by name, mood, tag, font or hex — try “dense”, “serif”, “#7c8cf8”"
+          autocomplete="off"
+          aria-label="Search styles"
+        />
+        <kbd>/</kbd>
       </div>
-      <p class="count" id="count">{entries.length} styles</p>
-    </div>
+
+      {facets.map((facet) => (
+        <div class="facet">
+          <span class="label">{facet.group}</span>
+          <div class="chips">
+            {facet.tags.map((tag) => (
+              <button class="chip" type="button" data-tag={tag} aria-pressed="false">
+                {tag}<span class="n" data-count-for={tag}></span>
+              </button>
+            ))}
+            {facet.rest.length > 0 && (
+              <>
+                {facet.rest.map((tag) => (
+                  <button class="chip extra" type="button" data-tag={tag} aria-pressed="false" hidden>
+                    {tag}<span class="n" data-count-for={tag}></span>
+                  </button>
+                ))}
+                <button class="chip more" type="button" id="more">+{facet.rest.length} more</button>
+              </>
+            )}
+          </div>
+        </div>
+      ))}
+
+      <div class="status">
+        <p class="count" id="count">{entries.length} styles</p>
+        <button class="linkish" type="button" id="clear" hidden>Clear all</button>
+      </div>
+    </search>
 
     <div class="grid" id="grid">
       {entries.map((entry) => (
@@ -83,7 +135,11 @@ const filters = [...TONES, ...useTags];
         </a>
       ))}
     </div>
-    <p class="empty" id="empty" hidden>Nothing matches that. Try a broader word.</p>
+
+    <div class="empty" id="empty" hidden>
+      <p>Nothing matches that.</p>
+      <button class="copy" type="button" id="reset">Clear search and filters</button>
+    </div>
   </div>
 
   <script type="application/json" id="search-docs" set:html={JSON.stringify(searchDocs)} />
@@ -91,15 +147,30 @@ const filters = [...TONES, ...useTags];
   <script>
     import MiniSearch from "minisearch";
 
-    const docs: Array<{ id: string; tags: string }> = JSON.parse(
-      document.getElementById("search-docs")!.textContent!,
-    );
-    const byId = new Map(docs.map((doc) => [doc.id, doc]));
+    type Doc = {
+      id: string;
+      name: string;
+      mood: string;
+      summary: string;
+      tags: string;
+      type: string;
+      palette: string;
+    };
 
-    const search = new MiniSearch({
-      fields: ["name", "mood", "summary", "tags"],
+    const docs: Doc[] = JSON.parse(document.getElementById("search-docs")!.textContent!);
+    const tagsById = new Map(docs.map((d) => [d.id, new Set(d.tags.split(" "))]));
+
+    const search = new MiniSearch<Doc>({
+      fields: ["name", "mood", "summary", "tags", "type", "palette"],
       storeFields: ["id"],
-      searchOptions: { prefix: true, fuzzy: 0.2, boost: { name: 2, tags: 1.5 } },
+      // Hex values and font names are punctuation-heavy; keep them intact as terms.
+      tokenize: (text) => text.split(/[\s,"'`]+/).filter(Boolean),
+      processTerm: (term) => term.replace(/[.;:()]+$/g, "").toLowerCase() || null,
+      searchOptions: {
+        prefix: true,
+        fuzzy: 0.2,
+        boost: { name: 3, tags: 2, mood: 1.5 },
+      },
     });
     search.addAll(docs);
 
@@ -107,22 +178,68 @@ const filters = [...TONES, ...useTags];
     const grid = document.getElementById("grid")!;
     const empty = document.getElementById("empty")!;
     const count = document.getElementById("count")!;
-    const chips = [...document.querySelectorAll<HTMLButtonElement>(".chip")];
+    const clear = document.getElementById("clear") as HTMLButtonElement;
+    const more = document.getElementById("more") as HTMLButtonElement | null;
+    const chips = [...document.querySelectorAll<HTMLButtonElement>(".chip[data-tag]")];
     const cards = [...grid.querySelectorAll<HTMLElement>(".style-card")];
-    let activeTag: string | null = null;
+
+    const selected = new Set<string>();
+
+    /** Ids matching the query alone, or null when there is no query. */
+    function queryMatches(): Set<string> | null {
+      const query = input.value.trim();
+      if (!query) return null;
+      return new Set(search.search(query).map((r) => r.id as string));
+    }
+
+    /** A style matches when it carries every selected tag (AND across choices). */
+    function hasTags(id: string, tags: Iterable<string>): boolean {
+      const own = tagsById.get(id)!;
+      for (const tag of tags) if (!own.has(tag)) return false;
+      return true;
+    }
+
+    function readUrl() {
+      const params = new URLSearchParams(location.search);
+      input.value = params.get("q") ?? "";
+      selected.clear();
+      for (const tag of (params.get("tags") ?? "").split(",").filter(Boolean)) selected.add(tag);
+    }
+
+    function writeUrl() {
+      const params = new URLSearchParams();
+      if (input.value.trim()) params.set("q", input.value.trim());
+      if (selected.size) params.set("tags", [...selected].join(","));
+      const query = params.toString();
+      // replaceState, not pushState: filtering should not fill up the back button.
+      history.replaceState(null, "", query ? `?${query}` : location.pathname);
+    }
 
     function apply() {
-      const query = input.value.trim();
-      const matched = query ? new Set(search.search(query).map((r) => r.id as string)) : null;
+      const matched = queryMatches();
       let visible = 0;
 
       for (const card of cards) {
         const id = card.dataset.id!;
-        const okQuery = !matched || matched.has(id);
-        const okTag = !activeTag || byId.get(id)!.tags.split(" ").includes(activeTag);
-        const show = okQuery && okTag;
+        const show = (!matched || matched.has(id)) && hasTags(id, selected);
         card.hidden = !show;
         if (show) visible++;
+      }
+
+      // Facet counts reflect what each chip would add on top of the current state,
+      // so a chip reading 0 is one that would empty the grid.
+      for (const chip of chips) {
+        const tag = chip.dataset.tag!;
+        const on = selected.has(tag);
+        const probe = new Set(selected);
+        probe.add(tag);
+        const n = docs.filter(
+          (d) => (!matched || matched.has(d.id)) && hasTags(d.id, probe),
+        ).length;
+
+        chip.setAttribute("aria-pressed", String(on));
+        chip.querySelector(".n")!.textContent = on ? "" : ` ${n}`;
+        chip.toggleAttribute("disabled", !on && n === 0);
       }
 
       empty.hidden = visible > 0;
@@ -130,20 +247,46 @@ const filters = [...TONES, ...useTags];
         visible === cards.length
           ? `${cards.length} styles`
           : `${visible} of ${cards.length} styles`;
+      clear.hidden = !input.value.trim() && selected.size === 0;
+
+      writeUrl();
+    }
+
+    function reset() {
+      input.value = "";
+      selected.clear();
+      apply();
     }
 
     input.addEventListener("input", apply);
     for (const chip of chips) {
       chip.addEventListener("click", () => {
-        activeTag = activeTag === chip.dataset.tag ? null : chip.dataset.tag!;
-        for (const other of chips) {
-          other.setAttribute("aria-pressed", String(other.dataset.tag === activeTag));
-        }
+        const tag = chip.dataset.tag!;
+        if (selected.has(tag)) selected.delete(tag);
+        else selected.add(tag);
         apply();
       });
     }
 
-    for (const button of document.querySelectorAll<HTMLButtonElement>(".copy")) {
+    clear.addEventListener("click", reset);
+    document.getElementById("reset")!.addEventListener("click", reset);
+
+    more?.addEventListener("click", () => {
+      for (const chip of document.querySelectorAll<HTMLElement>(".chip.extra")) chip.hidden = false;
+      more.hidden = true;
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "/" && document.activeElement !== input) {
+        event.preventDefault();
+        input.focus();
+      } else if (event.key === "Escape" && document.activeElement === input) {
+        reset();
+        input.blur();
+      }
+    });
+
+    for (const button of document.querySelectorAll<HTMLButtonElement>("[data-copy]")) {
       button.addEventListener("click", async () => {
         await navigator.clipboard.writeText(button.dataset.copy ?? "");
         const original = button.textContent;
@@ -155,5 +298,18 @@ const filters = [...TONES, ...useTags];
         }, 1600);
       });
     }
+
+    // A shared link like ?q=dense&tags=dark must land on the same filtered view.
+    readUrl();
+    if (selected.size > 0 && [...selected].some((tag) => !chips.some((c) => c.dataset.tag === tag))) {
+      selected.clear();
+    }
+    for (const chip of document.querySelectorAll<HTMLElement>(".chip.extra")) {
+      if (selected.has((chip as HTMLButtonElement).dataset.tag!)) {
+        chip.hidden = false;
+        if (more) more.hidden = true;
+      }
+    }
+    apply();
   </script>
 </Base>

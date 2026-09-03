@@ -98,6 +98,11 @@ Re-introducing any of these will look like a mysterious visual bug:
 - **Shorthand `padding` on an element that already has `.wrap`.** It zeroes the horizontal
   padding. Use `padding-block`. This is invisible on desktop because auto margins hide it, and
   breaks on mobile.
+- **Setting `el.hidden = true` on something with an author `display` rule.** The author rule beats
+  the UA `[hidden] { display: none }`, so the element stays on screen while your own counters say
+  it is gone. Any class you hide this way needs an explicit `.thing[hidden] { display: none }`.
+  When verifying, assert on `getComputedStyle(el).display`, not on `el.hidden` — reading the
+  property back only confirms you set it.
 
 ## Verifying UI changes
 
