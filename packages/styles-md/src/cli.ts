@@ -9,7 +9,7 @@ import { toCss, toTailwind, toShadcn, toTokensJson, TARGETS, type Target } from 
 import { toMinified } from "./minify.js";
 import { styleSchema } from "./schema.js";
 
-const DEFAULT_REGISTRY = "https://styles-md.vercel.app";
+const DEFAULT_REGISTRY = "https://style.karasdev.com";
 
 // CI logs and piped output stay clean; humans get colour.
 const COLOR = Boolean(process.stdout.isTTY) && !process.env.NO_COLOR;
