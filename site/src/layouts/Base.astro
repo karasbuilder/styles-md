@@ -17,11 +17,13 @@ const { title, description, variant = "page" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" href="data:," />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
   </head>
   <body class={variant}>
     <header class="site-head">
-      <a class="brand" href="/">styles-md</a>
+      <a class="brand" href="/" aria-label="styles-md — Home">
+        <img src="/logo.svg" width="32" height="32" alt="" />
+      </a>
       <nav>
         <a href="/">Styles</a>
         <a href="https://github.com/karasbuilder/styles-md">GitHub</a>

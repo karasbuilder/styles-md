@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" fill="#16181c">
+  <title>styles-md</title>
+  <style>@media (prefers-color-scheme: dark) { :root { fill: #eceef1; } }</style>
+  <!-- Three design modules and one intelligent node, from the selected logo concept. -->
+  <path d="M116 16H342Q358 16 358 32V118Q358 134 342 134H254C188 134 134 188 134 250V262Q134 278 118 278H32Q16 278 16 262V116A100 100 0 0 1 116 16Z"/>
+  <circle cx="507" cy="94" r="78"/>
+  <path d="M32 340H118Q134 340 134 356C134 414 182 464 256 464Q272 464 272 480V568Q272 584 256 584H116A100 100 0 0 1 16 484V356Q16 340 32 340Z"/>
+  <path d="M490 278H576Q592 278 592 294V484A100 100 0 0 1 492 584H350Q334 584 334 568V480Q334 464 350 464C420 464 474 412 474 344V294Q474 278 490 278Z"/>
+</svg>
