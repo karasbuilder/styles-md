@@ -70,10 +70,16 @@ program
     for (const style of styles) {
       const outDir = opts.out ? join(resolve(opts.out), style.slug) : style.dir;
       mkdirSync(outDir, { recursive: true });
+      // Every target ships as a real file so the deployed registry can serve it
+      // directly — the site, the CLI and a raw GitHub URL all read the same bytes.
       writeFileSync(join(outDir, "tokens.json"), toTokensJson(style.meta));
       writeFileSync(join(outDir, "DESIGN.min.md"), toMinified(style));
       writeFileSync(join(outDir, "style.css"), toCss(style.meta));
-      console.log(`${green("✓")} ${style.slug} ${dim("tokens.json DESIGN.min.md style.css")}`);
+      writeFileSync(join(outDir, "theme.css"), toTailwind(style.meta));
+      writeFileSync(join(outDir, "shadcn.css"), toShadcn(style.meta));
+      console.log(
+        `${green("✓")} ${style.slug} ${dim("tokens.json DESIGN.min.md style.css theme.css shadcn.css")}`,
+      );
     }
 
     const indexPath = opts.out ? join(resolve(opts.out), "index.json") : join(stylesDir, "index.json");

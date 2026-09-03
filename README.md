@@ -57,6 +57,9 @@ styles/<slug>/DESIGN.md      authored — the product
 styles/<slug>/DESIGN.min.md  generated — the agent-facing spec
 styles/<slug>/tokens.json    generated — machine-readable tokens
 styles/<slug>/style.css      generated — CSS custom properties
+styles/<slug>/theme.css      generated — Tailwind v4 @theme block
+styles/<slug>/shadcn.css     generated — shadcn/ui variables in oklch
+styles/<slug>/preview.webp   generated — the demo page in this style
 styles/index.json            generated — the search index
 packages/styles-md/          schema, compiler and CLI
 site/src/components/Demo.astro   the canonical page every style renders

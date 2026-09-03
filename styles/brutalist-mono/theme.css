@@ -1,0 +1,28 @@
+/* Brutalist Mono — Tailwind v4 theme. Import after `@import "tailwindcss";` */
+@theme {
+  --color-bg: #ffffff;
+  --color-surface: #f2f2f0;
+  --color-fg: #000000;
+  --color-muted: #4a4a4a;
+  --color-accent: #ff3b00;
+  --color-accent-fg: #000000;
+  --color-border: #000000;
+  --color-success: #007a3d;
+  --color-danger: #d40000;
+  --font-sans: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --text-xs: 9.6px;
+  --text-sm: 12px;
+  --text-base: 15px;
+  --text-lg: 18.75px;
+  --text-xl: 23.44px;
+  --text-2xl: 29.3px;
+  --text-3xl: 36.62px;
+  --text-4xl: 45.78px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-full: 0px;
+  --spacing: 8px;
+  --ease-default: steps(1, end);
+}

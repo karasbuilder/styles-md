@@ -2,6 +2,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { getCollection, render } from "astro:content";
+import { Code } from "astro:components";
 import { deriveScales, estimateTokens } from "styles-md";
 import Base from "../../layouts/Base.astro";
 
@@ -14,179 +15,238 @@ const { entry } = Astro.props;
 const style = entry.data;
 const { Content } = await render(entry);
 
-// The minified spec is a build artefact of the CLI, not something the site
-// re-derives — offering the real file keeps the site honest about what ships.
-const minPath = join(process.cwd(), "..", "styles", style.id, "DESIGN.min.md");
-const minified = readFileSync(minPath, "utf8");
+// Read the shipped artefacts rather than re-deriving them — what the page shows
+// is byte-identical to what `npx styles-md add` writes and what the CDN serves.
+const read = (file: string) =>
+  readFileSync(join(process.cwd(), "..", "styles", style.id, file), "utf8");
+
+const files = {
+  design: read("DESIGN.md"),
+  compact: read("DESIGN.min.md"),
+  tailwind: read("theme.css"),
+  css: read("style.css"),
+  tokens: read("tokens.json"),
+};
 
 const scales = deriveScales(style.tokens as never);
 const colors = Object.entries(style.tokens.color).filter(([, v]) => v) as [string, string][];
+const kebab = (s: string) => s.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 
-const installs = [
-  { label: "CSS variables", cmd: `npx styles-md add ${style.id}` },
-  { label: "Tailwind v4", cmd: `npx styles-md add ${style.id} --target tailwind` },
-  { label: "shadcn/ui", cmd: `npx styles-md add ${style.id} --target shadcn` },
+const TABS = [
+  { id: "design", label: "DESIGN.md", file: "DESIGN.md" },
+  { id: "tailwind", label: "Tailwind v4", file: "theme.css" },
+  { id: "css", label: "CSS Variables", file: "style.css" },
+  { id: "tokens", label: "Design Tokens", file: "tokens.json" },
 ];
 
 const shape = [
   ["stroke", style.tokens.stroke.width],
-  ["radius sm / md / lg", `${style.tokens.radius.sm} · ${style.tokens.radius.md} · ${style.tokens.radius.lg}`],
+  ["radius", `${style.tokens.radius.sm} · ${style.tokens.radius.md} · ${style.tokens.radius.lg}`],
   ["spacing unit", style.tokens.space.unit],
   ["gutter", style.tokens.space.gutter],
   ["section gap", style.tokens.space.section],
   ["max width", style.tokens.space.maxWidth],
-  ["duration", style.tokens.motion.duration],
-  ["easing", style.tokens.motion.easing],
+  ["motion", `${style.tokens.motion.duration} ${style.tokens.motion.easing}`],
 ];
+
+const shiki = { light: "github-light", dark: "github-dark" } as const;
 ---
 
-<Base title={`${style.name} — styles-md`} description={style.summary}>
-  <div class="wrap detail">
-    <a class="back" href="/">← All styles</a>
+<Base title={`${style.name} — styles-md`} description={style.summary} variant="studio">
+  <div class="studio">
+    <!-- LEFT: what the style looks like. Visual only — no file contents here. -->
+    <section class="pane visual">
+      <a class="back" href="/">← All styles</a>
 
-    <header class="ident">
-      <h1>{style.name}</h1>
-      <p class="mood">{style.mood}</p>
-      <p class="lede">{style.summary}</p>
-      <div class="tags">
-        {style.tags.map((tag: string) => <span class="tag">{tag}</span>)}
+      <div class="frame">
+        <div class="frame-bar">
+          <span>Live preview</span>
+          <a href={`/demo/${style.id}/`} target="_blank" rel="noreferrer">Open full page ↗</a>
+        </div>
+        <iframe src={`/demo/${style.id}/`} title={`${style.name} demo`} loading="lazy"></iframe>
+        <img
+          class="still"
+          src={`/styles/${style.id}/preview.webp`}
+          alt={`The demo page rendered in ${style.name}`}
+          width="1280"
+          height="900"
+          loading="lazy"
+        />
       </div>
-      <p class="fine">v{style.version} · {style.license} · {style.quality}</p>
-    </header>
 
-    <section class="preview">
-      <div class="preview-bar">
-        <span>Live preview — every style renders this same page</span>
-        <a href={`/demo/${style.id}/`} target="_blank" rel="noreferrer">Open full page ↗</a>
+      <header class="ident">
+        <h1>{style.name}</h1>
+        <p class="mood">{style.mood}</p>
+        <p class="summary">{style.summary}</p>
+        <div class="tags">
+          {style.tags.map((tag: string) => <span class="tag">{tag}</span>)}
+          <span class="tag">v{style.version}</span>
+          <span class="tag">{style.license}</span>
+        </div>
+      </header>
+
+      <div class="block">
+        <h2>Install</h2>
+        <div class="cmd">
+          <code>npx styles-md add {style.id}</code>
+          <button class="copy" type="button" data-copy={`npx styles-md add ${style.id}`}>Copy</button>
+        </div>
       </div>
-      <iframe src={`/demo/${style.id}/`} title={`${style.name} demo`} loading="lazy"></iframe>
-      <img
-        class="still"
-        src={`/styles/${style.id}/preview.webp`}
-        alt={`The demo page rendered in ${style.name}`}
-        width="1280"
-        height="900"
-        loading="lazy"
-      />
+
+      <div class="block">
+        <h2>Palette</h2>
+        <div class="palette">
+          {colors.map(([name, value]) => (
+            <div class="swatch">
+              <div class="chipc" style={`background:${value}`}></div>
+              <span class="n">{kebab(name)}</span>
+              <span class="v">{value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Type</h2>
+        <p class="note">
+          {style.tokens.font.baseSize} base · {style.tokens.font.scale} ratio · weight
+          {" "}{style.tokens.font.weightBody}/{style.tokens.font.weightHeading}. Fonts are not
+          bundled — specimens fall back to what you have installed.
+        </p>
+        <div class="specimens">
+          {[...scales.type].reverse().map((step) => (
+            <div class="specimen">
+              <span class="k">{step.name} · {step.size}</span>
+              <p
+                style={`font-family:${style.tokens.font.sans}; font-size:${step.size}; font-weight:${style.tokens.font.weightHeading}; letter-spacing:${style.tokens.font.headingTracking}em; line-height:1.2`}
+              >The quick brown fox jumps</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Shape, space &amp; motion</h2>
+        <dl class="spec">
+          {shape.map(([key, value]) => (
+            <>
+              <dt>{key}</dt>
+              <dd>{value}</dd>
+            </>
+          ))}
+        </dl>
+      </div>
     </section>
 
-    <div class="layout">
-      <div class="col">
-        <section>
-          <div class="rule"><h2>Palette</h2></div>
-          <div class="palette">
-            {colors.map(([name, value]) => (
-              <div class="swatch">
-                <div class="chipc" style={`background:${value}`}></div>
-                <span class="n">{name.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}</span>
-                <span class="v">{value}</span>
-              </div>
-            ))}
-          </div>
-
-          <div class="two">
-            <div>
-              <div class="rule"><h2>Type</h2></div>
-              <dl class="spec">
-                <dt>base · ratio</dt>
-                <dd>{style.tokens.font.baseSize} · {style.tokens.font.scale}</dd>
-                {scales.type.map((step) => (
-                  <>
-                    <dt>{step.name}</dt>
-                    <dd>{step.size}</dd>
-                  </>
-                ))}
-                <dt>body · heading weight</dt>
-                <dd>{style.tokens.font.weightBody} · {style.tokens.font.weightHeading}</dd>
-                <dt>heading tracking</dt>
-                <dd>{style.tokens.font.headingTracking}em</dd>
-              </dl>
-            </div>
-
-            <div>
-              <div class="rule"><h2>Shape, space &amp; motion</h2></div>
-              <dl class="spec">
-                {shape.map(([key, value]) => (
-                  <>
-                    <dt>{key}</dt>
-                    <dd>{value}</dd>
-                  </>
-                ))}
-              </dl>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <div class="rule"><h2>The spec</h2></div>
-          <div class="prose"><Content /></div>
-        </section>
+    <!-- RIGHT: the artefact itself, one format at a time. -->
+    <section class="pane source">
+      <div class="tabs" role="tablist">
+        {TABS.map((tab, i) => (
+          <button
+            class="tab"
+            role="tab"
+            type="button"
+            data-tab={tab.id}
+            data-file={tab.file}
+            aria-selected={String(i === 0)}
+          >{tab.label}</button>
+        ))}
       </div>
 
-      <aside>
-        <div>
-          <div class="rule"><h2>Install</h2></div>
-          <div class="install">
-            <div class="targets">
-              {installs.map((install, i) => (
-                <button
-                  class="chip"
-                  type="button"
-                  data-cmd={install.cmd}
-                  aria-pressed={String(i === 0)}
-                >{install.label}</button>
-              ))}
-            </div>
-            <div class="cmd">
-              <code id="install-cmd">{installs[0].cmd}</code>
-              <button class="copy" type="button" data-copy={installs[0].cmd}>Copy</button>
-            </div>
-          </div>
+      <div class="toolbar">
+        <div class="modes" id="modes">
+          <button class="mode" type="button" data-mode="design" aria-pressed="true">Full</button>
+          <button class="mode" type="button" data-mode="compact" aria-pressed="false">
+            Compact · ~{estimateTokens(files.compact)} tokens
+          </button>
         </div>
+        <button class="copy" type="button" id="copy-source">Copy</button>
+        <a class="copy" id="download" href={`/styles/${style.id}/DESIGN.md`} download>Download</a>
+      </div>
 
-        <div class="agent">
-          <div class="rule"><h2>For your agent</h2></div>
-          <p>
-            <code class="mono">DESIGN.min.md</code> is the token-budgeted spec — roughly
-            {" "}{estimateTokens(minified)} tokens of hard numbers and rules, no prose.
-          </p>
-          <button class="copy" type="button" data-copy-target="min-source">Copy DESIGN.min.md</button>
-          <details>
-            <summary>Preview the file</summary>
-            <pre id="min-source">{minified}</pre>
-          </details>
+      <div class="viewer">
+        <div class="panel prose" data-panel="design"><Content /></div>
+        <div class="panel" data-panel="compact" hidden>
+          <Code code={files.compact} lang="markdown" themes={shiki} defaultColor={false} />
         </div>
-      </aside>
-    </div>
+        <div class="panel" data-panel="tailwind" hidden>
+          <Code code={files.tailwind} lang="css" themes={shiki} defaultColor={false} />
+        </div>
+        <div class="panel" data-panel="css" hidden>
+          <Code code={files.css} lang="css" themes={shiki} defaultColor={false} />
+        </div>
+        <div class="panel" data-panel="tokens" hidden>
+          <Code code={files.tokens} lang="json" themes={shiki} defaultColor={false} />
+        </div>
+      </div>
+    </section>
   </div>
 
-  <script>
-    // One command line, three targets — showing all three at rail width truncated
-    // them to the same visible text, which read as a bug.
-    const cmdEl = document.getElementById("install-cmd")!;
-    const cmdCopy = cmdEl.parentElement!.querySelector<HTMLButtonElement>(".copy")!;
-    const targets = [...document.querySelectorAll<HTMLButtonElement>(".targets .chip")];
+  <script type="application/json" id="sources" set:html={JSON.stringify(files)} />
 
-    for (const target of targets) {
-      target.addEventListener("click", () => {
-        const cmd = target.dataset.cmd!;
-        cmdEl.textContent = cmd;
-        cmdCopy.dataset.copy = cmd;
-        for (const other of targets) {
-          other.setAttribute("aria-pressed", String(other === target));
-        }
+  <script>
+    const sources: Record<string, string> = JSON.parse(
+      document.getElementById("sources")!.textContent!,
+    );
+    const slug = location.pathname.split("/").filter(Boolean).at(-1)!;
+
+    const tabs = [...document.querySelectorAll<HTMLButtonElement>(".tab")];
+    const modes = [...document.querySelectorAll<HTMLButtonElement>(".mode")];
+    const panels = [...document.querySelectorAll<HTMLElement>(".panel")];
+    const modeBar = document.getElementById("modes")!;
+    const download = document.getElementById("download") as HTMLAnchorElement;
+
+    let tab = "design";
+    let mode = "design"; // only meaningful while the DESIGN.md tab is active
+
+    function activePanel() {
+      return tab === "design" ? mode : tab;
+    }
+
+    function apply() {
+      const active = activePanel();
+      for (const panel of panels) panel.hidden = panel.dataset.panel !== active;
+      for (const button of tabs) button.setAttribute("aria-selected", String(button.dataset.tab === tab));
+      for (const button of modes) button.setAttribute("aria-pressed", String(button.dataset.mode === mode));
+
+      // Full/Compact only applies to the Markdown spec.
+      modeBar.hidden = tab !== "design";
+
+      const file =
+        active === "compact"
+          ? "DESIGN.min.md"
+          : (tabs.find((t) => t.dataset.tab === tab)!.dataset.file as string);
+      download.href = `/styles/${slug}/${file}`;
+      download.setAttribute("download", file);
+    }
+
+    for (const button of tabs) {
+      button.addEventListener("click", () => {
+        tab = button.dataset.tab!;
+        apply();
+      });
+    }
+    for (const button of modes) {
+      button.addEventListener("click", () => {
+        mode = button.dataset.mode!;
+        apply();
       });
     }
 
-    for (const button of document.querySelectorAll<HTMLButtonElement>(".copy")) {
-      button.addEventListener("click", async () => {
-        const targetId = button.dataset.copyTarget;
-        const text = targetId
-          ? (document.getElementById(targetId)?.textContent ?? "")
-          : (button.dataset.copy ?? "");
-        if (!text) return;
+    document.getElementById("copy-source")!.addEventListener("click", async (event) => {
+      const button = event.currentTarget as HTMLButtonElement;
+      await navigator.clipboard.writeText(sources[activePanel()]);
+      button.textContent = "Copied";
+      button.dataset.done = "true";
+      setTimeout(() => {
+        button.textContent = "Copy";
+        delete button.dataset.done;
+      }, 1600);
+    });
 
-        await navigator.clipboard.writeText(text);
+    for (const button of document.querySelectorAll<HTMLButtonElement>("[data-copy]")) {
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(button.dataset.copy ?? "");
         const original = button.textContent;
         button.textContent = "Copied";
         button.dataset.done = "true";
@@ -196,5 +256,7 @@ const shape = [
         }, 1600);
       });
     }
+
+    apply();
   </script>
 </Base>

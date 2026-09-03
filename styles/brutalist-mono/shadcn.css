@@ -1,0 +1,22 @@
+/* Brutalist Mono — shadcn/ui variables */
+:root {
+  --background: oklch(1.0000000000000002 0 none);
+  --foreground: oklch(0 0 none);
+  --card: oklch(0.9605925526497542 0.0026534423962959294 106.44944934221728);
+  --card-foreground: oklch(0 0 none);
+  --popover: oklch(0.9605925526497542 0.0026534423962959294 106.44944934221728);
+  --popover-foreground: oklch(0 0 none);
+  --primary: oklch(0.6519846293459696 0.23608118480880655 33.727985850560174);
+  --primary-foreground: oklch(0 0 none);
+  --secondary: oklch(0.9605925526497542 0.0026534423962959294 106.44944934221728);
+  --secondary-foreground: oklch(0 0 none);
+  --muted: oklch(0.9605925526497542 0.0026534423962959294 106.44944934221728);
+  --muted-foreground: oklch(0.4091200040105989 0 none);
+  --accent: oklch(0.9605925526497542 0.0026534423962959294 106.44944934221728);
+  --accent-foreground: oklch(0 0 none);
+  --destructive: oklch(0.5462857157593259 0.22416992695065513 29.233880279627865);
+  --border: oklch(0 0 none);
+  --input: oklch(0 0 none);
+  --ring: oklch(0.6519846293459696 0.23608118480880655 33.727985850560174);
+  --radius: 0px;
+}

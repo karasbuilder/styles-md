@@ -3,7 +3,8 @@
 ## Adding a style
 
 1. Copy the closest existing folder: `cp -r styles/soft-clinic styles/your-slug`
-2. Delete the generated files — `DESIGN.min.md`, `tokens.json`, `style.css`, `preview.webp`.
+2. Delete the generated files — `DESIGN.min.md`, `tokens.json`, `style.css`, `theme.css`,
+   `shadcn.css`, `preview.webp`.
 3. Edit `DESIGN.md`. The folder name and the `id` must match.
 4. Run `pnpm run validate`, then `pnpm run build && pnpm run dev` and look at your style on the
    demo page. If it does not look distinctly good there, it is not ready.
