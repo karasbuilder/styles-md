@@ -51,6 +51,66 @@ const shape = [
 
 const shiki = { light: "github-light", dark: "github-dark" } as const;
 
+const font = style.tokens.font;
+
+/** The family a stack actually asks for. The rest of the stack is the safety net. */
+const primary = (stack: string) => stack.split(",")[0]!.trim().replace(/^["']|["']$/g, "");
+
+/** CSS keywords resolve everywhere, so an "is it installed?" chip would be noise. */
+const GENERIC = new Set([
+  "serif", "sans-serif", "monospace", "cursive", "fantasy", "system-ui",
+  "ui-sans-serif", "ui-serif", "ui-monospace", "ui-rounded", "math", "emoji",
+]);
+
+/**
+ * Headings render in the display face when a style ships one, the same
+ * `var(--sm-font-display, var(--sm-font-sans))` fallback the demo uses. Showing
+ * every specimen in the sans stack would misrepresent half the styles.
+ */
+const headingStack = font.display ?? font.sans;
+
+const roles = [
+  {
+    roles: font.display ? ["Body"] : ["Body", "headings"],
+    stack: font.sans,
+    weight: font.weightBody,
+    tracking: 0,
+    sample: "Aa Bb Cc 0123 The quick brown fox",
+  },
+  ...(font.display
+    ? [{
+        roles: ["Headings"],
+        stack: font.display,
+        weight: font.weightHeading,
+        tracking: font.headingTracking,
+        sample: "Aa Bb Cc 0123 The quick brown fox",
+      }]
+    : []),
+  {
+    roles: ["Code"],
+    stack: font.mono,
+    weight: font.weightBody,
+    tracking: 0,
+    sample: "const total = 1 + lI0O;",
+  },
+];
+
+/** "Body, headings & code": a style that reuses one stack should say so once. */
+const listRoles = (items: string[]) =>
+  items.length < 2 ? items[0]! : `${items.slice(0, -1).join(", ")} & ${items.at(-1)!.toLowerCase()}`;
+
+// Several styles set the same stack for two roles (mono-only styles set all
+// three). Listing it twice reads as a mistake, so merge on the stack itself.
+const faces = roles
+  .filter((face, i) => roles.findIndex((other) => other.stack === face.stack) === i)
+  .map((face) => ({
+    ...face,
+    family: primary(face.stack),
+    label: listRoles(
+      roles.filter((other) => other.stack === face.stack).flatMap((other) => other.roles),
+    ),
+  }));
+
 /**
  * The built-in demo always leads — it is the only preview that renders identical
  * content across every style, which is what makes the gallery comparable. Real
@@ -157,17 +217,36 @@ const sources = [
 
       <div class="block">
         <h2>Type</h2>
+        <div class="faces">
+          {faces.map((face) => (
+            <div class="face">
+              <div class="face-head">
+                <span class="role">{face.label}</span>
+                <span class="family">{face.family}</span>
+                {!GENERIC.has(face.family.toLowerCase()) && (
+                  <span class="avail" data-family={face.family} hidden></span>
+                )}
+              </div>
+              <p
+                class="sample"
+                style={`font-family:${face.stack}; font-weight:${face.weight}; letter-spacing:${face.tracking}em`}
+              >{face.sample}</p>
+              <code class="stack">{face.stack}</code>
+            </div>
+          ))}
+        </div>
         <p class="note">
-          {style.tokens.font.baseSize} base · {style.tokens.font.scale} ratio · weight
-          {" "}{style.tokens.font.weightBody}/{style.tokens.font.weightHeading}. Fonts are not
-          bundled — specimens fall back to what you have installed.
+          {font.baseSize} base · {font.scale} ratio · body {font.weightBody} / heading
+          {" "}{font.weightHeading} · heading tracking {font.headingTracking}em. Fonts are not
+          bundled. Install the first family in each stack, or the specimens below fall back to
+          the next one your device has.
         </p>
         <div class="specimens">
           {[...scales.type].reverse().map((step) => (
             <div class="specimen">
               <span class="k">{step.name} · {step.size}</span>
               <p
-                style={`font-family:${style.tokens.font.sans}; font-size:${step.size}; font-weight:${style.tokens.font.weightHeading}; letter-spacing:${style.tokens.font.headingTracking}em; line-height:1.2`}
+                style={`font-family:${headingStack}; font-size:${step.size}; font-weight:${font.weightHeading}; letter-spacing:${font.headingTracking}em; line-height:1.2`}
               >The quick brown fox jumps</p>
             </div>
           ))}
@@ -271,6 +350,39 @@ const sources = [
           }
         });
       }
+    }
+
+    // Nothing here is web-hosted, so a specimen may be rendering a fallback the
+    // style never asked for. Measuring the family against two generics tells the
+    // visitor which of the two they are looking at.
+    const chips = [...document.querySelectorAll<HTMLElement>(".avail[data-family]")];
+    if (chips.length > 0) {
+      const ctx = document.createElement("canvas").getContext("2d")!;
+      const probe = "mmmwwwiiil1O0 The quick brown fox";
+
+      const resolves = (family: string) =>
+        ["monospace", "serif"].some((generic) => {
+          ctx.font = `32px ${generic}`;
+          const base = ctx.measureText(probe).width;
+          ctx.font = `32px "${family}", ${generic}`;
+          return Math.abs(ctx.measureText(probe).width - base) > 0.5;
+        });
+
+      const paint = () => {
+        for (const chip of chips) {
+          const family = chip.dataset.family!;
+          const installed = resolves(family);
+          chip.dataset.installed = String(installed);
+          chip.textContent = installed ? "on this device" : "not installed";
+          chip.title = installed
+            ? `${family} is available here, so this specimen is accurate`
+            : `${family} is missing, so this specimen uses the next family in the stack`;
+          chip.hidden = false;
+        }
+      };
+
+      if (document.fonts?.ready) void document.fonts.ready.then(paint);
+      else paint();
     }
 
     const sources: Record<string, string> = JSON.parse(
