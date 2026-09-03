@@ -14,7 +14,13 @@ const searchDocs = entries.map((entry) => ({
   tags: entry.data.tags.join(" "),
 }));
 
-const allTags = [...new Set(entries.flatMap((e) => e.data.tags))].sort();
+// Two axes people actually browse by: is it light or dark, and what is it for.
+const TONES = ["light", "dark"];
+const useTags = [...new Set(entries.flatMap((e) => e.data.tags))]
+  .filter((tag) => !TONES.includes(tag))
+  .sort()
+  .slice(0, 8);
+const filters = [...TONES, ...useTags];
 ---
 
 <Base
@@ -24,41 +30,54 @@ const allTags = [...new Set(entries.flatMap((e) => e.data.tags))].sort();
   <div class="wrap intro">
     <h1>Design specs your coding agent can actually follow.</h1>
     <p class="lede">
-      Every style is one Markdown file: hard tokens in the frontmatter, the rules that need judgment
-      in the body. Validated against a schema and WCAG AA before it ships. Install one with a single
-      command — no account, no server, no API.
+      One Markdown file per style: hard tokens in the frontmatter, the rules that need judgment in
+      the body. Every one is checked against a schema and WCAG AA before it ships.
     </p>
-    <pre style="margin-top:24px;max-width:520px">npx styles-md add midnight-precision</pre>
+    <div class="install-hint">
+      <code class="mono">npx styles-md add midnight-precision</code>
+      <button class="copy" type="button" data-copy="npx styles-md add midnight-precision">Copy</button>
+    </div>
   </div>
 
   <div class="wrap">
-    <div class="controls">
-      <input
-        id="q"
-        type="search"
-        placeholder="Search by mood, tag or name — try “dark”, “editorial”, “dense”"
-        autocomplete="off"
-      />
-      {allTags.slice(0, 8).map((tag) => (
-        <button class="chip" type="button" data-tag={tag} aria-pressed="false">{tag}</button>
-      ))}
+    <div class="filters">
+      <input id="q" type="search" placeholder="Search styles" autocomplete="off" />
+      <div class="chips">
+        <span class="label">Filter</span>
+        {filters.map((tag) => (
+          <button class="chip" type="button" data-tag={tag} aria-pressed="false">{tag}</button>
+        ))}
+      </div>
+      <p class="count" id="count">{entries.length} styles</p>
     </div>
 
     <div class="grid" id="grid">
       {entries.map((entry) => (
         <a class="style-card" href={`/styles/${entry.data.id}/`} data-id={entry.data.id}>
+          <img
+            class="thumb"
+            src={`/styles/${entry.data.id}/preview.webp`}
+            alt={`The demo page rendered in ${entry.data.name}`}
+            width="1280"
+            height="900"
+            loading="lazy"
+            style={`background:${entry.data.tokens.color.bg}`}
+          />
           <div class="swatches">
             <span style={`background:${entry.data.tokens.color.bg}`}></span>
             <span style={`background:${entry.data.tokens.color.surface}`}></span>
-            <span style={`background:${entry.data.tokens.color.fg}`}></span>
             <span style={`background:${entry.data.tokens.color.muted}`}></span>
+            <span style={`background:${entry.data.tokens.color.fg}`}></span>
             <span style={`background:${entry.data.tokens.color.accent}`}></span>
           </div>
           <div class="meta">
-            <h3>{entry.data.name}</h3>
-            <p>{entry.data.mood}</p>
+            <div class="top">
+              <h3>{entry.data.name}</h3>
+              <span class="go">View →</span>
+            </div>
+            <p class="mood">{entry.data.mood}</p>
             <div class="tags">
-              {entry.data.tags.slice(0, 4).map((tag) => <span class="tag">{tag}</span>)}
+              {entry.data.tags.slice(0, 4).map((tag: string) => <span class="tag">{tag}</span>)}
             </div>
           </div>
         </a>
@@ -72,7 +91,11 @@ const allTags = [...new Set(entries.flatMap((e) => e.data.tags))].sort();
   <script>
     import MiniSearch from "minisearch";
 
-    const docs = JSON.parse(document.getElementById("search-docs")!.textContent!);
+    const docs: Array<{ id: string; tags: string }> = JSON.parse(
+      document.getElementById("search-docs")!.textContent!,
+    );
+    const byId = new Map(docs.map((doc) => [doc.id, doc]));
+
     const search = new MiniSearch({
       fields: ["name", "mood", "summary", "tags"],
       storeFields: ["id"],
@@ -83,6 +106,7 @@ const allTags = [...new Set(entries.flatMap((e) => e.data.tags))].sort();
     const input = document.getElementById("q") as HTMLInputElement;
     const grid = document.getElementById("grid")!;
     const empty = document.getElementById("empty")!;
+    const count = document.getElementById("count")!;
     const chips = [...document.querySelectorAll<HTMLButtonElement>(".chip")];
     const cards = [...grid.querySelectorAll<HTMLElement>(".style-card")];
     let activeTag: string | null = null;
@@ -94,14 +118,18 @@ const allTags = [...new Set(entries.flatMap((e) => e.data.tags))].sort();
 
       for (const card of cards) {
         const id = card.dataset.id!;
-        const doc = docs.find((d: { id: string }) => d.id === id);
         const okQuery = !matched || matched.has(id);
-        const okTag = !activeTag || doc.tags.split(" ").includes(activeTag);
+        const okTag = !activeTag || byId.get(id)!.tags.split(" ").includes(activeTag);
         const show = okQuery && okTag;
         card.hidden = !show;
         if (show) visible++;
       }
+
       empty.hidden = visible > 0;
+      count.textContent =
+        visible === cards.length
+          ? `${cards.length} styles`
+          : `${visible} of ${cards.length} styles`;
     }
 
     input.addEventListener("input", apply);
@@ -112,6 +140,19 @@ const allTags = [...new Set(entries.flatMap((e) => e.data.tags))].sort();
           other.setAttribute("aria-pressed", String(other.dataset.tag === activeTag));
         }
         apply();
+      });
+    }
+
+    for (const button of document.querySelectorAll<HTMLButtonElement>(".copy")) {
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(button.dataset.copy ?? "");
+        const original = button.textContent;
+        button.textContent = "Copied";
+        button.dataset.done = "true";
+        setTimeout(() => {
+          button.textContent = original;
+          delete button.dataset.done;
+        }, 1600);
       });
     }
   </script>

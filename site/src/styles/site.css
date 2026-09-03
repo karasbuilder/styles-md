@@ -1,13 +1,18 @@
-/* Gallery chrome. Deliberately neutral: the styles on display must not compete
-   with the site showing them. */
+/* Gallery chrome. Deliberately neutral and quiet: the styles on display must be
+   the only colour on screen. Hierarchy comes from scale and whitespace, not from
+   boxes — so this file uses rules and space where it would be tempting to add a
+   card. Inter is kept on purpose; a characterful chrome font would compete with
+   the eight typographic systems the site exists to show. */
 :root {
   --page: #ffffff;
   --panel: #f7f8f9;
   --ink: #16181c;
   --soft: #5c6470;
-  --line: #dfe3e8;
+  --faint: #8b93a0;
+  --line: #e4e7ec;
+  --line-strong: #cbd1d9;
   --tint: #2f5bd8;
-  --radius: 10px;
+  --radius: 8px;
   --measure: 1180px;
   color-scheme: light dark;
 }
@@ -15,10 +20,12 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --page: #0d0f12;
-    --panel: #161a1f;
+    --panel: #15181d;
     --ink: #eceef1;
     --soft: #99a1ad;
-    --line: #2a3038;
+    --faint: #737b87;
+    --line: #23272e;
+    --line-strong: #333a43;
     --tint: #8ba0ff;
   }
 }
@@ -34,105 +41,304 @@ body {
 }
 
 a { color: inherit; }
+:focus-visible { outline: 2px solid var(--tint); outline-offset: 2px; border-radius: 3px; }
 
 .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 24px; }
 
+/* ---------- chrome ---------- */
+
 .site-head {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 16px;
-  padding: 20px 24px;
+  padding: 18px 24px;
   border-bottom: 1px solid var(--line);
 }
-.site-head strong { font-weight: 620; letter-spacing: -0.02em; }
+.site-head .brand { font-weight: 620; letter-spacing: -0.02em; text-decoration: none; }
 .site-head nav { margin-inline-start: auto; display: flex; gap: 20px; font-size: 14px; }
 .site-head nav a { color: var(--soft); text-decoration: none; }
 .site-head nav a:hover { color: var(--ink); }
 
-h1 { font-size: 40px; line-height: 1.1; letter-spacing: -0.03em; font-weight: 620; margin: 0 0 12px; }
-h2 { font-size: 20px; letter-spacing: -0.02em; font-weight: 620; margin: 0 0 12px; }
-.lede { color: var(--soft); font-size: 18px; max-width: 60ch; margin: 0; }
+.site-foot {
+  border-top: 1px solid var(--line);
+  margin-top: 96px;
+  padding: 28px 24px;
+  color: var(--faint);
+  font-size: 13px;
+}
 
-.intro { padding: 64px 0 32px; }
+/* ---------- shared type ---------- */
 
-.controls { display: flex; gap: 12px; flex-wrap: wrap; padding-bottom: 24px; }
-.controls input {
-  font: inherit;
-  flex: 1 1 280px;
-  padding: 10px 14px;
+h1 { font-size: clamp(32px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.032em; font-weight: 620; margin: 0; }
+h2 { font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; color: var(--faint); margin: 0; }
+h3 { font-size: 16px; letter-spacing: -0.01em; font-weight: 620; margin: 0; }
+p { margin: 0; }
+
+.lede { color: var(--soft); font-size: 18px; line-height: 1.55; max-width: 62ch; }
+.fine { color: var(--faint); font-size: 13px; }
+.mono { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; }
+
+/* A section heading is a label plus a hairline. No card, no fill. */
+.rule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.rule::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+.tag {
+  font-size: 12px;
+  color: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+/* ---------- home ---------- */
+
+/* padding-block, not the shorthand — `.wrap` owns the horizontal padding and a
+   shorthand here would silently zero it out on narrow screens. */
+.intro { padding-block: 72px 40px; display: grid; gap: 18px; justify-items: start; }
+.intro h1 { max-width: 20ch; }
+
+.install-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+  padding: 10px 12px 10px 16px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--panel);
+  font-size: 14px;
+}
+
+.filters { display: grid; gap: 14px; padding-bottom: 28px; }
+.filters input {
+  font: inherit;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: transparent;
   color: var(--ink);
 }
-.controls input:focus-visible { outline: 2px solid var(--tint); outline-offset: 2px; }
+.filters input::placeholder { color: var(--faint); }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.chips .label { font-size: 13px; color: var(--faint); margin-right: 4px; }
 .chip {
   font: inherit;
-  font-size: 14px;
-  padding: 8px 14px;
+  font-size: 13px;
+  padding: 5px 12px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: transparent;
   color: var(--soft);
   cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease;
 }
+.chip:hover { color: var(--ink); border-color: var(--line-strong); }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--page); border-color: var(--ink); }
+.count { font-size: 13px; color: var(--faint); }
 
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding-bottom: 80px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
 
+/* The card *is* the interaction here — one clickable unit per style. */
 .style-card {
+  display: block;
+  text-decoration: none;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   overflow: hidden;
-  text-decoration: none;
+  background: var(--page);
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+.style-card:hover { border-color: var(--line-strong); box-shadow: 0 6px 24px rgb(0 0 0 / 0.06); }
+/* The real demo page, rendered in this style. Cropped to the top so every card
+   shows the same region — that is what makes the grid comparable. */
+.style-card .thumb {
   display: block;
-  background: var(--panel);
-  transition: border-color 140ms ease, transform 140ms ease;
-}
-.style-card:hover { border-color: var(--soft); transform: translateY(-2px); }
-.style-card .swatches { display: flex; height: 76px; }
-.style-card .swatches span { flex: 1; }
-.style-card .meta { padding: 16px; }
-.style-card h3 { margin: 0 0 4px; font-size: 16px; font-weight: 620; letter-spacing: -0.01em; }
-.style-card p { margin: 0; color: var(--soft); font-size: 14px; }
-.style-card .tags { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
-.tag { font-size: 12px; color: var(--soft); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; }
-
-.empty { color: var(--soft); padding: 40px 0 80px; }
-
-.detail { padding: 40px 0 80px; display: grid; gap: 32px; }
-.back { color: var(--soft); text-decoration: none; font-size: 14px; }
-.frame {
   width: 100%;
-  height: 720px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--panel);
+  height: 200px;
+  object-fit: cover;
+  object-position: top center;
+  border-bottom: 1px solid var(--line);
 }
-.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: start; }
+.style-card .swatches { display: flex; height: 6px; }
+.style-card .swatches span { flex: 1; }
+.style-card .swatches span:last-child { flex: 1.6; }
+.style-card .meta { padding: 16px 18px 18px; }
+.style-card .top { display: flex; align-items: baseline; gap: 10px; }
+.style-card h3 { flex: 1; }
+.style-card .mood { color: var(--soft); font-size: 14px; margin-top: 3px; }
+.style-card .tags { margin-top: 14px; display: flex; gap: 6px; flex-wrap: wrap; }
+.style-card .go { font-size: 13px; color: var(--faint); }
+.style-card:hover .go { color: var(--tint); }
 
-table.tokens { width: 100%; border-collapse: collapse; font-size: 14px; }
-table.tokens th { text-align: left; color: var(--soft); font-weight: 400; padding: 6px 12px 6px 0; vertical-align: top; white-space: nowrap; }
-table.tokens td { padding: 6px 0; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; }
-.dot { display: inline-block; width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--line); vertical-align: -2px; margin-right: 8px; }
+.empty { color: var(--soft); padding: 48px 0; }
+
+/* ---------- detail ---------- */
+
+.detail { padding-block: 32px 0; }
+.back { color: var(--soft); text-decoration: none; font-size: 14px; }
+.back:hover { color: var(--ink); }
+
+.ident { display: grid; gap: 14px; justify-items: start; padding: 20px 0 40px; }
+.ident .mood { font-size: 20px; color: var(--soft); letter-spacing: -0.01em; }
+.ident .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* Preview is the largest thing on the page — it is the reason to be here. */
+.preview { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--faint);
+}
+.preview-bar a { margin-inline-start: auto; color: var(--soft); text-decoration: none; }
+.preview-bar a:hover { color: var(--ink); }
+/* Tall enough that the form and table row peek in — the cut-off edge is the cue
+   that the preview scrolls, rather than looking like the page just ends. */
+.preview iframe { display: block; width: 100%; height: 880px; border: 0; background: var(--page); }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 296px;
+  gap: 56px;
+  padding-top: 72px;
+  align-items: start;
+}
+.layout > .col { grid-column: 1; grid-row: 1; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 72px; }
+/* Every grid container down the rail needs an explicit minmax(0, 1fr) track:
+   the default `auto` track plus `min-width: auto` on the items means one long
+   install command widens the whole column and overflows the page. */
+.layout > aside {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  position: sticky;
+  top: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+}
+
+.preview .still { display: none; width: 100%; height: auto; }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; gap: 56px; padding-top: 48px; }
+  .layout > .col, .layout > aside { grid-column: 1; }
+  .layout > aside { grid-row: 1; position: static; }
+  .layout > .col { grid-row: 2; }
+  /* A 1280px design squeezed into a phone-width frame is unreadable. Show the
+     rendered still instead and let "Open full page" do the real preview. */
+  .preview iframe { display: none; }
+  .preview .still { display: block; }
+}
+
+/* install rail */
+.install { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.targets { display: flex; gap: 6px; flex-wrap: wrap; }
+.targets .chip { font-size: 12px; padding: 4px 10px; }
+.install .k { font-size: 12px; color: var(--faint); letter-spacing: 0.04em; text-transform: uppercase; }
+.cmd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  padding: 7px 7px 7px 11px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 12.5px;
+}
+/* min-width:0 or the nowrap content refuses to shrink and blows out the rail. */
+.cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+.cmd code::-webkit-scrollbar { display: none; }
+
+.copy {
+  font: inherit;
+  font-size: 12px;
+  font-family: "Inter", system-ui, sans-serif;
+  padding: 4px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  background: var(--page);
+  color: var(--soft);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.copy:hover { color: var(--ink); border-color: var(--ink); }
+.copy[data-done="true"] { color: var(--tint); border-color: var(--tint); }
+
+.agent { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; justify-items: start; }
+.agent p { font-size: 13.5px; color: var(--soft); line-height: 1.5; }
+.agent .copy { font-size: 13px; padding: 8px 14px; }
+.agent details { width: 100%; }
+.agent summary { font-size: 13px; color: var(--faint); cursor: pointer; }
+.agent details pre { margin-top: 12px; max-height: 340px; overflow: auto; }
 
 pre {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 16px;
+  padding: 14px;
   overflow-x: auto;
   font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 12px;
+  line-height: 1.6;
   margin: 0;
 }
 
-.prose { max-width: 68ch; }
-.prose h2 { margin-top: 32px; }
-.prose h3 { margin-top: 24px; font-size: 16px; }
-.prose ul { padding-left: 20px; }
-.prose li { margin-bottom: 6px; }
-.prose code { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-size: 13px; }
+/* token spec sheet */
+.palette { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.swatch { display: grid; gap: 7px; }
+.swatch .chipc { height: 52px; border-radius: 6px; border: 1px solid var(--line); }
+.swatch .n { font-size: 13px; font-weight: 500; }
+.swatch .v { font-size: 12px; color: var(--faint); font-family: ui-monospace, Menlo, monospace; }
 
-.site-foot { border-top: 1px solid var(--line); padding: 24px; color: var(--soft); font-size: 14px; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 48px; margin-top: 48px; }
+dl.spec { display: grid; grid-template-columns: auto 1fr; gap: 0; margin: 0; font-size: 14px; }
+dl.spec dt { color: var(--soft); padding: 7px 20px 7px 0; border-bottom: 1px solid var(--line); }
+dl.spec dd {
+  margin: 0;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 13px;
+}
+
+/* the written spec, rendered once */
+.prose { max-width: 66ch; }
+.prose h1 { display: none; } /* the page header already names the style */
+.prose h2 {
+  font-size: 20px;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-weight: 620;
+  margin: 44px 0 14px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.prose h2:first-of-type { margin-top: 0; border-top: 0; padding-top: 0; }
+.prose p { margin: 0 0 14px; color: var(--soft); }
+.prose ul { padding-left: 18px; margin: 0 0 14px; }
+.prose li { margin-bottom: 8px; color: var(--soft); }
+.prose li::marker { color: var(--faint); }
+.prose code {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 12.5px;
+  color: var(--ink);
+}

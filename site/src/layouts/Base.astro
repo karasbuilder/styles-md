@@ -19,16 +19,15 @@ const { title, description } = Astro.props;
   </head>
   <body>
     <header class="site-head">
-      <strong><a href="/" style="text-decoration:none">styles-md</a></strong>
+      <a class="brand" href="/">styles-md</a>
       <nav>
         <a href="/">Styles</a>
         <a href="https://github.com/styles-md/styles-md">GitHub</a>
       </nav>
     </header>
-    <slot />
+    <main><slot /></main>
     <footer class="site-foot">
-      Style specs are CC-BY-4.0. Tooling is MIT. Every style is validated against the schema and
-      WCAG AA before it ships.
+      Style specs are CC-BY-4.0. Tooling is MIT.
     </footer>
   </body>
 </html>
