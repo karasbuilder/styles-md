@@ -63,7 +63,7 @@ attention. Colour is a signal, not decoration.
 
 ## Typography
 
-Inter at 15px with a 1.2 ratio gives a narrow ramp — the gap between body and heading is
+Inter at 15px with a 1.2 ratio gives a narrow ramp, so the gap between body and heading is
 deliberately small so that hierarchy comes from weight and spacing rather than size. Use
 `weightHeading` (560) for every heading level and let the size step carry the rest. Numerals in
 tables and metrics use the mono stack with tabular figures.
@@ -71,7 +71,7 @@ tables and metrics use the mono stack with tabular figures.
 ## Colour
 
 The two greys do the work: `bg` for the page, `surface` for anything raised. `border` is visible
-but never assertive — it exists so a card reads as a card at a glance, not so it draws a box.
+but never assertive. It exists so a card reads as a card at a glance, not so it draws a box.
 Reserve `accent` for primary buttons, active nav items and focus rings.
 
 ## Components
@@ -92,7 +92,7 @@ Reserve `accent` for primary buttons, active nav items and focus rings.
 - Do left-align text. Centred body copy breaks the instrument feeling immediately.
 - Don't use pure black or pure white anywhere.
 - Don't add a gradient. Not on buttons, not on backgrounds, not on borders.
-- Don't stack more than two surface levels — `bg` and `surface` is the whole depth budget.
+- Don't stack more than two surface levels. `bg` and `surface` are the only two you get.
 - Don't use accent colour for text on the page background; contrast is legal but the effect is loud.
 - Don't round anything past 12px. Pills are for badges only.
 

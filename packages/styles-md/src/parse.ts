@@ -9,7 +9,7 @@ export interface Style {
   dir: string;
   file: string;
   meta: StyleFrontmatter;
-  /** Markdown after the frontmatter — the judgment layer. */
+  /** Markdown after the frontmatter: the judgment layer. */
   body: string;
 }
 

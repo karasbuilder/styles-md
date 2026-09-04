@@ -15,7 +15,7 @@ const { entry } = Astro.props;
 const style = entry.data;
 const { Content } = await render(entry);
 
-// Read the shipped artefacts rather than re-deriving them — what the page shows
+// Read the shipped artefacts rather than re-deriving them, so what the page shows
 // is byte-identical to what `npx styles-md add` writes and what the CDN serves.
 const read = (file: string) =>
   readFileSync(join(process.cwd(), "..", "styles", style.id, file), "utf8");
@@ -112,7 +112,7 @@ const faces = roles
   }));
 
 /**
- * The built-in demo always leads — it is the only preview that renders identical
+ * The built-in demo always leads. It is the only preview that renders identical
  * content across every style, which is what makes the gallery comparable. Real
  * sites built with the style follow.
  */
@@ -127,9 +127,9 @@ const sources = [
 ];
 ---
 
-<Base title={`${style.name} — styles-md`} description={style.summary} variant="studio">
+<Base title={`${style.name} · styles-md`} description={style.summary} variant="studio">
   <div class="studio">
-    <!-- LEFT: what the style looks like. Visual only — no file contents here. -->
+    <!-- LEFT: what the style looks like. Visual only, no file contents here. -->
     <section class="pane visual">
       <a class="back" href="/">← All styles</a>
 
@@ -345,7 +345,7 @@ const sources = [
             offsite.hidden = false;
             offsiteLabel.textContent = tab.textContent;
             offsiteNote.textContent =
-              tab.dataset.note || "This site does not allow embedding — open it in a new tab.";
+              tab.dataset.note || "This site does not allow embedding. Open it in a new tab.";
             offsiteLink.href = url;
           }
         });

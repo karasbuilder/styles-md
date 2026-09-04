@@ -1,8 +1,8 @@
 ---
 /**
- * The canonical demo page. Every style renders this exact markup, which is what
- * makes the gallery an honest comparison instead of eight cherry-picked screens.
- * It reads only --sm-* variables — nothing here is hardcoded.
+ * The canonical demo page. Every style renders this exact markup and it reads
+ * only --sm-* variables, so any difference you see between two styles comes
+ * from their tokens. Hardcode one value here and that stops being true.
  */
 interface Props {
   name: string;
@@ -106,7 +106,7 @@ const rows = [
 
   <footer class="foot">
     <span>{name}</span>
-    <span class="muted">Rendered from a styles-md DESIGN.md — no component was restyled by hand.</span>
+    <span class="muted">Rendered from a styles-md DESIGN.md. No component was restyled by hand.</span>
   </footer>
 </div>
 

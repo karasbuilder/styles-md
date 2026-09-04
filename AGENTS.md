@@ -6,7 +6,7 @@ Instructions for AI coding agents working in this repository.
 
 An open library of design styles as Markdown. One file per style: hard tokens in the
 frontmatter, rules that need judgment in the body. A TypeScript package validates and compiles
-them; an Astro site presents them. **Static output only — there is no backend anywhere, git is
+them; an Astro site presents them. **Static output only. There is no backend anywhere, git is
 the database, and the deployed site is the CDN the CLI reads from.** Do not introduce a server,
 a database, or a runtime API.
 
@@ -28,7 +28,7 @@ Node >= 20.11, pnpm 10.7. Always run `pnpm run validate` before claiming a style
 
 **`packages/styles-md/src/schema.ts` is the single source of truth.** The CLI, CI and the Astro
 content collection all validate against that one Zod definition. It is exported as a factory
-(`buildStyleSchema(z)`) so Astro can pass its own bundled zod — do not replace this with a second
+(`buildStyleSchema(z)`) so Astro can pass its own bundled zod. Do not replace this with a second
 schema, a JSON Schema file kept in sync by hand, or a type-only definition.
 
 **Two layers, and they must not blur.** Frontmatter is deterministic: it compiles to CSS, a
@@ -51,12 +51,13 @@ Change `DESIGN.md`, then run `pnpm run build:tokens`. CI runs the build and fail
 1. Copy the closest folder under `styles/`, delete its generated files, edit `DESIGN.md`.
 2. Folder name and frontmatter `id` must match, and both must be kebab-case.
 3. **Name a mood, not a company.** `midnight-precision`, never `linear-clone`. Recreating a real
-   product's design system is a trademark problem — this rule is not stylistic.
+   product's design system is a trademark problem, so this rule is not stylistic.
 4. `## Principles`, `## Components` and `## Do / Don't` are required, with those exact titles.
    They are the only sections carried into `DESIGN.min.md`; everything else is dropped. If a rule
    must reach the model, it lives in one of those three.
-5. `DESIGN.min.md` must stay under ~900 estimated tokens. Enforced, not advisory — longer specs
-   measurably degrade agent output.
+5. `DESIGN.min.md` must stay under ~900 estimated tokens, and validate fails past it. The number
+   is a judgment call, not a measurement: nothing here benchmarks it. It exists so a spec still
+   leaves room in the context window for the user's own code.
 6. Every required colour pair must clear WCAG AA. `muted` and `accentFg` fail most often.
 7. Run `pnpm run build && pnpm run dev` and *look at the style on the demo page* before saying it
    works. A style that validates but looks bad is not done.
@@ -64,7 +65,7 @@ Change `DESIGN.md`, then run `pnpm run build:tokens`. CI runs the build and fail
 ## Changing the schema
 
 **Clear the Astro content cache after every schema change**, or the site build
-crashes on styles whose files did not change — the data store still holds entries
+crashes on styles whose files did not change. The data store still holds entries
 parsed by the old schema, so a newly added field reads as `undefined`. There are
 **two** stores and both must go:
 
@@ -76,7 +77,7 @@ rm -rf site/.astro site/node_modules/.astro
 Adding a required field breaks all eight existing styles. So: new fields are optional or carry a
 default, add a test in `packages/styles-md/src/index.test.ts`, and state in the commit what a
 style can now express that it could not before. `tokens.stroke.width` was added because border
-weight is half of what makes a style feel brutalist — that is the bar for a new field.
+weight is a large part of what makes a style feel brutalist. Aim for that level of justification.
 
 ## Site conventions
 
@@ -84,13 +85,14 @@ weight is half of what makes a style feel brutalist — that is the bar for a ne
 invalid there and silently breaks the rule it wraps.
 
 `site/src/components/Demo.astro` is the canonical demo page rendered under every style. It reads
-**only `--sm-*` custom properties** — nothing in it may be hardcoded. That is what makes the
-gallery an honest comparison rather than eight cherry-picked screens.
+**only `--sm-*` custom properties**, and nothing in it may be hardcoded. Hardcode one value and
+the gallery stops comparing anything, because that style is no longer rendering the same page as
+the others.
 
 The style page is a two-pane "studio" layout: left is what the style looks like, right is the
 artefact itself with format tabs. **Nothing appears in both panes.** The page previously showed
-the same tokens as a table, as prose and as a raw file dump, and that duplication was the single
-worst readability problem it had. Do not reintroduce it.
+the same tokens as a table, as prose and as a raw file dump, and that duplication was the worst
+readability problem it had. Do not reintroduce it.
 
 The gallery chrome is intentionally neutral (Inter, greys, one tint). A characterful chrome font
 would compete with the typographic systems the site exists to display.
@@ -100,8 +102,9 @@ would compete with the typographic systems the site exists to display.
 Re-introducing any of these will look like a mysterious visual bug:
 
 - **`overflow: hidden` on a box containing an `<iframe>` inside an auto grid row.** It becomes a
-  scroll container and Chromium drops the iframe from the row's intrinsic size — the row collapses
-  to the borders and the content vanishes. Use `overflow: clip`, which still rounds corners.
+  scroll container and Chromium drops the iframe from the row's intrinsic size, so the row
+  collapses to the borders and the content vanishes. Use `overflow: clip`, which still rounds
+  corners.
 - **Grid chains without `minmax(0, 1fr)`.** Grid items default to `min-width: auto`, so one long
   unbreakable string widens the whole column and overflows the page. Every grid container down a
   narrow rail needs an explicit `minmax(0, 1fr)` track.
@@ -111,7 +114,7 @@ Re-introducing any of these will look like a mysterious visual bug:
 - **Setting `el.hidden = true` on something with an author `display` rule.** The author rule beats
   the UA `[hidden] { display: none }`, so the element stays on screen while your own counters say
   it is gone. Any class you hide this way needs an explicit `.thing[hidden] { display: none }`.
-  When verifying, assert on `getComputedStyle(el).display`, not on `el.hidden` — reading the
+  When verifying, assert on `getComputedStyle(el).display`, not on `el.hidden`. Reading the
   property back only confirms you set it.
 
 ## Verifying UI changes
@@ -123,32 +126,52 @@ horizontal overflow** in light and dark at 390 / 768 / 1100 / 1440 / 1800:
 document.documentElement.scrollWidth - window.innerWidth  // must be 0
 ```
 
-When a layout is wrong, measure the element boxes and find the culprit — do not guess at CSS and
+When a layout is wrong, measure the element boxes and find the culprit. Do not guess at CSS and
 re-screenshot hoping it changed.
 
 ## Dependencies
 
 The full list is short on purpose: `zod`, `gray-matter`, `culori`, `commander`, `astro`,
 `minisearch`, `playwright`, `vitest`. Adding one needs a reason beyond convenience. No CSS
-framework in the site, no component library, no build orchestrator — two workspace packages do
-not need Turborepo.
+framework in the site, no component library, no build orchestrator, because two workspace
+packages do not need Turborepo.
 
 ## Prose written by an agent
 
-**Never use an em dash (`—`) in anything you write here.** Not in commit messages, PR bodies, code
-comments, or docs. It is the clearest tell of machine-written text, and this repository is read by
-people deciding whether to trust a design spec. Use a period, a comma, a colon, or parentheses
-instead. An en dash (`–`) is the same problem; a plain hyphen in a compound word is fine.
+Everything in this repository is prose a stranger reads to decide whether the design specs are
+worth trusting. Writing that pattern-matches to generated filler costs that trust before anyone
+evaluates a single token value.
+
+**Never use an em dash (`—`).** Not in commit messages, PR bodies, code comments, or docs. Use a
+period, a comma, a colon, or parentheses. An en dash (`–`) is the same problem; a plain hyphen in
+a compound word is fine.
 
 ```
 no:  Fonts are not bundled — install the family yourself.
 yes: Fonts are not bundled. Install the family yourself.
-no:  The row collapses — Chromium drops the iframe.
-yes: The row collapses, because Chromium drops the iframe.
 ```
 
-This applies to new writing. Prose already committed keeps its dashes until someone rewrites that
-paragraph for its own reasons; do not open a repo-wide cleanup diff.
+**Never assert a measurement this repository cannot produce.** There is no benchmark suite and no
+eval harness here, so nothing may claim that a change "measurably" improves or degrades agent
+output, that agents "drift" past a threshold, or that a number was tested. Say it is a judgment
+call and give the reasoning. The same applies to counts: do not write a number of styles, users
+or downloads that `ls styles/` would contradict.
+
+```
+no:  Under ~900 tokens; longer specs measurably degrade agent output.
+yes: Under ~900 tokens. The cap is a judgment call, so a spec leaves room for the user's code.
+```
+
+**No punchline closers.** Do not end a paragraph with a short declarative fragment engineered to
+sound decisive: "That is the whole bet.", "That is the bar.", "This is not negotiable.", "It is
+broken." Make the claim in the sentence that carries it and stop.
+
+**Do not repeat a formulation across files.** The same sentence reworded in README, AGENTS and
+CONTRIBUTING reads as generated copy, and the three drift apart the moment one is edited. State
+it where it belongs and link to it from the others.
+
+**Use the "not X, but Y" antithesis at most once per document.** It is a strong construction and
+turns into a tic on the third repetition.
 
 ## Commits and pull requests
 
@@ -179,7 +202,7 @@ you cannot mark honestly is the finding: say so instead of quietly dropping the 
                       390 / 768 / 1100 / 1440 / 1800, zero horizontal overflow
 [ ] git status clean of strays: screenshots, logs, scratch files, .vercel
 [ ] read git diff --staged hunk by hunk: no debug code, no unrelated edits
-[ ] message says why, conventional prefix, no AI attribution, no em dash
+[ ] message says why, conventional prefix, no AI attribution, no em dash, no invented numbers
 ```
 
 For a PR, add: on a branch and not `main`, a full `pnpm run build` passes, and the body states what
@@ -187,6 +210,6 @@ changed, why, and how it was verified. Whatever you did not verify goes in the b
 
 ## Licensing
 
-Tooling is MIT, style specs are CC-BY-4.0 — keep the split, and keep the attribution comment the
+Tooling is MIT, style specs are CC-BY-4.0. Keep the split, and keep the attribution comment the
 compiler emits at the top of generated files. **No font files are ever committed.** Styles declare
 CSS stacks with fallbacks; licensing a family is the consumer's problem.

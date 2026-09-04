@@ -52,7 +52,7 @@ only voice in the room.
 ## Principles
 
 - One family, monospace, at 14px. Density is a feature.
-- Green is the whole palette. Every state — active, success, focus, link — is the same green.
+- Green is the whole palette. Active, success, focus and link are all the same green.
 - Radius is nearly zero; 3px keeps it from looking like a mistake, nothing more.
 - Prefix interactive labels with a symbol (`>`, `$`, `//`) instead of adding decoration.
 - Transitions run at 90ms linear. Anything slower breaks the responsiveness illusion.
@@ -60,8 +60,8 @@ only voice in the room.
 ## Typography
 
 Monospace at 14px, line height 1.55. Headings are uppercase at weight 700 with slightly positive
-tracking, which mono needs to avoid looking cramped. Never use a proportional font — not for
-marketing copy, not for buttons.
+tracking, which mono needs to avoid looking cramped. Never use a proportional font, not for
+marketing copy and not for buttons.
 
 ## Colour
 
@@ -82,7 +82,7 @@ disabled states.
 
 ## Do / Don't
 
-- Do keep rows tight — 32px is a comfortable table row here.
+- Do keep rows tight. 32px is a comfortable table row here.
 - Do use `muted` heavily; most text on screen should not be full `fg`.
 - Do align numeric columns right with tabular figures.
 - Don't add a second accent hue. Warnings use `danger`, everything else is green.

@@ -54,13 +54,13 @@ nobody loses their line.
 
 - The measure is 680px and does not stretch. Wide text is unreadable text.
 - Headings use the display serif; everything functional uses the sans.
-- Line height is 1.7 for body copy. This is not negotiable in a reading style.
+- Line height is 1.7 for body copy. Tighter than that stops being a reading style.
 - Accent appears on links, pull quotes and nothing else.
 - Paper is warm, never white. Pure white pages read as unfinished here.
 
 ## Typography
 
-A 1.333 ratio on a 19px base makes a dramatic ramp — that contrast is the point. Body copy sits
+A 1.333 ratio on a 19px base makes a dramatic ramp, and the contrast is deliberate. Body copy sits
 at base, headings jump hard, and there is no intermediate step to soften it. Set links in accent
 with a 1px underline offset 3px, never with a colour change alone.
 
@@ -83,7 +83,7 @@ rule the colour of aged paper edge, used for separators far more often than for 
 ## Do / Don't
 
 - Do let sections breathe at 112px. Editorial pacing is mostly whitespace.
-- Do use the sans for UI chrome — nav, buttons, captions, metadata.
+- Do use the sans for UI chrome: nav, buttons, captions, metadata.
 - Do keep images full-measure or full-bleed, never floated beside text.
 - Don't justify text. Ragged right is correct on screen.
 - Don't set body copy below 19px; this style has no small mode.

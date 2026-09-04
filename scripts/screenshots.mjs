@@ -1,6 +1,6 @@
 // Renders the canonical demo page under every style and writes styles/<slug>/preview.webp.
 // Run after `pnpm run build:site`. Pass --only=slug,slug to re-render just the styles a PR
-// touched — regenerating all of them on every commit floods the diff for no reason.
+// touched, because regenerating all of them on every commit floods the diff for no reason.
 import { createServer } from "node:http";
 import { readFileSync, existsSync, statSync } from "node:fs";
 import { join, extname, dirname } from "node:path";
@@ -25,7 +25,7 @@ if (targets.length === 0) {
 }
 
 if (!existsSync(dist)) {
-  console.error("site/dist missing — run `pnpm run build:site` first");
+  console.error("site/dist missing. Run `pnpm run build:site` first");
   process.exit(1);
 }
 

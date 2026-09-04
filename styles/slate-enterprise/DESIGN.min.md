@@ -24,7 +24,7 @@ motion: { duration: "140ms", easing: "cubic-bezier(0.4, 0, 0.2, 1)" }
 
 - Density first. 14px base, 32px table rows, 20px gutters.
 - Blue signals action and nothing else. Status uses green, amber and red.
-- Small radii throughout — 6px is the default and 8px is the ceiling.
+- Small radii throughout: 6px is the default and 8px is the ceiling.
 - Every destructive action needs a confirmation step and red is reserved for it.
 - Tables are the primary interface. Design them before you design anything else.
 
@@ -43,11 +43,11 @@ motion: { duration: "140ms", easing: "cubic-bezier(0.4, 0, 0.2, 1)" }
 
 - Do use `text-sm` for table content, form labels and secondary actions.
 - Do keep forms in a single column with labels above fields.
-- Do show counts, timestamps and owners — enterprise users want metadata.
+- Do show counts, timestamps and owners. Enterprise users want metadata.
 - Don't use large radii or playful motion; both undermine credibility here.
 - Don't put more than one primary button in a view.
 - Don't use saturated colour for anything except status and the accent.
 - Don't exceed 72px between sections; the density should feel deliberate.
-- Don't hide bulk actions behind hover — keep them in a persistent toolbar.
+- Don't hide bulk actions behind hover. Keep them in a persistent toolbar.
 
-<!-- styles-md/slate-enterprise@1.0.0 — CC-BY-4.0. Full spec: DESIGN.md -->
+<!-- styles-md/slate-enterprise@1.0.0, CC-BY-4.0. Full spec: DESIGN.md -->

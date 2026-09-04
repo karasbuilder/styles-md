@@ -41,13 +41,13 @@ motion: { duration: "260ms", easing: "cubic-bezier(0.34, 1.56, 0.64, 1)" }
 
 ## Do / Don't
 
-- Do give sections 104px of air — the chunky elements need it.
+- Do give sections 104px of air. The chunky elements need it.
 - Do use sentence case for every label, button and heading.
 - Do animate hovers with the springy curve; it is the personality of the style.
 - Don't use thin or light font weights anywhere.
 - Don't drop below 16px radius on a button.
 - Don't add a second saturated colour. Tints of the accent only.
 - Don't use blurred shadows on buttons; the solid offset is the look.
-- Don't set body copy at weight 400 — it looks broken next to the headings.
+- Don't set body copy at weight 400. It looks broken next to the headings.
 
-<!-- styles-md/candy-playful@1.0.0 — CC-BY-4.0. Full spec: DESIGN.md -->
+<!-- styles-md/candy-playful@1.0.0, CC-BY-4.0. Full spec: DESIGN.md -->

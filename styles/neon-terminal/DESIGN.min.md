@@ -23,7 +23,7 @@ motion: { duration: "90ms", easing: "linear" }
 ## Principles
 
 - One family, monospace, at 14px. Density is a feature.
-- Green is the whole palette. Every state — active, success, focus, link — is the same green.
+- Green is the whole palette. Active, success, focus and link are all the same green.
 - Radius is nearly zero; 3px keeps it from looking like a mistake, nothing more.
 - Prefix interactive labels with a symbol (`>`, `$`, `//`) instead of adding decoration.
 - Transitions run at 90ms linear. Anything slower breaks the responsiveness illusion.
@@ -41,7 +41,7 @@ motion: { duration: "90ms", easing: "linear" }
 
 ## Do / Don't
 
-- Do keep rows tight — 32px is a comfortable table row here.
+- Do keep rows tight. 32px is a comfortable table row here.
 - Do use `muted` heavily; most text on screen should not be full `fg`.
 - Do align numeric columns right with tabular figures.
 - Don't add a second accent hue. Warnings use `danger`, everything else is green.
@@ -50,4 +50,4 @@ motion: { duration: "90ms", easing: "linear" }
 - Don't set anything above `text-2xl`; this style has no hero type.
 - Don't centre-align body content.
 
-<!-- styles-md/neon-terminal@1.0.0 — CC-BY-4.0. Full spec: DESIGN.md -->
+<!-- styles-md/neon-terminal@1.0.0, CC-BY-4.0. Full spec: DESIGN.md -->

@@ -5,7 +5,7 @@ version: 1.0.0
 license: CC-BY-4.0
 author: styles-md contributors
 mood: calm competence, clean light and teal
-summary: Airy light surfaces, generous radius and a measured teal accent. Trustworthy without being cold — built for products that handle something people care about.
+summary: Airy light surfaces, generous radius and a measured teal accent. Trustworthy without being cold, built for products that handle something people care about.
 tags: [light, calm, saas, healthcare, rounded, trustworthy]
 quality: featured
 tokens:
@@ -55,7 +55,7 @@ saying anything at all.
 
 ## Principles
 
-- Cards float on tinted background — `surface` is always lighter than `bg`, never the reverse.
+- Cards float on tinted background. `surface` is always lighter than `bg`, never the reverse.
 - Radius is large and consistent: 12px is the default for anything interactive.
 - Shadows are wide and very faint. If you can see the shadow, it is too strong.
 - Teal is a calm accent; use it for primary actions and active states only.
@@ -89,7 +89,7 @@ rules.
 - Do keep 24px of padding inside every card, minimum.
 - Do use `muted` for supporting copy and labels above inputs.
 - Do pair the accent with plenty of white space so it stays calm.
-- Don't use hard 1px shadows or dark borders — the whole style collapses.
+- Don't use hard 1px shadows or dark borders. The whole style collapses.
 - Don't mix radii; picking 12px means 12px everywhere except cards at 20px.
 - Don't put more than three metrics in a row.
 - Don't use red except for genuine destructive actions.

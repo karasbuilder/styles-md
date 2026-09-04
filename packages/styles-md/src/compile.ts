@@ -105,10 +105,10 @@ function declarations(map: Record<string, string>, prefix: string, indent = "  "
     .join("\n");
 }
 
-/** Plain CSS custom properties. The primary target — works in any framework. */
+/** Plain CSS custom properties. The primary target, working in any framework. */
 export function toCss(style: StyleFrontmatter, selector = ":root"): string {
   const body = declarations(flattenTokens(style.tokens), "sm-");
-  return `/* ${style.name} — ${style.mood}\n   styles-md style "${style.id}" v${style.version}, ${style.license} */\n${selector} {\n${body}\n}\n`;
+  return `/* ${style.name}: ${style.mood}\n   styles-md style "${style.id}" v${style.version}, ${style.license} */\n${selector} {\n${body}\n}\n`;
 }
 
 /** Tailwind v4 CSS-first theme block. */
@@ -116,8 +116,8 @@ export function toTailwind(style: StyleFrontmatter): string {
   const flat = flattenTokens(style.tokens);
   const theme: Record<string, string> = {};
   for (const [key, value] of Object.entries(flat)) {
-    // Only namespaces Tailwind v4 actually reads. `space-N` is not one of them —
-    // v4 derives the whole spacing scale from a single `--spacing` value.
+    // Only namespaces Tailwind v4 actually reads. `space-N` is not one of them,
+    // because v4 derives the whole spacing scale from a single `--spacing` value.
     if (key.startsWith("color-") || key.startsWith("text-") || key.startsWith("radius-")) {
       theme[key] = value;
     } else if (key === "font-sans" || key === "font-mono" || key === "font-display") {
@@ -126,7 +126,7 @@ export function toTailwind(style: StyleFrontmatter): string {
   }
   theme["spacing"] = style.tokens.space.unit;
   theme["ease-default"] = style.tokens.motion.easing;
-  return `/* ${style.name} — Tailwind v4 theme. Import after \`@import "tailwindcss";\` */\n@theme {\n${declarations(theme, "")}\n}\n`;
+  return `/* ${style.name}: Tailwind v4 theme. Import after \`@import "tailwindcss";\` */\n@theme {\n${declarations(theme, "")}\n}\n`;
 }
 
 /**
@@ -157,7 +157,7 @@ export function toShadcn(style: StyleFrontmatter): string {
     ring: oklch(c.accent),
     radius: style.tokens.radius.md,
   };
-  return `/* ${style.name} — shadcn/ui variables */\n:root {\n${declarations(map, "")}\n}\n`;
+  return `/* ${style.name}: shadcn/ui variables */\n:root {\n${declarations(map, "")}\n}\n`;
 }
 
 /** Machine-readable sidecar, consumed by the site and by any future MCP server. */

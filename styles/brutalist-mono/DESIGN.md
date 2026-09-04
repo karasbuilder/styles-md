@@ -84,13 +84,13 @@ the page when a border alone is not enough. `accent` is reserved strictly for in
 
 ## Do / Don't
 
-- Do label things in uppercase — nav, buttons, badges, table headers.
+- Do label things in uppercase: nav, buttons, badges, table headers.
 - Do keep the 8px grid visible; every gap is a multiple of 8.
 - Do let content touch the borders. Padding is 24px maximum.
 - Don't round any corner, ever.
 - Don't blur a shadow.
 - Don't animate anything, including hovers.
-- Don't use accent for large fills — it is a 15% colour at most.
+- Don't use accent for large fills. It is a 15% colour at most.
 - Don't add a third font or a second accent.
 
 ## When to use

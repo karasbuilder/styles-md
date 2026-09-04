@@ -1,4 +1,4 @@
-/* Brutalist Mono — Tailwind v4 theme. Import after `@import "tailwindcss";` */
+/* Brutalist Mono: Tailwind v4 theme. Import after `@import "tailwindcss";` */
 @theme {
   --color-bg: #ffffff;
   --color-surface: #f2f2f0;

@@ -1,4 +1,4 @@
-/* Neon Terminal — Tailwind v4 theme. Import after `@import "tailwindcss";` */
+/* Neon Terminal: Tailwind v4 theme. Import after `@import "tailwindcss";` */
 @theme {
   --color-bg: #05070a;
   --color-surface: #0c1218;

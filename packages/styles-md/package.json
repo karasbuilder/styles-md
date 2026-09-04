@@ -1,7 +1,7 @@
 {
   "name": "styles-md",
   "version": "0.1.0",
-  "description": "Schema, compiler and CLI for styles-md — a library of DESIGN.md style specs for AI coding agents.",
+  "description": "Schema, compiler and CLI for styles-md, a library of DESIGN.md style specs for AI coding agents.",
   "type": "module",
   "license": "MIT",
   "bin": {

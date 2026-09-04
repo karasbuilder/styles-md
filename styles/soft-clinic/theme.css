@@ -1,4 +1,4 @@
-/* Soft Clinic — Tailwind v4 theme. Import after `@import "tailwindcss";` */
+/* Soft Clinic: Tailwind v4 theme. Import after `@import "tailwindcss";` */
 @theme {
   --color-bg: #f6f9fb;
   --color-surface: #ffffff;

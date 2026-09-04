@@ -65,7 +65,7 @@ looks genuinely pressable.
 
 Nunito at 17px with a 1.333 ratio gives a big, cheerful ramp. Headings are tightly tracked at
 weight 800 so they stay compact despite the size. Line height 1.6 body, 1.15 headings. Sentence
-case everywhere — uppercase kills the friendliness instantly.
+case everywhere, because uppercase kills the friendliness instantly.
 
 ## Colour
 
@@ -85,14 +85,14 @@ keeps the whole surface warm even where nothing is coloured.
 
 ## Do / Don't
 
-- Do give sections 104px of air — the chunky elements need it.
+- Do give sections 104px of air. The chunky elements need it.
 - Do use sentence case for every label, button and heading.
 - Do animate hovers with the springy curve; it is the personality of the style.
 - Don't use thin or light font weights anywhere.
 - Don't drop below 16px radius on a button.
 - Don't add a second saturated colour. Tints of the accent only.
 - Don't use blurred shadows on buttons; the solid offset is the look.
-- Don't set body copy at weight 400 — it looks broken next to the headings.
+- Don't set body copy at weight 400. It looks broken next to the headings.
 
 ## When to use
 

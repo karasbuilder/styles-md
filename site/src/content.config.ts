@@ -4,7 +4,7 @@ import { buildStyleSchema } from "styles-md/schema";
 
 /**
  * The site validates styles with the exact schema the CLI and CI use. If a
- * contributor's frontmatter is wrong, the site build fails — there is no second
+ * contributor's frontmatter is wrong, the site build fails. There is no second
  * definition to drift from.
  */
 const styles = defineCollection({

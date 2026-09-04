@@ -3,7 +3,7 @@ import { deriveScales } from "./compile.js";
 
 /**
  * Sections carried into DESIGN.min.md. Everything else in a style file is
- * rationale for humans — useful in review, pure context tax for an agent.
+ * rationale for humans: useful in review, pure context tax for an agent.
  * Authors are told up front: if a rule must reach the model, it lives here.
  */
 export const AGENT_SECTIONS = ["Principles", "Components", "Do / Don't"] as const;
@@ -82,7 +82,7 @@ export function toMinified(style: Style): string {
   }
 
   lines.push(
-    `<!-- styles-md/${meta.id}@${meta.version} — ${meta.license}. Full spec: DESIGN.md -->`,
+    `<!-- styles-md/${meta.id}@${meta.version}, ${meta.license}. Full spec: DESIGN.md -->`,
     "",
   );
 

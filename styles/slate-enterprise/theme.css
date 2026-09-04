@@ -1,4 +1,4 @@
-/* Slate Enterprise — Tailwind v4 theme. Import after `@import "tailwindcss";` */
+/* Slate Enterprise: Tailwind v4 theme. Import after `@import "tailwindcss";` */
 @theme {
   --color-bg: #ffffff;
   --color-surface: #f8fafc;

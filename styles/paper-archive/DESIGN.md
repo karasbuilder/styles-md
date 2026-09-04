@@ -53,7 +53,7 @@ scannability: clear hierarchy, tight rows, and a sidebar you can navigate withou
 
 - Optimise for scanning, not reading. Short paragraphs, frequent headings, lots of lists.
 - Three-column layout: nav, content, page outline. The outline is not optional.
-- Blue is a link colour and nothing else — never a button fill on the page body.
+- Blue is a link colour and nothing else, never a button fill on the page body.
 - Code is a first-class citizen; give it a tinted surface and real padding.
 - Headings carry a persistent anchor link revealed on hover.
 
@@ -65,7 +65,7 @@ Inline code uses mono at 0.9em with a tinted background.
 
 ## Colour
 
-Warm grey paper with a near-white content surface. `border` is a soft taupe used constantly — for
+Warm grey paper with a near-white content surface. `border` is a soft taupe used constantly: for
 sidebar dividers, table rules, callout edges and code block outlines.
 
 ## Components

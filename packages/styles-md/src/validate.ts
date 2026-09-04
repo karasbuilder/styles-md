@@ -38,7 +38,7 @@ export function validateStyle(style: Style): StyleReport {
   }
 
   for (const title of missingSections) {
-    errors.push(`missing required section "## ${title}" — agents never see it otherwise`);
+    errors.push(`missing required section "## ${title}": agents never see it otherwise`);
   }
 
   if (minTokens > TOKEN_BUDGET.min) {

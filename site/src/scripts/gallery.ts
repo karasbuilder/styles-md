@@ -101,7 +101,7 @@ function apply() {
   empty.hidden = visible > 0;
   count.textContent = `${visible} ${visible === 1 ? "style" : "styles"}${query || selected.size ? ` of ${cards.length}` : ""}`;
   title.textContent = query ? "Search results" : selected.size ? "Filtered styles" : "All styles";
-  document.getElementById("sort-note")!.textContent = query ? "Best match first" : "Name A–Z";
+  document.getElementById("sort-note")!.textContent = query ? "Best match first" : "Name A-Z";
   active.hidden = !query && selected.size === 0;
   activeList.replaceChildren();
   if (query) addActiveFilter(`“${query}”`, "query");

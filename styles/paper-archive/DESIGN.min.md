@@ -24,7 +24,7 @@ motion: { duration: "120ms", easing: "ease-out" }
 
 - Optimise for scanning, not reading. Short paragraphs, frequent headings, lots of lists.
 - Three-column layout: nav, content, page outline. The outline is not optional.
-- Blue is a link colour and nothing else — never a button fill on the page body.
+- Blue is a link colour and nothing else, never a button fill on the page body.
 - Code is a first-class citizen; give it a tinted surface and real padding.
 - Headings carry a persistent anchor link revealed on hover.
 
@@ -50,4 +50,4 @@ motion: { duration: "120ms", easing: "ease-out" }
 - Don't exceed `text-3xl`, even for the page title.
 - Don't hide navigation behind a menu on desktop.
 
-<!-- styles-md/paper-archive@1.0.0 — CC-BY-4.0. Full spec: DESIGN.md -->
+<!-- styles-md/paper-archive@1.0.0, CC-BY-4.0. Full spec: DESIGN.md -->

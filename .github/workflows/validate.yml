@@ -33,7 +33,7 @@ jobs:
         run: |
           node packages/styles-md/dist/cli.js build styles
           git diff --exit-code -- styles \
-            || (echo "::error::styles/ artefacts are stale — run 'pnpm run build:tokens' and commit"; exit 1)
+            || (echo "::error::styles/ artefacts are stale. Run 'pnpm run build:tokens' and commit"; exit 1)
 
       - name: Build site
         run: pnpm run build:site

@@ -71,7 +71,7 @@ program
       const outDir = opts.out ? join(resolve(opts.out), style.slug) : style.dir;
       mkdirSync(outDir, { recursive: true });
       // Every target ships as a real file so the deployed registry can serve it
-      // directly — the site, the CLI and a raw GitHub URL all read the same bytes.
+      // directly: the site, the CLI and a raw GitHub URL all read the same bytes.
       writeFileSync(join(outDir, "tokens.json"), toTokensJson(style.meta));
       writeFileSync(join(outDir, "DESIGN.min.md"), toMinified(style));
       writeFileSync(join(outDir, "style.css"), toCss(style.meta));
@@ -107,7 +107,7 @@ program
       const result = await inspectFraming(site.url);
 
       if (!result.ok) {
-        console.error(`${red("✗")} ${bold(slug)} ${site.label} ${dim(site.url)} — ${result.reason}`);
+        console.error(`${red("✗")} ${bold(slug)} ${site.label} ${dim(site.url)}: ${result.reason}`);
         failures++;
         continue;
       }
@@ -115,7 +115,7 @@ program
       // the page would render an empty box with no way to tell it went wrong.
       if (site.embed && !result.frameable) {
         console.error(
-          `${red("✗")} ${bold(slug)} ${site.label} — declares embed: true but ${result.blockedBy} forbids framing`,
+          `${red("✗")} ${bold(slug)} ${site.label}: declares embed: true but ${result.blockedBy} forbids framing`,
         );
         failures++;
         continue;
@@ -123,7 +123,7 @@ program
       const hint = site.embed
         ? green("embeddable")
         : result.frameable
-          ? yellow("frameable — could set embed: true")
+          ? yellow("frameable, could set embed: true")
           : dim("link-only");
       console.log(`${green("✓")} ${bold(slug)} ${site.label} ${hint}`);
     }
@@ -251,7 +251,7 @@ function findLocalStyle(slug: string): string | null {
   return null;
 }
 
-/** Registry reads are plain static file fetches — there is no server to call. */
+/** Registry reads are plain static file fetches. There is no server to call. */
 async function fetchStyle(slug: string, registry: string): Promise<Style | null> {
   const url = `${registry.replace(/\/$/, "")}/styles/${slug}/DESIGN.md`;
   const response = await fetch(url).catch(() => null);

@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 }
 
 const { style } = Astro.props;
-// `:root` scope, standalone page — this is exactly what the screenshot job renders.
+// `:root` scope, standalone page, exactly what the screenshot job renders.
 const css = toCss(style as never);
 ---
 
@@ -21,7 +21,7 @@ const css = toCss(style as never);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{style.name} — styles-md demo</title>
+    <title>{style.name} · styles-md demo</title>
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <style set:html={css} />
     <style>

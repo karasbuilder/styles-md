@@ -46,8 +46,8 @@ motion: { duration: "160ms", easing: "cubic-bezier(0.4, 0, 0.2, 1)" }
 - Do left-align text. Centred body copy breaks the instrument feeling immediately.
 - Don't use pure black or pure white anywhere.
 - Don't add a gradient. Not on buttons, not on backgrounds, not on borders.
-- Don't stack more than two surface levels — `bg` and `surface` is the whole depth budget.
+- Don't stack more than two surface levels. `bg` and `surface` are the only two you get.
 - Don't use accent colour for text on the page background; contrast is legal but the effect is loud.
 - Don't round anything past 12px. Pills are for badges only.
 
-<!-- styles-md/midnight-precision@1.0.0 — CC-BY-4.0. Full spec: DESIGN.md -->
+<!-- styles-md/midnight-precision@1.0.0, CC-BY-4.0. Full spec: DESIGN.md -->

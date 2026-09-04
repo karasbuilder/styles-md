@@ -24,7 +24,7 @@ motion: { duration: "200ms", easing: "cubic-bezier(0.33, 1, 0.68, 1)" }
 
 - The measure is 680px and does not stretch. Wide text is unreadable text.
 - Headings use the display serif; everything functional uses the sans.
-- Line height is 1.7 for body copy. This is not negotiable in a reading style.
+- Line height is 1.7 for body copy. Tighter than that stops being a reading style.
 - Accent appears on links, pull quotes and nothing else.
 - Paper is warm, never white. Pure white pages read as unfinished here.
 
@@ -42,7 +42,7 @@ motion: { duration: "200ms", easing: "cubic-bezier(0.33, 1, 0.68, 1)" }
 ## Do / Don't
 
 - Do let sections breathe at 112px. Editorial pacing is mostly whitespace.
-- Do use the sans for UI chrome — nav, buttons, captions, metadata.
+- Do use the sans for UI chrome: nav, buttons, captions, metadata.
 - Do keep images full-measure or full-bleed, never floated beside text.
 - Don't justify text. Ragged right is correct on screen.
 - Don't set body copy below 19px; this style has no small mode.
@@ -50,4 +50,4 @@ motion: { duration: "200ms", easing: "cubic-bezier(0.33, 1, 0.68, 1)" }
 - Don't use the display serif for anything under `text-lg`.
 - Don't introduce a second accent. One warm colour is the entire palette story.
 
-<!-- styles-md/warm-editorial@1.0.0 — CC-BY-4.0. Full spec: DESIGN.md -->
+<!-- styles-md/warm-editorial@1.0.0, CC-BY-4.0. Full spec: DESIGN.md -->

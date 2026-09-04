@@ -1,7 +1,7 @@
 import { z as defaultZ } from "zod";
 
 /**
- * The style contract. This is the real API of the project — the site, the CLI,
+ * The style contract. This is the real API of the project: the site, the CLI,
  * CI and any future MCP server all validate against this one definition.
  *
  * It is exported as a factory so consumers that bundle their own copy of zod
@@ -37,8 +37,8 @@ export function buildStyleSchema(z: typeof defaultZ) {
     /**
      * Real sites built with this style, shown alongside the built-in demo.
      *
-     * `embed` claims the site can be framed. Most cannot — `X-Frame-Options` or
-     * a CSP `frame-ancestors` directive will render a blank box — so it defaults
+     * `embed` claims the site can be framed. Most cannot, because `X-Frame-Options` or
+     * a CSP `frame-ancestors` directive will render a blank box, so it defaults
      * to false and `styles-md check-links` verifies the claim against the live
      * headers before anyone trusts it.
      */
@@ -67,7 +67,7 @@ export function buildStyleSchema(z: typeof defaultZ) {
         danger: hex.optional(),
       }),
       font: z.object({
-        /** Full CSS font stack. Never a bare family — licensing forces fallbacks. */
+        /** Full CSS font stack. Never a bare family, since licensing forces fallbacks. */
         sans: z.string().min(3),
         mono: z.string().min(3),
         display: z.string().min(3).optional(),
@@ -85,7 +85,7 @@ export function buildStyleSchema(z: typeof defaultZ) {
         section: cssLength,
         maxWidth: cssLength,
       }),
-      /** Border weight is a loud style signal — hairline vs 2px is half of "brutalist". */
+      /** Border weight is a loud style signal: hairline vs 2px is half of "brutalist". */
       stroke: z
         .object({
           width: cssLength,
@@ -117,8 +117,8 @@ export type StyleFrontmatter = ReturnType<typeof styleSchema.parse>;
 export type StyleTokens = StyleFrontmatter["tokens"];
 
 /**
- * Pairs that must clear WCAG AA. Checked in CI — a palette that fails here is
- * not a stylistic disagreement, it is a broken style.
+ * Pairs that must clear WCAG AA. Checked in CI, so a palette that fails here
+ * cannot merge however good it looks.
  */
 export const CONTRAST_PAIRS: Array<{
   fg: keyof StyleTokens["color"];
@@ -133,5 +133,5 @@ export const CONTRAST_PAIRS: Array<{
   { fg: "border", bg: "bg", min: 1.4, label: "border against page background" },
 ];
 
-/** Agent context budget. Past this, model output measurably drifts. */
+/** Agent context budget. A judgment call, not a measured threshold. */
 export const TOKEN_BUDGET = { min: 900, full: 2400 } as const;
