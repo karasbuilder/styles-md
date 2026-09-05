@@ -128,12 +128,13 @@ const faces = roles
   }));
 
 /**
- * The built-in demo always leads. It is the only preview that renders identical
- * content across every style, which is what makes the gallery comparable. Real
- * sites built with the style follow.
+ * The built-in demo leads where it is offered. It is the only preview that
+ * renders identical content across every style, which is what makes two styles
+ * comparable, so `showDemo: false` is a deliberate trade a style makes when its
+ * character only reads at full scale. Real sites built with the style follow.
  */
 const sources = [
-  { label: "Demo", url: `/demo/${style.id}/`, embed: true, note: "" },
+  ...(style.showDemo ? [{ label: "Demo", url: `/demo/${style.id}/`, embed: true, note: "" }] : []),
   ...style.showcase.map((site) => ({
     label: site.label,
     url: site.url,
@@ -141,6 +142,13 @@ const sources = [
     note: site.note ?? "",
   })),
 ];
+
+/**
+ * Whatever leads has to render correctly from the server, because the tab
+ * script only exists when there is more than one source to switch between.
+ */
+const lead = sources[0];
+const leadIsExternal = !lead.url.startsWith("/");
 ---
 
 <Base title={`${style.name} · styles-md`} description={style.summary} variant="studio">
@@ -169,30 +177,37 @@ const sources = [
           ) : (
             <span>Live preview</span>
           )}
-          <a id="open-source" href={`/demo/${style.id}/`} target="_blank" rel="noreferrer">
-            Open full page ↗
+          <a id="open-source" href={lead.url} target="_blank" rel="noreferrer">
+            {leadIsExternal ? "Open site ↗" : "Open full page ↗"}
           </a>
         </div>
 
         <iframe
           id="preview-frame"
-          src={`/demo/${style.id}/`}
-          title={`${style.name} demo`}
+          src={lead.embed ? lead.url : undefined}
+          title={`${style.name}: ${lead.label}`}
+          hidden={!lead.embed}
           loading="lazy"
           sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
           referrerpolicy="no-referrer"></iframe>
 
         <!-- Shown for sites that forbid framing, and on narrow screens. -->
-        <div class="offsite" id="offsite" hidden>
-          <p class="who" id="offsite-label"></p>
-          <p class="note" id="offsite-note"></p>
-          <a class="copy" id="offsite-link" href="#" target="_blank" rel="noreferrer">Open site ↗</a>
+        <div class="offsite" id="offsite" hidden={lead.embed}>
+          <p class="who" id="offsite-label">{lead.embed ? "" : lead.label}</p>
+          <p class="note" id="offsite-note">
+            {lead.embed
+              ? ""
+              : lead.note || "This site does not allow embedding. Open it in a new tab."}
+          </p>
+          <a class="copy" id="offsite-link" href={lead.url} target="_blank" rel="noreferrer"
+            >Open site ↗</a
+          >
         </div>
 
         <img
           class="still"
           src={`/styles/${style.id}/preview.webp`}
-          alt={`The demo page rendered in ${style.name}`}
+          alt={`A page rendered in ${style.name}`}
           width="1280"
           height="900"
           loading="lazy"

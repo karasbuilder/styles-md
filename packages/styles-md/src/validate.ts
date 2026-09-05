@@ -45,6 +45,13 @@ export function validateStyle(style: Style): StyleReport {
     errors.push(`missing required section "## ${title}": agents never see it otherwise`);
   }
 
+  /* Dropping the demo is only allowed if something else can stand in for it. */
+  if (!style.meta.showDemo && style.meta.showcase.length === 0) {
+    errors.push(
+      `showDemo is false with no showcase entry: the style page would have no preview at all`,
+    );
+  }
+
   if (minTokens > TOKEN_BUDGET.min) {
     errors.push(
       `DESIGN.min.md is ~${minTokens} tokens, budget is ${TOKEN_BUDGET.min}; trim the agent sections`,

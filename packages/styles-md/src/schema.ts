@@ -36,6 +36,18 @@ export function buildStyleSchema(z: typeof defaultZ) {
     quality: z.enum(["draft", "reviewed", "featured"]).default("draft"),
 
     /**
+     * Whether the built-in demo page is offered as a preview source.
+     *
+     * It leads by default, because it is the one page that renders identical
+     * content under every style and so makes two styles comparable. A style
+     * whose character only lands at full scale can turn it off and lead with a
+     * real site instead, which costs that comparability. `styles-md validate`
+     * rejects turning it off without a `showcase` entry to take its place,
+     * since the result would be a style page with no preview at all.
+     */
+    showDemo: z.boolean().default(true),
+
+    /**
      * Real sites built with this style, shown alongside the built-in demo.
      *
      * `embed` claims the site can be framed. Most cannot, because `X-Frame-Options` or

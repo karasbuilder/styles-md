@@ -5,7 +5,7 @@ import { loadStyles } from "./parse.js";
 import { deriveScales, flattenTokens, toCss, toShadcn } from "./compile.js";
 import { checkContrast } from "./contrast.js";
 import { splitSections, missingAgentSections, toMinified } from "./minify.js";
-import { validateDir } from "./validate.js";
+import { validateDir, validateStyle } from "./validate.js";
 import { checkFontLicensing, parseStack } from "./fonts.js";
 
 const STYLES_DIR = join(import.meta.dirname, "..", "..", "..", "styles");
@@ -35,6 +35,20 @@ function baseTokens() {
     motion: { duration: "160ms", easing: "ease" },
   };
 }
+
+/** Wraps parsed frontmatter into the on-disk Style shape validateStyle takes. */
+function styleAt(meta: ReturnType<typeof styleFixture>, body = REQUIRED_SECTIONS) {
+  return { slug: meta.id, dir: `/tmp/${meta.id}`, file: `/tmp/${meta.id}/DESIGN.md`, meta, body };
+}
+
+const REQUIRED_SECTIONS = [
+  "## Principles",
+  "- a principle",
+  "## Components",
+  "- Button: a button",
+  "## Do / Don't",
+  "- Do something",
+].join("\n\n");
 
 function styleFixture(overrides: Record<string, unknown> = {}) {
   return styleSchema.parse({
@@ -83,6 +97,28 @@ describe("schema", () => {
     expect(() =>
       styleFixture({ showcase: [{ label: "Acme", url: "http://example.com" }] }),
     ).toThrow();
+  });
+
+  it("shows the built-in demo unless a style opts out", () => {
+    expect(styleFixture().showDemo).toBe(true);
+    expect(styleFixture({ showDemo: false }).showDemo).toBe(false);
+  });
+
+  it("refuses to drop the demo when no showcase can replace it", () => {
+    const noPreview = validateStyle(
+      styleAt(styleFixture({ showDemo: false })),
+    );
+    expect(noPreview.errors.some((e) => e.includes("no preview at all"))).toBe(true);
+
+    const withShowcase = validateStyle(
+      styleAt(
+        styleFixture({
+          showDemo: false,
+          showcase: [{ label: "Acme", url: "https://acme.example.com", embed: true }],
+        }),
+      ),
+    );
+    expect(withShowcase.errors.some((e) => e.includes("no preview at all"))).toBe(false);
   });
 });
 

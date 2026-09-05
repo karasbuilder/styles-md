@@ -40,9 +40,9 @@ const groups = [
       <div>
         <p class="eyebrow">The design style library</p>
         <h1 id="discovery-title">Find the right feel.</h1>
-        <p class="discovery-lede">Every style renders the same demo page, so what you are comparing is the design and not the screenshot.</p>
+        <p class="discovery-lede">Most styles render the same demo page, so what you are comparing is the design and not the screenshot. A style loud enough to need full scale leads with a real site instead.</p>
       </div>
-      <p class="library-note"><span class="note-dot" aria-hidden="true"></span>{entries.length} open styles</p>
+      <p class="library-note"><span class="note-dot" aria-hidden="true"></span>{entries.length} open {entries.length === 1 ? "style" : "styles"}</p>
     </section>
 
     <search class="discovery-search" aria-label="Find design styles">
@@ -125,7 +125,7 @@ const groups = [
           <p>Try a broader word, or remove a filter to see more styles.</p>
           <button class="copy" type="button" id="reset">Reset search and filters</button>
         </div>
-        <p class="comparison-note">Same interface, different styles. Open a preview to explore the details.</p>
+        <p class="comparison-note">Open a preview to explore the details.</p>
       </section>
     </div>
   </div>
