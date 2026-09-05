@@ -8,6 +8,11 @@ mood: a sticker sheet that handles your invoices
 summary: Cream page, white cards, 2px ink outlines and hard offset shadows. Flat pastel fills and one ultra-heavy display face carry all the volume.
 tags: [light, brutalist, playful, pastel, saas, marketing]
 quality: draft
+showcase:
+  - label: Big Speaker
+    url: https://loa-store.vercel.app
+    embed: true
+    note: Speaker shop built from this spec with Next.js and Tailwind v4
 tokens:
   color:
     bg: "#f5f2f0"
