@@ -1,4 +1,5 @@
 import { z as defaultZ } from "zod";
+import { FREE_LICENSES } from "./fonts.js";
 
 /**
  * The style contract. This is the real API of the project: the site, the CLI,
@@ -52,6 +53,30 @@ export function buildStyleSchema(z: typeof defaultZ) {
         }),
       )
       .max(6)
+      .default([]),
+
+    /**
+     * Every font family the stacks below ask for by name, and what it costs.
+     *
+     * `license` is an enum of licences that are free for commercial use, so a
+     * paid family cannot be declared at all: the schema rejects it before any
+     * reviewer has to notice. System fallbacks (Segoe UI, Menlo, Arial Black)
+     * are deliberately absent, since naming one uses the reader's own installed
+     * copy and redistributes nothing. `styles-md validate` cross-checks this
+     * list against the stacks in both directions.
+     */
+    fonts: z
+      .array(
+        z.object({
+          family: z.string().min(1).max(60),
+          role: z.enum(["sans", "mono", "display"]),
+          license: z.enum(FREE_LICENSES),
+          /** Where to get it. The page that carries the licence, not a CDN link. */
+          url: z.string().url().startsWith("https://", "must be an https URL"),
+          note: z.string().max(120).optional(),
+        }),
+      )
+      .max(8)
       .default([]),
 
     tokens: z.object({

@@ -2,11 +2,14 @@ import { loadStyles, estimateTokens, type Style, type ParseIssue } from "./parse
 import { checkContrast, type ContrastCheck } from "./contrast.js";
 import { missingAgentSections, toMinified } from "./minify.js";
 import { TOKEN_BUDGET } from "./schema.js";
+import { checkFontLicensing } from "./fonts.js";
 
 export interface StyleReport {
   slug: string;
   contrast: ContrastCheck[];
   missingSections: string[];
+  /** Families named in a stack that need no licence: generics and OS fonts. */
+  fontFallbacks: string[];
   fullTokens: number;
   minTokens: number;
   errors: string[];
@@ -25,9 +28,10 @@ export function validateStyle(style: Style): StyleReport {
   const missingSections = missingAgentSections(style.body);
   const fullTokens = estimateTokens(style.body);
   const minTokens = estimateTokens(toMinified(style));
+  const licensing = checkFontLicensing(style.meta.tokens.font, style.meta.fonts);
 
-  const errors: string[] = [];
-  const warnings: string[] = [];
+  const errors: string[] = [...licensing.errors];
+  const warnings: string[] = [...licensing.warnings];
 
   for (const check of contrast) {
     if (!check.pass) {
