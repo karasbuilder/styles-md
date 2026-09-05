@@ -4,9 +4,9 @@ An open library of design styles as Markdown. One file per style: hard tokens in
 the rules that need judgment in the body. Point a coding agent at it, or compile it straight to CSS.
 
 ```bash
-npx styles-md add midnight-precision            # CSS custom properties
-npx styles-md add midnight-precision --target tailwind   # Tailwind v4 @theme
-npx styles-md add midnight-precision --target shadcn     # shadcn/ui variables in oklch
+npx styles-md add pastel-brutalist            # CSS custom properties
+npx styles-md add pastel-brutalist --target tailwind   # Tailwind v4 @theme
+npx styles-md add pastel-brutalist --target shadcn     # shadcn/ui variables in oklch
 ```
 
 That writes three files into your project:
@@ -43,12 +43,12 @@ A style does not merge unless it passes all of these:
 | Context budget | `DESIGN.min.md` stays under ~900 estimated tokens |
 | Artefacts | Generated files match a fresh build, so nothing is hand-edited |
 
-Eight styles are published today, and every one of them clears those gates on every commit. The
+One style is published today, and it clears those gates on every commit. The
 bet is that a small library nobody has to double-check is worth more than a large scraped one.
 
 ## Styles are moods, not brands
 
-Every style is an original system with a name like `midnight-precision` or `warm-editorial`. This
+Every style is an original system with a name like `pastel-brutalist`. This
 project does not publish clones of real companies' design systems. That avoids the trademark and
 trade dress problem, and picking by the feeling you want turns out to be more useful than picking
 by which company you are imitating.

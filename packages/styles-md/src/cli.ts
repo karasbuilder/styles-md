@@ -145,7 +145,7 @@ program
 
 program
   .command("add")
-  .argument("<slug>", "style id, e.g. midnight-precision")
+  .argument("<slug>", "style id, e.g. pastel-brutalist")
   .option("-d, --dir <dir>", "project directory to write into", ".")
   .option("-t, --target <target>", `output target: ${TARGETS.join(" | ")}`, "css")
   .option("-r, --registry <url>", "registry base URL", DEFAULT_REGISTRY)
@@ -196,6 +196,17 @@ ${green("✓")} installed ${bold(style.meta.name)} ${dim(`(${style.meta.id}@${st
   ${join("styles-md", "DESIGN.min.md")}  ${dim("point your coding agent at this file")}
   ${join("styles-md", "DESIGN.md")}      ${dim("full spec, for humans")}
 `);
+
+    // No font file ships with a style, so the last thing `add` does is say what
+    // the stacks will ask for. Every entry is free to use: the schema allows no
+    // other kind. Without this the first render silently falls back and looks wrong.
+    if (style.meta.fonts.length > 0) {
+      console.log(`  ${bold("Fonts")} ${dim("not bundled, install these or the stacks fall back")}\n`);
+      for (const font of style.meta.fonts) {
+        console.log(`  ${font.family}  ${dim(`${font.role} · ${font.license}`)}\n    ${dim(font.url)}`);
+      }
+      console.log("");
+    }
   });
 
 interface FramingResult {

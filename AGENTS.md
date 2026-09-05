@@ -50,7 +50,7 @@ Change `DESIGN.md`, then run `pnpm run build:tokens`. CI runs the build and fail
 
 1. Copy the closest folder under `styles/`, delete its generated files, edit `DESIGN.md`.
 2. Folder name and frontmatter `id` must match, and both must be kebab-case.
-3. **Name a mood, not a company.** `midnight-precision`, never `linear-clone`. Recreating a real
+3. **Name a mood, not a company.** `pastel-brutalist`, never `linear-clone`. Recreating a real
    product's design system is a trademark problem, so this rule is not stylistic.
 4. `## Principles`, `## Components` and `## Do / Don't` are required, with those exact titles.
    They are the only sections carried into `DESIGN.min.md`; everything else is dropped. If a rule
@@ -59,7 +59,12 @@ Change `DESIGN.md`, then run `pnpm run build:tokens`. CI runs the build and fail
    is a judgment call, not a measurement: nothing here benchmarks it. It exists so a spec still
    leaves room in the context window for the user's own code.
 6. Every required colour pair must clear WCAG AA. `muted` and `accentFg` fail most often.
-7. Run `pnpm run build && pnpm run dev` and *look at the style on the demo page* before saying it
+7. Every font family a stack names needs a `fonts[]` entry, and `license` accepts only licences
+   that are free for commercial use, so a paid family cannot be declared. Validate fails both on a
+   family with no entry and on an entry no stack names, so the list cannot rot. System fallbacks
+   (Segoe UI, Menlo, Arial Black) are exempt: naming one uses the reader's installed copy. Never
+   commit a font file; the repository redistributes none and that is the whole licensing story.
+8. Run `pnpm run build && pnpm run dev` and *look at the style on the demo page* before saying it
    works. A style that validates but looks bad is not done.
 
 ## Changing the schema
@@ -74,7 +79,7 @@ rm -rf site/.astro site/node_modules/.astro
 ```
 
 
-Adding a required field breaks all eight existing styles. So: new fields are optional or carry a
+Adding a required field breaks every existing style. So: new fields are optional or carry a
 default, add a test in `packages/styles-md/src/index.test.ts`, and state in the commit what a
 style can now express that it could not before. `tokens.stroke.width` was added because border
 weight is a large part of what makes a style feel brutalist. Aim for that level of justification.

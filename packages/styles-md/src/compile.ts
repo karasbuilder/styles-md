@@ -170,6 +170,7 @@ export function toTokensJson(style: StyleFrontmatter): string {
       license: style.license,
       mood: style.mood,
       tags: style.tags,
+      fonts: style.fonts,
       tokens: style.tokens,
       derived: deriveScales(style.tokens),
       variables: flattenTokens(style.tokens),

@@ -13,6 +13,34 @@ showcase:
     url: https://loa-store.vercel.app
     embed: true
     note: Speaker shop built from this spec with Next.js and Tailwind v4
+fonts:
+  - family: Geist
+    role: sans
+    license: OFL-1.1
+    url: https://github.com/vercel/geist-font
+  - family: Geist Sans
+    role: sans
+    license: OFL-1.1
+    url: https://github.com/vercel/geist-font
+    note: The name the npm `geist` package registers. Same font as Geist.
+  - family: Geist Mono
+    role: mono
+    license: OFL-1.1
+    url: https://github.com/vercel/geist-font
+  - family: Inter
+    role: sans
+    license: OFL-1.1
+    url: https://github.com/rsms/inter
+    note: Fallback. Close enough in width that the layout holds if Geist is missing.
+  - family: Gasoek One
+    role: display
+    license: OFL-1.1
+    url: https://fonts.google.com/specimen/Gasoek+One
+  - family: Archivo Black
+    role: display
+    license: OFL-1.1
+    url: https://fonts.google.com/specimen/Archivo+Black
+    note: Fallback. Same ultra-heavy weight, slightly narrower.
 tokens:
   color:
     bg: "#f5f2f0"

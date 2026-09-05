@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { getCollection, render } from "astro:content";
 import { Code } from "astro:components";
-import { deriveScales, estimateTokens } from "styles-md";
+import { deriveScales, estimateTokens, checkFontLicensing } from "styles-md";
 import Base from "../../layouts/Base.astro";
 
 export async function getStaticPaths() {
@@ -94,6 +94,22 @@ const roles = [
     sample: "const total = 1 + lI0O;",
   },
 ];
+
+/** SPDX ids are precise but unreadable. The panel shows the name people know. */
+const LICENSE_NAMES: Record<string, string> = {
+  "OFL-1.1": "SIL Open Font License 1.1",
+  "Apache-2.0": "Apache License 2.0",
+  MIT: "MIT License",
+  "CC0-1.0": "CC0 1.0 (public domain)",
+  "Ubuntu-1.0": "Ubuntu Font Licence 1.0",
+};
+
+/**
+ * Families a stack names that carry no licensing question: CSS generics and
+ * fonts the OS ships. `checkFontLicensing` already works this out for CI, so
+ * the page reuses it rather than keeping a second list that can drift.
+ */
+const fallbackFamilies = checkFontLicensing(font, style.fonts as never).fallbacks;
 
 /** "Body, headings & code": a style that reuses one stack should say so once. */
 const listRoles = (items: string[]) =>
@@ -251,6 +267,36 @@ const sources = [
             </div>
           ))}
         </div>
+      </div>
+
+      <div class="block">
+        <h2>Licensing</h2>
+        <p class="note">
+          No font files are redistributed here. Every family this style asks for by name is free
+          for commercial use, and CI rejects a style that names one which is not.
+        </p>
+        <ul class="licences">
+          {style.fonts.map((font) => (
+            <li>
+              <span class="fam">{font.family}</span>
+              <span class="role">{font.role}</span>
+              <a class="lic" href={font.url} rel="noopener noreferrer" target="_blank">
+                {LICENSE_NAMES[font.license] ?? font.license}
+              </a>
+              {font.note && <span class="fnote">{font.note}</span>}
+            </li>
+          ))}
+        </ul>
+        {fallbackFamilies.length > 0 && (
+          <p class="note">
+            Fallbacks: {fallbackFamilies.join(", ")}. These are CSS generics and fonts the reader's
+            OS already ships, referenced by name only, so nothing is licensed or downloaded.
+          </p>
+        )}
+        <p class="note">
+          The spec itself, and everything generated from it, is {style.license}. Attribution is the
+          comment at the top of each generated file; keep it and you have complied.
+        </p>
       </div>
 
       <div class="block">

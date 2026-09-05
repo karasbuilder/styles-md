@@ -2,7 +2,7 @@
 
 ## Adding a style
 
-1. Copy the closest existing folder: `cp -r styles/soft-clinic styles/your-slug`
+1. Copy the closest existing folder: `cp -r styles/pastel-brutalist styles/your-slug`
 2. Delete the generated files: `DESIGN.min.md`, `tokens.json`, `style.css`, `theme.css`,
    `shadcn.css`, `preview.webp`.
 3. Edit `DESIGN.md`. The folder name and the `id` must match.
@@ -12,7 +12,7 @@
 
 ## Rules that get PRs rejected
 
-**Give it a mood for a name.** `midnight-precision`, not `linear-clone`. We do not publish
+**Give it a mood for a name.** `pastel-brutalist`, not `linear-clone`. We do not publish
 recreations of real products' design systems, which is a trademark problem before it is anything
 else.
 
@@ -26,6 +26,24 @@ palette philosophy. Negative constraints carry more of the style than anything e
 **Stay inside the context budget.** `DESIGN.min.md` must come in under ~900 estimated tokens, and
 validate fails past that. The cap is a judgment call rather than a measured threshold, and it
 exists so a spec still leaves room in the context window for the code it is being applied to.
+
+**Declare every font, and pick free ones.** Each family a stack names has to have a `fonts[]`
+entry, and `license` only accepts licences that are free for commercial use, so a paid family
+cannot be declared at all. Validate checks both directions: a family with no entry fails, and an
+entry no stack names fails too. System fallbacks are the exception and need no entry, since naming
+Segoe UI or Menlo uses the reader's own copy and redistributes nothing.
+
+```yaml
+fonts:
+  - family: Gasoek One
+    role: display            # sans | mono | display
+    license: OFL-1.1         # OFL-1.1 | Apache-2.0 | MIT | CC0-1.0 | Ubuntu-1.0
+    url: https://fonts.google.com/specimen/Gasoek+One
+    note: Fallback for X.    # optional
+```
+
+**Never commit a font file.** This repository redistributes none, and that is what keeps the
+licensing story simple. Stacks name families; users install them.
 
 **Pass contrast.** Every required pair must clear WCAG AA. A palette that fails this is not up for
 discussion, however good it looks. Adjust `muted` and `accentFg` first, since they fail most often.

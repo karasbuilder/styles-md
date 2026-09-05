@@ -6,6 +6,7 @@ import { deriveScales, flattenTokens, toCss, toShadcn } from "./compile.js";
 import { checkContrast } from "./contrast.js";
 import { splitSections, missingAgentSections, toMinified } from "./minify.js";
 import { validateDir } from "./validate.js";
+import { checkFontLicensing, parseStack } from "./fonts.js";
 
 const STYLES_DIR = join(import.meta.dirname, "..", "..", "..", "styles");
 
@@ -157,11 +158,78 @@ describe("minify", () => {
   });
 });
 
+describe("font licensing", () => {
+  const ofl = (family: string, role: "sans" | "mono" | "display") =>
+    ({ family, role, license: "OFL-1.1", url: "https://example.com/font" }) as const;
+  const stacks = {
+    sans: 'Inter, system-ui, "Segoe UI", sans-serif',
+    mono: 'ui-monospace, "SFMono-Regular", Menlo, monospace',
+  };
+
+  it("splits a stack and strips quotes", () => {
+    expect(parseStack('"Geist Mono", ui-monospace, Menlo, monospace')).toEqual([
+      "Geist Mono",
+      "ui-monospace",
+      "Menlo",
+      "monospace",
+    ]);
+  });
+
+  it("passes when every named family is declared", () => {
+    const result = checkFontLicensing(stacks, [ofl("Inter", "sans")]);
+    expect(result.errors).toEqual([]);
+    expect(result.warnings).toEqual([]);
+  });
+
+  it("rejects a family no fonts[] entry covers", () => {
+    const result = checkFontLicensing({ ...stacks, sans: "Circular, system-ui, sans-serif" }, []);
+    expect(result.errors).toHaveLength(1);
+    expect(result.errors[0]).toContain('names "Circular"');
+  });
+
+  it("rejects a declaration no stack asks for, so the list cannot rot", () => {
+    const result = checkFontLicensing(stacks, [ofl("Inter", "sans"), ofl("Lyon", "display")]);
+    expect(result.errors).toEqual([expect.stringContaining('declares "Lyon"')]);
+  });
+
+  it("rejects a bare family with no fallback", () => {
+    const result = checkFontLicensing({ ...stacks, sans: "Inter" }, [ofl("Inter", "sans")]);
+    expect(result.errors).toEqual([expect.stringContaining("bare family")]);
+  });
+
+  it("treats generics and OS families as fallbacks needing no licence", () => {
+    const result = checkFontLicensing(stacks, [ofl("Inter", "sans")]);
+    expect(result.fallbacks).toContain("Segoe UI");
+    expect(result.fallbacks).toContain("Menlo");
+    expect(result.fallbacks).toContain("sans-serif");
+  });
+
+  it("warns when a stack leads with a proprietary system family", () => {
+    const result = checkFontLicensing({ ...stacks, sans: '"Segoe UI", system-ui, sans-serif' }, []);
+    expect(result.errors).toEqual([]);
+    expect(result.warnings).toEqual([expect.stringContaining('leads with "Segoe UI"')]);
+  });
+
+  it("rejects a licence that is not on the free list at the schema layer", () => {
+    expect(() =>
+      styleFixture({
+        fonts: [
+          { family: "Inter", role: "sans", license: "Proprietary", url: "https://example.com" },
+        ],
+      }),
+    ).toThrow();
+  });
+
+  it("defaults fonts to an empty list", () => {
+    expect(styleFixture().fonts).toEqual([]);
+  });
+});
+
 describe("the shipped library", () => {
   it("parses and passes every gate", () => {
     const report = validateDir(STYLES_DIR);
     expect(report.parseIssues).toEqual([]);
-    expect(report.styles.length).toBeGreaterThanOrEqual(8);
+    expect(report.styles.length).toBeGreaterThanOrEqual(1);
     expect(report.styles.flatMap((s) => s.errors)).toEqual([]);
   });
 

@@ -17,6 +17,17 @@ export {
 } from "./parse.js";
 export { checkContrast, contrastFailures, type ContrastCheck } from "./contrast.js";
 export {
+  checkFontLicensing,
+  parseStack,
+  primaryFamily,
+  isGenericFamily,
+  isSystemFamily,
+  FREE_LICENSES,
+  type FontLicense,
+  type FontDeclaration,
+  type FontLicensingResult,
+} from "./fonts.js";
+export {
   compile,
   deriveScales,
   flattenTokens,

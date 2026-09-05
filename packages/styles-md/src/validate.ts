@@ -57,7 +57,16 @@ export function validateStyle(style: Style): StyleReport {
     warnings.push(`marked "featured" but still has warnings`);
   }
 
-  return { slug: style.slug, contrast, missingSections, fullTokens, minTokens, errors, warnings };
+  return {
+    slug: style.slug,
+    contrast,
+    missingSections,
+    fontFallbacks: licensing.fallbacks,
+    fullTokens,
+    minTokens,
+    errors,
+    warnings,
+  };
 }
 
 export function validateDir(dir: string): ValidationReport {
