@@ -87,6 +87,26 @@ for (const style of targets) {
     throw new Error(`${style.id}: ${target.url} returned ${response?.status() ?? "no response"}`);
   }
 
+  /*
+   * The network goes idle well before an entrance animation ends, so a shot
+   * taken here catches buttons and headings part way through their fade and
+   * writes a washed-out card. Wait for the finite animations to settle.
+   *
+   * Looping ones (drifting artwork, tickers, marquees) never finish, so they
+   * are excluded, and the cap keeps one runaway page from stalling the run.
+   */
+  await page.evaluate(async () => {
+    const settling = document
+      .getAnimations()
+      .filter((animation) => animation.effect?.getTiming().iterations !== Infinity)
+      .map((animation) => animation.finished.catch(() => {}));
+
+    await Promise.race([
+      Promise.all(settling),
+      new Promise((resolve) => setTimeout(resolve, 2000)),
+    ]);
+  });
+
   await page.screenshot({
     path: join(root, "styles", style.id, "preview.webp"),
     type: "webp",

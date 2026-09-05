@@ -8,6 +8,10 @@ mood: a lavender candy shop at dusk
 summary: A violet-tinted page, aubergine type and big soft-cornered colour blocks. One regular weight does every job, from a 13px caption to a 96px display line.
 tags: [light, violet, pastel, rounded, playful, fintech, marketing]
 quality: draft
+# The shared demo page uses one surface for every card, so it cannot show the
+# rotating block fills, which are the loudest thing about this style. The real
+# site leads instead. That costs comparison against the other styles.
+showDemo: false
 showcase:
   - label: Lumo
     url: https://lumo-virid-phi.vercel.app
