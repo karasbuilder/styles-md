@@ -12,3 +12,6 @@ dist/
 site/public/styles/
 .vercel
 .env*
+
+# Scratch projects generated from the styles. Not part of the library.
+projects/

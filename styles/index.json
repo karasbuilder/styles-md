@@ -132,6 +132,33 @@
     }
   },
   {
+    "id": "pastel-brutalist",
+    "name": "Pastel Brutalist",
+    "mood": "a sticker sheet that handles your invoices",
+    "summary": "Cream page, white cards, 2px ink outlines and hard offset shadows. Flat pastel fills and one ultra-heavy display face carry all the volume.",
+    "tags": [
+      "light",
+      "brutalist",
+      "playful",
+      "pastel",
+      "saas",
+      "marketing"
+    ],
+    "quality": "draft",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#f5f2f0",
+      "surface": "#ffffff",
+      "fg": "#151617",
+      "muted": "#63615f",
+      "accent": "#b09cfb",
+      "accentFg": "#151617",
+      "border": "#151617",
+      "success": "#4ecb71",
+      "danger": "#ff6b52"
+    }
+  },
+  {
     "id": "slate-enterprise",
     "name": "Slate Enterprise",
     "mood": "quiet authority in a boardroom",
