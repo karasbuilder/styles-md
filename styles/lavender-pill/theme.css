@@ -1,0 +1,28 @@
+/* Lavender Pill: Tailwind v4 theme. Import after `@import "tailwindcss";` */
+@theme {
+  --color-bg: #f5f2ff;
+  --color-surface: #fdfcfe;
+  --color-fg: #3c315b;
+  --color-muted: #6f6a80;
+  --color-accent: #ab9ff2;
+  --color-accent-fg: #3c315b;
+  --color-border: #cec9e3;
+  --color-success: #2ec08b;
+  --color-danger: #e5555c;
+  --font-sans: "Figtree", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --text-xs: 10.24px;
+  --text-sm: 12.8px;
+  --text-base: 16px;
+  --text-lg: 20px;
+  --text-xl: 25px;
+  --text-2xl: 31.25px;
+  --text-3xl: 39.06px;
+  --text-4xl: 48.83px;
+  --radius-sm: 16px;
+  --radius-md: 24px;
+  --radius-lg: 32px;
+  --radius-full: 9999px;
+  --spacing: 4px;
+  --ease-default: cubic-bezier(0.22, 1, 0.36, 1);
+}

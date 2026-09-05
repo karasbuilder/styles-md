@@ -1,5 +1,33 @@
 [
   {
+    "id": "lavender-pill",
+    "name": "Lavender Pill",
+    "mood": "a lavender candy shop at dusk",
+    "summary": "A violet-tinted page, aubergine type and big soft-cornered colour blocks. One regular weight does every job, from a 13px caption to a 96px display line.",
+    "tags": [
+      "light",
+      "violet",
+      "pastel",
+      "rounded",
+      "playful",
+      "fintech",
+      "marketing"
+    ],
+    "quality": "draft",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#f5f2ff",
+      "surface": "#fdfcfe",
+      "fg": "#3c315b",
+      "muted": "#6f6a80",
+      "accent": "#ab9ff2",
+      "accentFg": "#3c315b",
+      "border": "#cec9e3",
+      "success": "#2ec08b",
+      "danger": "#e5555c"
+    }
+  },
+  {
     "id": "pastel-brutalist",
     "name": "Pastel Brutalist",
     "mood": "a sticker sheet that handles your invoices",

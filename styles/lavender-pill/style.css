@@ -1,0 +1,48 @@
+/* Lavender Pill: a lavender candy shop at dusk
+   styles-md style "lavender-pill" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #f5f2ff;
+  --sm-color-surface: #fdfcfe;
+  --sm-color-fg: #3c315b;
+  --sm-color-muted: #6f6a80;
+  --sm-color-accent: #ab9ff2;
+  --sm-color-accent-fg: #3c315b;
+  --sm-color-border: #cec9e3;
+  --sm-color-success: #2ec08b;
+  --sm-color-danger: #e5555c;
+  --sm-font-sans: "Figtree", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sm-font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sm-font-weight-body: 400;
+  --sm-font-weight-heading: 400;
+  --sm-heading-tracking: -0.025em;
+  --sm-text-xs: 10.24px;
+  --sm-text-sm: 12.8px;
+  --sm-text-base: 16px;
+  --sm-text-lg: 20px;
+  --sm-text-xl: 25px;
+  --sm-text-2xl: 31.25px;
+  --sm-text-3xl: 39.06px;
+  --sm-text-4xl: 48.83px;
+  --sm-space-1: 4px;
+  --sm-space-2: 8px;
+  --sm-space-3: 12px;
+  --sm-space-4: 16px;
+  --sm-space-6: 24px;
+  --sm-space-8: 32px;
+  --sm-space-12: 48px;
+  --sm-space-16: 64px;
+  --sm-space-24: 96px;
+  --sm-gutter: 32px;
+  --sm-section: 96px;
+  --sm-max-width: 1560px;
+  --sm-stroke-width: 1px;
+  --sm-radius-sm: 16px;
+  --sm-radius-md: 24px;
+  --sm-radius-lg: 32px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 400ms;
+  --sm-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --sm-shadow-sm: 0 0 4px 0 #e2dffe;
+  --sm-shadow-md: 0 0 16px 0 #e2dffe;
+  --sm-shadow-lg: 0 0 40px 0 #e2dffe;
+}
