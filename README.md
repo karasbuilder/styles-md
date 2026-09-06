@@ -101,3 +101,7 @@ page so reviewers can actually see it.
 
 If you are working through an AI coding agent, [AGENTS.md](AGENTS.md) carries the invariants it
 needs: which files are generated, the layout traps already hit here, and what not to add.
+
+## Author
+
+Created and maintained by karas ([github.com/karasbuilder](https://github.com/karasbuilder)).

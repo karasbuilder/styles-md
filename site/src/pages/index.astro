@@ -31,90 +31,100 @@ const groups = [
   { name: "Use case", tags: uses.filter((t) => tagCounts.has(t)), extra: [] as string[] },
   { name: "Typography", tags: typography.filter((t) => tagCounts.has(t)), extra: [] as string[] },
   { name: "Character", tags: character.slice(0, 8), extra: character.slice(8) },
-];
+  // A rail section with nothing under it reads as a broken heading, so drop it.
+].filter((group) => group.tags.length > 0 || group.extra.length > 0);
+const slug = (name: string) => `rail-${name.toLowerCase().replace(/\s+/g, "-")}`;
 ---
 
 <Base title="styles-md · find your next design style" description="Explore design styles by mood, use case, typography and palette. Preview the same interface in every style, then take it into your project.">
-  <div class="wrap discovery">
-    <section class="discovery-intro" aria-labelledby="discovery-title">
-      <div>
-        <p class="eyebrow">The design style library</p>
-        <h1 id="discovery-title">Find the right feel.</h1>
-        <p class="discovery-lede">Most styles render the same demo page, so what you are comparing is the design and not the screenshot. A style loud enough to need full scale leads with a real site instead.</p>
-      </div>
-      <p class="library-note"><span class="note-dot" aria-hidden="true"></span>{entries.length} open {entries.length === 1 ? "style" : "styles"}</p>
-    </section>
+  <search class="head-search" slot="head" aria-label="Find design styles">
+    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
+    <input id="q" type="search" placeholder="Search styles, moods, fonts or colors…" autocomplete="off" aria-label="Search styles" aria-describedby="search-help" aria-controls="grid" />
+    <kbd aria-hidden="true">/</kbd>
+  </search>
 
-    <search class="discovery-search" aria-label="Find design styles">
-      <div class="searchbox">
-        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
-        <input id="q" type="search" placeholder="Search styles, moods, fonts or colors…" autocomplete="off" aria-label="Search styles" aria-describedby="search-help" aria-controls="grid" />
-        <kbd aria-hidden="true">/</kbd>
-      </div>
-      <p class="search-help" id="search-help">Try a direction:
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-body">
+      <p class="eyebrow">The design style library</p>
+      <h1 id="hero-title">Find the right feel.</h1>
+      <p class="hero-lede">Most styles render the same demo page, so what you are comparing is the design and not the screenshot. A style loud enough to need full scale leads with a real site instead.</p>
+      <p class="hero-try" id="search-help"><span>Try a direction</span>
         <button type="button" data-query="minimal">minimal</button>
         <button type="button" data-query="editorial">editorial</button>
         <button type="button" data-query="#7c8cf8">#7c8cf8</button>
       </p>
-    </search>
+      <p class="hero-note"><span class="note-dot" aria-hidden="true"></span>{entries.length} open {entries.length === 1 ? "style" : "styles"} · specs CC-BY-4.0</p>
+    </div>
+  </section>
 
-    <div class="browse-layout">
-      <aside class="filter-rail" aria-label="Style filters">
-        <details class="filter-panel" id="filter-panel" open>
-          <summary>Filters <span id="filter-count"></span><span class="filter-chevron" aria-hidden="true">⌄</span></summary>
-          <div class="filter-content">
-            <fieldset class="filter-group">
-              <legend>Appearance</legend>
-              <div class="tone-options">
-                <button class="tone-option" type="button" data-tone="" aria-pressed="true">Any</button>
-                {tones.map((tone) => <button class="tone-option" type="button" data-tone={tone} aria-pressed="false"><span class={`tone-dot ${tone}`} aria-hidden="true"></span>{label(tone)}</button>)}
-              </div>
-            </fieldset>
-            {groups.map((group) => (
-              <fieldset class="filter-group">
-                <legend>{group.name}</legend>
-                <div class:list={["filter-options", { "use-options": group.name === "Use case" }]}>
-                  {group.tags.map((tag) => (
-                    <button class="filter-option" type="button" data-tag={tag} data-label={label(tag)} aria-pressed="false">
-                      <span>{label(tag)}</span><span class="n" aria-hidden="true">{tagCounts.get(tag)}</span>
-                    </button>
-                  ))}
-                </div>
-                {group.extra.length > 0 && <details class="more-filters" id="more-filters">
-                  <summary>More attributes <span aria-hidden="true">+</span></summary>
-                  <div class="filter-options">
-                    {group.extra.map((tag) => <button class="filter-option" type="button" data-tag={tag} data-label={label(tag)} aria-pressed="false"><span>{label(tag)}</span><span class="n" aria-hidden="true">{tagCounts.get(tag)}</span></button>)}
-                  </div>
-                </details>}
-              </fieldset>
-            ))}
-            <p class="filter-hint">Combine filters to narrow your search.</p>
+  <div class="browse">
+    <aside class="rail" aria-label="Style filters">
+      <details class="filter-panel" id="filter-panel" open>
+        <summary>Filters <span id="filter-count"></span><span class="filter-chevron" aria-hidden="true">⌄</span></summary>
+        <nav class="rail-nav">
+          <button class="rail-item rail-all" id="rail-all" type="button" data-reset aria-pressed="true">
+            <svg class="rail-glyph" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1.5" y="1.5" width="5" height="5" rx="1"/><rect x="9.5" y="1.5" width="5" height="5" rx="1"/><rect x="1.5" y="9.5" width="5" height="5" rx="1"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/></svg>
+            <span>All styles</span><span class="n">{entries.length}</span>
+          </button>
+
+          <div class="rail-group" role="group" aria-labelledby="rail-appearance">
+            <p class="rail-legend" id="rail-appearance">Appearance</p>
+            <div class="tone-options">
+              <button class="tone-option" type="button" data-tone="" aria-pressed="true">Any</button>
+              {tones.map((tone) => <button class="tone-option" type="button" data-tone={tone} aria-pressed="false"><span class={`tone-dot ${tone}`} aria-hidden="true"></span>{label(tone)}</button>)}
+            </div>
           </div>
-        </details>
-      </aside>
 
-      <section class="results" aria-labelledby="results-title">
-        <div class="results-head">
-          <div class="results-heading"><h2 id="results-title">All styles</h2><p class="count" id="count" role="status" aria-live="polite" aria-atomic="true">{entries.length} styles</p></div>
+          {groups.map((group) => (
+            <div class="rail-group" role="group" aria-labelledby={slug(group.name)}>
+              <p class="rail-legend" id={slug(group.name)}>{group.name}</p>
+              <div class="rail-list">
+                {group.tags.map((tag) => (
+                  <button class="rail-item filter-option" type="button" data-tag={tag} data-label={label(tag)} aria-pressed="false">
+                    <span class="rail-mark" aria-hidden="true"></span><span>{label(tag)}</span><span class="n" aria-hidden="true">{tagCounts.get(tag)}</span>
+                  </button>
+                ))}
+              </div>
+              {group.extra.length > 0 && <details class="more-filters" id="more-filters">
+                <summary>More attributes <span aria-hidden="true">+</span></summary>
+                <div class="rail-list">
+                  {group.extra.map((tag) => <button class="rail-item filter-option" type="button" data-tag={tag} data-label={label(tag)} aria-pressed="false"><span class="rail-mark" aria-hidden="true"></span><span>{label(tag)}</span><span class="n" aria-hidden="true">{tagCounts.get(tag)}</span></button>)}
+                </div>
+              </details>}
+            </div>
+          ))}
+        </nav>
+      </details>
+    </aside>
+
+    <section class="results" aria-labelledby="results-title">
+      <div class="section-bar">
+        <h2 id="results-title">All styles</h2>
+        <div class="section-tools">
           <span class="sort-note" id="sort-note">Name A-Z</span>
+          <span class="section-count" id="count" aria-hidden="true">[{entries.length}]</span>
+          <span class="sr-only" id="count-sr" role="status" aria-live="polite" aria-atomic="true">{entries.length} styles</span>
         </div>
+      </div>
+
+      <div class="results-body">
         <div class="active-filters" id="active-filters" hidden>
           <div class="active-list" id="active-list" aria-label="Active filters"></div>
-          <button class="linkish" type="button" id="clear">Clear all</button>
+          <button class="linkish" type="button" id="clear" data-reset>Clear all</button>
         </div>
         <div class="grid" id="grid">
           {entries.map(({ data }, index) => (
             <a class="style-card" href={`/styles/${data.id}/`} data-id={data.id}>
-              <div class="card-preview">
-                <img class="thumb" src={`/styles/${data.id}/preview.webp`} alt={`The demo page rendered in ${data.name}`} width="1280" height="900" loading={index < 3 ? "eager" : "lazy"} style={`background:${data.tokens.color.bg}`} />
+              <div class="card-top">
+                <span class="card-mark" style={`background:${data.tokens.color.accent}`} aria-hidden="true"></span>
+                <h3>{data.name}</h3>
+                <span class="go" aria-hidden="true">↗</span>
               </div>
-              <div class="meta">
-                <div class="top"><h3>{data.name}</h3><span class="go" aria-hidden="true">↗</span></div>
-                <p class="mood">{data.mood}</p>
-                <div class="card-details">
-                  <div class="tags">{data.tags.filter((tag) => !tones.includes(tag)).slice(0, 2).map((tag) => <span class="tag">{label(tag)}</span>)}</div>
-                  <div class="swatches" aria-label="Color palette">{[data.tokens.color.bg, data.tokens.color.fg, data.tokens.color.accent].map((color) => <span style={`background:${color}`} title={color}></span>)}</div>
-                </div>
+              <p class="mood">{data.mood}</p>
+              <img class="thumb" src={`/styles/${data.id}/preview.webp`} alt={`The demo page rendered in ${data.name}`} width="1280" height="900" loading={index < 4 ? "eager" : "lazy"} style={`background:${data.tokens.color.bg}`} />
+              <div class="card-foot">
+                <span class="card-tags">{data.tags.filter((tag) => !tones.includes(tag)).slice(0, 2).map((tag) => <span>{tag}</span>)}</span>
+                <span class="swatches" aria-label="Color palette">{[data.tokens.color.bg, data.tokens.color.fg, data.tokens.color.accent].map((color) => <span style={`background:${color}`} title={color}></span>)}</span>
               </div>
             </a>
           ))}
@@ -123,11 +133,11 @@ const groups = [
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4M8 10.5h5"/></svg>
           <h3>No styles found</h3>
           <p>Try a broader word, or remove a filter to see more styles.</p>
-          <button class="copy" type="button" id="reset">Reset search and filters</button>
+          <button class="copy" type="button" id="reset" data-reset>Reset search and filters</button>
         </div>
         <p class="comparison-note">Open a preview to explore the details.</p>
-      </section>
-    </div>
+      </div>
+    </section>
   </div>
   <script type="application/json" id="search-docs" set:html={JSON.stringify(searchDocs).replace(/</g, "\\u003c")} />
   <script src="../scripts/gallery.ts"></script>

@@ -1,0 +1,27 @@
+/* Sticker Diner: Tailwind v4 theme. Import after `@import "tailwindcss";` */
+@theme {
+  --color-bg: #f5e3cd;
+  --color-surface: #ffffff;
+  --color-fg: #1b1b1b;
+  --color-muted: #6b4f3a;
+  --color-accent: #e51000;
+  --color-accent-fg: #ffffff;
+  --color-border: #1b1b1b;
+  --font-sans: "Mouse Memoirs", "Oswald", Impact, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Modak", "Bowlby One", "Arial Black", Impact, sans-serif;
+  --text-xs: 8.78px;
+  --text-sm: 11.85px;
+  --text-base: 16px;
+  --text-lg: 21.6px;
+  --text-xl: 29.16px;
+  --text-2xl: 39.37px;
+  --text-3xl: 53.14px;
+  --text-4xl: 71.74px;
+  --radius-sm: 14px;
+  --radius-md: 28px;
+  --radius-lg: 72px;
+  --radius-full: 9999px;
+  --spacing: 4px;
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+}

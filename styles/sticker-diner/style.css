@@ -1,0 +1,47 @@
+/* Sticker Diner: a hand-painted burger van at a summer fair
+   styles-md style "sticker-diner" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #f5e3cd;
+  --sm-color-surface: #ffffff;
+  --sm-color-fg: #1b1b1b;
+  --sm-color-muted: #6b4f3a;
+  --sm-color-accent: #e51000;
+  --sm-color-accent-fg: #ffffff;
+  --sm-color-border: #1b1b1b;
+  --sm-font-sans: "Mouse Memoirs", "Oswald", Impact, sans-serif;
+  --sm-font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sm-font-display: "Modak", "Bowlby One", "Arial Black", Impact, sans-serif;
+  --sm-font-weight-body: 400;
+  --sm-font-weight-heading: 400;
+  --sm-heading-tracking: 0em;
+  --sm-text-xs: 8.78px;
+  --sm-text-sm: 11.85px;
+  --sm-text-base: 16px;
+  --sm-text-lg: 21.6px;
+  --sm-text-xl: 29.16px;
+  --sm-text-2xl: 39.37px;
+  --sm-text-3xl: 53.14px;
+  --sm-text-4xl: 71.74px;
+  --sm-space-1: 4px;
+  --sm-space-2: 8px;
+  --sm-space-3: 12px;
+  --sm-space-4: 16px;
+  --sm-space-6: 24px;
+  --sm-space-8: 32px;
+  --sm-space-12: 48px;
+  --sm-space-16: 64px;
+  --sm-space-24: 96px;
+  --sm-gutter: 24px;
+  --sm-section: 96px;
+  --sm-max-width: 1408px;
+  --sm-stroke-width: 2px;
+  --sm-radius-sm: 14px;
+  --sm-radius-md: 28px;
+  --sm-radius-lg: 72px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 300ms;
+  --sm-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --sm-shadow-sm: 0 6px 22px rgba(27, 27, 27, 0.18);
+  --sm-shadow-md: 0 14px 43px rgba(27, 27, 27, 0.25);
+  --sm-shadow-lg: 0 24px 64px rgba(27, 27, 27, 0.3);
+}

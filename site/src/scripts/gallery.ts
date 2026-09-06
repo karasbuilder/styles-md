@@ -19,6 +19,8 @@ const grid = document.getElementById("grid")!;
 const cards = [...grid.querySelectorAll<HTMLAnchorElement>(".style-card")];
 const empty = document.getElementById("empty")!;
 const count = document.getElementById("count")!;
+const countSr = document.getElementById("count-sr")!;
+const railAll = document.getElementById("rail-all")!;
 const title = document.getElementById("results-title")!;
 const active = document.getElementById("active-filters")!;
 const activeList = document.getElementById("active-list")!;
@@ -99,7 +101,12 @@ function apply() {
   for (const option of toneOptions) option.setAttribute("aria-pressed", String(option.dataset.tone === tone));
   // Tone is a switch, so light and dark remain available even with zero matches.
   empty.hidden = visible > 0;
-  count.textContent = `${visible} ${visible === 1 ? "style" : "styles"}${query || selected.size ? ` of ${cards.length}` : ""}`;
+  const narrowed = Boolean(query) || selected.size > 0;
+  // The bar shows the count the way the rail shows tallies: bracketed digits.
+  // Screen readers get the sentence from the live region instead.
+  count.textContent = `[${visible}${narrowed ? `/${cards.length}` : ""}]`;
+  countSr.textContent = `${visible} ${visible === 1 ? "style" : "styles"}${narrowed ? ` of ${cards.length}` : ""}`;
+  railAll.setAttribute("aria-pressed", String(!narrowed));
   title.textContent = query ? "Search results" : selected.size ? "Filtered styles" : "All styles";
   document.getElementById("sort-note")!.textContent = query ? "Best match first" : "Name A-Z";
   active.hidden = !query && selected.size === 0;
@@ -142,8 +149,7 @@ activeList.addEventListener("click", (event) => {
   apply();
   (activeList.querySelector<HTMLButtonElement>("button") ?? input).focus({ preventScroll: true });
 });
-document.getElementById("clear")!.addEventListener("click", reset);
-document.getElementById("reset")!.addEventListener("click", reset);
+for (const button of document.querySelectorAll<HTMLButtonElement>("[data-reset]")) button.addEventListener("click", reset);
 document.addEventListener("keydown", (event) => {
   const editing = document.activeElement?.matches("input, textarea, select, [contenteditable]");
   if (event.key === "/" && !editing && !event.metaKey && !event.ctrlKey && !event.altKey) {
@@ -155,7 +161,8 @@ document.addEventListener("keydown", (event) => {
     input.blur();
   }
 });
-const compact = matchMedia("(max-width: 900px)");
+// Must match the breakpoint where the rail folds into a disclosure in site.css.
+const compact = matchMedia("(max-width: 1000px)");
 panel.open = !compact.matches;
 compact.addEventListener("change", () => { panel.open = !compact.matches; });
 window.addEventListener("popstate", () => { readUrl(); apply(); });

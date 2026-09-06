@@ -15,3 +15,5 @@ site/public/styles/
 
 # Scratch projects generated from the styles. Not part of the library.
 projects/
+.repo.yaml
+.karasu-meta

@@ -1,6 +1,7 @@
 {
   "name": "styles-md-monorepo",
   "private": true,
+  "author": "karas (https://github.com/karasbuilder)",
   "type": "module",
   "packageManager": "pnpm@10.7.0",
   "engines": {

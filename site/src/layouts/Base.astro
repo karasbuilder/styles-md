@@ -8,6 +8,8 @@ interface Props {
   variant?: "page" | "studio";
 }
 const { title, description, variant = "page" } = Astro.props;
+const REPO = "https://github.com/karasbuilder/styles-md";
+const AUTHOR = "https://github.com/karasbuilder";
 ---
 
 <!doctype html>
@@ -22,16 +24,30 @@ const { title, description, variant = "page" } = Astro.props;
   <body class={variant}>
     <header class="site-head">
       <a class="brand" href="/" aria-label="styles-md home">
-        <img src="/logo.svg" width="32" height="32" alt="" />
+        <img src="/logo.svg" width="28" height="28" alt="" />
+        {variant === "page" && <span class="wordmark">styles-md</span>}
       </a>
-      <nav>
-        <a href="/">Styles</a>
-        <a href="https://github.com/karasbuilder/styles-md">GitHub</a>
-      </nav>
+      {/* The browse chrome puts search in the bar itself; the studio keeps its plain nav. */}
+      <slot name="head" />
+      {variant === "page" ? (
+        <nav class="head-actions">
+          <a class="head-btn" href={`${REPO}/blob/main/CONTRIBUTING.md`}>Contribute</a>
+          <a class="head-btn accent" href={REPO}>GitHub</a>
+        </nav>
+      ) : (
+        <nav>
+          <a href="/">Styles</a>
+          <a href={REPO}>GitHub</a>
+        </nav>
+      )}
     </header>
     <main class="site-main"><slot /></main>
     {variant === "page" && (
-      <footer class="site-foot">Style specs are CC-BY-4.0. Tooling is MIT.</footer>
+      <footer class="site-foot">
+        <span>Style specs are CC-BY-4.0. Tooling is MIT.</span>
+        <span>Built by <a href={AUTHOR}>karas</a></span>
+        <a href={REPO}>github.com/karasbuilder/styles-md</a>
+      </footer>
     )}
   </body>
 </html>

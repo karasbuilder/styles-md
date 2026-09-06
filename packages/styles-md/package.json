@@ -4,6 +4,12 @@
   "description": "Schema, compiler and CLI for styles-md, a library of DESIGN.md style specs for AI coding agents.",
   "type": "module",
   "license": "MIT",
+  "author": "karas (https://github.com/karasbuilder)",
+  "homepage": "https://github.com/karasbuilder/styles-md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karasbuilder/styles-md.git"
+  },
   "bin": {
     "styles-md": "./dist/cli.js"
   },

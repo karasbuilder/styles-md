@@ -1,0 +1,22 @@
+/* Sticker Diner: shadcn/ui variables */
+:root {
+  --background: oklch(0.9245242674018229 0.035264803860777405 72.885914229092);
+  --foreground: oklch(0.2221287433751307 0 none);
+  --card: oklch(1.0000000000000002 0 none);
+  --card-foreground: oklch(0.2221287433751307 0 none);
+  --popover: oklch(1.0000000000000002 0 none);
+  --popover-foreground: oklch(0.2221287433751307 0 none);
+  --primary: oklch(0.5823841449990316 0.23426941627300507 29.89871966343304);
+  --primary-foreground: oklch(1.0000000000000002 0 none);
+  --secondary: oklch(1.0000000000000002 0 none);
+  --secondary-foreground: oklch(0.2221287433751307 0 none);
+  --muted: oklch(1.0000000000000002 0 none);
+  --muted-foreground: oklch(0.4518148412068271 0.04967641757681179 57.955376022149245);
+  --accent: oklch(1.0000000000000002 0 none);
+  --accent-foreground: oklch(0.2221287433751307 0 none);
+  --destructive: oklch(0.6255652610932986 0.19333992907896502 23.026060464778094);
+  --border: oklch(0.2221287433751307 0 none);
+  --input: oklch(0.2221287433751307 0 none);
+  --ring: oklch(0.5823841449990316 0.23426941627300507 29.89871966343304);
+  --radius: 28px;
+}

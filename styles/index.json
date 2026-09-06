@@ -53,5 +53,31 @@
       "success": "#4ecb71",
       "danger": "#ff6b52"
     }
+  },
+  {
+    "id": "sticker-diner",
+    "name": "Sticker Diner",
+    "mood": "a hand-painted burger van at a summer fair",
+    "summary": "Cream page, enormous fat display type outlined in white, and rotated sticker badges. Sections meet on a wave rather than a straight edge, and every photo is a cut-out that overlaps the headline.",
+    "tags": [
+      "light",
+      "loud",
+      "playful",
+      "food",
+      "retro",
+      "poster",
+      "marketing"
+    ],
+    "quality": "draft",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#f5e3cd",
+      "surface": "#ffffff",
+      "fg": "#1b1b1b",
+      "muted": "#6b4f3a",
+      "accent": "#e51000",
+      "accentFg": "#ffffff",
+      "border": "#1b1b1b"
+    }
   }
 ]
