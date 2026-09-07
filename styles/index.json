@@ -107,5 +107,33 @@
       "accentFg": "#ffffff",
       "border": "#1b1b1b"
     }
+  },
+  {
+    "id": "sunlit-notebook",
+    "name": "Sunlit Notebook",
+    "mood": "a warm paper notebook in afternoon light",
+    "summary": "Warm paper canvas, white cards separated by a hairline rather than a shadow, and one blue reserved for the single filled button. Colour variety lives in the feature card fills, and hierarchy is alpha on the ink before it is a new hue.",
+    "tags": [
+      "light",
+      "warm",
+      "paper",
+      "productivity",
+      "saas",
+      "editorial",
+      "calm"
+    ],
+    "quality": "draft",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#f5f1ea",
+      "surface": "#ffffff",
+      "fg": "#171310",
+      "muted": "#6a6058",
+      "accent": "#1063d8",
+      "accentFg": "#ffffff",
+      "border": "#d2c7b7",
+      "success": "#1f7a45",
+      "danger": "#c33f27"
+    }
   }
 ]

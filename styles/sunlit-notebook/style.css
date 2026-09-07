@@ -1,0 +1,46 @@
+/* Sunlit Notebook: a warm paper notebook in afternoon light
+   styles-md style "sunlit-notebook" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #f5f1ea;
+  --sm-color-surface: #ffffff;
+  --sm-color-fg: #171310;
+  --sm-color-muted: #6a6058;
+  --sm-color-accent: #1063d8;
+  --sm-color-accent-fg: #ffffff;
+  --sm-color-border: #d2c7b7;
+  --sm-color-success: #1f7a45;
+  --sm-color-danger: #c33f27;
+  --sm-font-sans: "Figtree", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sm-font-display: "Figtree", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-weight-body: 400;
+  --sm-font-weight-heading: 600;
+  --sm-heading-tracking: -0.035em;
+  --sm-text-xs: 11.11px;
+  --sm-text-sm: 13.33px;
+  --sm-text-base: 16px;
+  --sm-text-lg: 19.2px;
+  --sm-text-xl: 23.04px;
+  --sm-text-2xl: 27.65px;
+  --sm-text-3xl: 33.18px;
+  --sm-text-4xl: 39.81px;
+  --sm-space-1: 4px;
+  --sm-space-2: 8px;
+  --sm-space-3: 12px;
+  --sm-space-4: 16px;
+  --sm-space-6: 24px;
+  --sm-space-8: 32px;
+  --sm-space-12: 48px;
+  --sm-space-16: 64px;
+  --sm-space-24: 96px;
+  --sm-gutter: 24px;
+  --sm-section: 80px;
+  --sm-max-width: 1440px;
+  --sm-stroke-width: 1px;
+  --sm-radius-sm: 4px;
+  --sm-radius-md: 8px;
+  --sm-radius-lg: 12px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 200ms;
+  --sm-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
