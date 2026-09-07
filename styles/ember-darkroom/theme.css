@@ -1,0 +1,29 @@
+/* Ember Darkroom: Tailwind v4 theme. Import after `@import "tailwindcss";` */
+@theme {
+  --color-bg: #140d06;
+  --color-surface: #2e2015;
+  --color-fg: #f7e7cf;
+  --color-muted: #b39d86;
+  --color-accent: #e2601a;
+  --color-accent-fg: #140d06;
+  --color-border: #443729;
+  --color-success: #93a862;
+  --color-danger: #e0655a;
+  --font-sans: "Archivo", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Archivo", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --text-xs: 12.5px;
+  --text-sm: 15px;
+  --text-base: 18px;
+  --text-lg: 21.6px;
+  --text-xl: 25.92px;
+  --text-2xl: 31.1px;
+  --text-3xl: 37.32px;
+  --text-4xl: 44.79px;
+  --radius-sm: 12px;
+  --radius-md: 22px;
+  --radius-lg: 36px;
+  --radius-full: 9999px;
+  --spacing: 6px;
+  --ease-default: cubic-bezier(0.33, 0, 0.2, 1);
+}

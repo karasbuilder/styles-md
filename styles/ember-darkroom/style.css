@@ -1,0 +1,46 @@
+/* Ember Darkroom: one object lit in a warm dark room
+   styles-md style "ember-darkroom" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #140d06;
+  --sm-color-surface: #2e2015;
+  --sm-color-fg: #f7e7cf;
+  --sm-color-muted: #b39d86;
+  --sm-color-accent: #e2601a;
+  --sm-color-accent-fg: #140d06;
+  --sm-color-border: #443729;
+  --sm-color-success: #93a862;
+  --sm-color-danger: #e0655a;
+  --sm-font-sans: "Archivo", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sm-font-display: "Archivo", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-weight-body: 400;
+  --sm-font-weight-heading: 500;
+  --sm-heading-tracking: 0em;
+  --sm-text-xs: 12.5px;
+  --sm-text-sm: 15px;
+  --sm-text-base: 18px;
+  --sm-text-lg: 21.6px;
+  --sm-text-xl: 25.92px;
+  --sm-text-2xl: 31.1px;
+  --sm-text-3xl: 37.32px;
+  --sm-text-4xl: 44.79px;
+  --sm-space-1: 6px;
+  --sm-space-2: 12px;
+  --sm-space-3: 18px;
+  --sm-space-4: 24px;
+  --sm-space-6: 36px;
+  --sm-space-8: 48px;
+  --sm-space-12: 72px;
+  --sm-space-16: 96px;
+  --sm-space-24: 144px;
+  --sm-gutter: 18px;
+  --sm-section: 160px;
+  --sm-max-width: 1440px;
+  --sm-stroke-width: 1px;
+  --sm-radius-sm: 12px;
+  --sm-radius-md: 22px;
+  --sm-radius-lg: 36px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 250ms;
+  --sm-easing: cubic-bezier(0.33, 0, 0.2, 1);
+}

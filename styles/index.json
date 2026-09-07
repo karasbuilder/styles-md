@@ -1,5 +1,33 @@
 [
   {
+    "id": "ember-darkroom",
+    "name": "Ember Darkroom",
+    "mood": "one object lit in a warm dark room",
+    "summary": "Warm near-black canvas, cream uppercase grotesk at a single weight, and one ember orange rationed to a single button and a few credit lines. Depth comes from a second surface, never a shadow, and every divider is a dashed hairline.",
+    "tags": [
+      "dark",
+      "warm",
+      "editorial",
+      "product",
+      "minimal",
+      "uppercase",
+      "luxury"
+    ],
+    "quality": "draft",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#140d06",
+      "surface": "#2e2015",
+      "fg": "#f7e7cf",
+      "muted": "#b39d86",
+      "accent": "#e2601a",
+      "accentFg": "#140d06",
+      "border": "#443729",
+      "success": "#93a862",
+      "danger": "#e0655a"
+    }
+  },
+  {
     "id": "lavender-pill",
     "name": "Lavender Pill",
     "mood": "a lavender candy shop at dusk",
