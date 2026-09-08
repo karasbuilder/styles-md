@@ -1,0 +1,46 @@
+/* Recess Bulletin: a bulletin board at recess, all stickers
+   styles-md style "recess-bulletin" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #ffffff;
+  --sm-color-surface: #fff6e2;
+  --sm-color-fg: #101010;
+  --sm-color-muted: #575757;
+  --sm-color-accent: #e6533c;
+  --sm-color-accent-fg: #101010;
+  --sm-color-border: #101010;
+  --sm-color-success: #3f7d4f;
+  --sm-color-danger: #c3372a;
+  --sm-font-sans: "Nunito", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sm-font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --sm-font-weight-body: 500;
+  --sm-font-weight-heading: 700;
+  --sm-heading-tracking: 0em;
+  --sm-text-xs: 10.24px;
+  --sm-text-sm: 12.8px;
+  --sm-text-base: 16px;
+  --sm-text-lg: 20px;
+  --sm-text-xl: 25px;
+  --sm-text-2xl: 31.25px;
+  --sm-text-3xl: 39.06px;
+  --sm-text-4xl: 48.83px;
+  --sm-space-1: 4px;
+  --sm-space-2: 8px;
+  --sm-space-3: 12px;
+  --sm-space-4: 16px;
+  --sm-space-6: 24px;
+  --sm-space-8: 32px;
+  --sm-space-12: 48px;
+  --sm-space-16: 64px;
+  --sm-space-24: 96px;
+  --sm-gutter: 24px;
+  --sm-section: 120px;
+  --sm-max-width: 1440px;
+  --sm-stroke-width: 3px;
+  --sm-radius-sm: 20px;
+  --sm-radius-md: 50px;
+  --sm-radius-lg: 140px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 400ms;
+  --sm-easing: cubic-bezier(0, 0, 0.1, 1.02);
+}

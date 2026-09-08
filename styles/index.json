@@ -109,6 +109,34 @@
     }
   },
   {
+    "id": "recess-bulletin",
+    "name": "Recess Bulletin",
+    "mood": "a bulletin board at recess, all stickers",
+    "summary": "White page, 3px black outlines and enormous radii. Everything is a sticker in a flat colour, tilted and overlapping, and depth comes from the outline rather than from a shadow. Type is a heavy rounded serif with normal tracking.",
+    "tags": [
+      "light",
+      "playful",
+      "bold",
+      "outline",
+      "food",
+      "marketing",
+      "retro"
+    ],
+    "quality": "draft",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#ffffff",
+      "surface": "#fff6e2",
+      "fg": "#101010",
+      "muted": "#575757",
+      "accent": "#e6533c",
+      "accentFg": "#101010",
+      "border": "#101010",
+      "success": "#3f7d4f",
+      "danger": "#c3372a"
+    }
+  },
+  {
     "id": "sticker-diner",
     "name": "Sticker Diner",
     "mood": "a hand-painted burger van at a summer fair",

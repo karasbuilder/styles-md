@@ -1,0 +1,29 @@
+/* Recess Bulletin: Tailwind v4 theme. Import after `@import "tailwindcss";` */
+@theme {
+  --color-bg: #ffffff;
+  --color-surface: #fff6e2;
+  --color-fg: #101010;
+  --color-muted: #575757;
+  --color-accent: #e6533c;
+  --color-accent-fg: #101010;
+  --color-border: #101010;
+  --color-success: #3f7d4f;
+  --color-danger: #c3372a;
+  --font-sans: "Nunito", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --text-xs: 10.24px;
+  --text-sm: 12.8px;
+  --text-base: 16px;
+  --text-lg: 20px;
+  --text-xl: 25px;
+  --text-2xl: 31.25px;
+  --text-3xl: 39.06px;
+  --text-4xl: 48.83px;
+  --radius-sm: 20px;
+  --radius-md: 50px;
+  --radius-lg: 140px;
+  --radius-full: 9999px;
+  --spacing: 4px;
+  --ease-default: cubic-bezier(0, 0, 0.1, 1.02);
+}
