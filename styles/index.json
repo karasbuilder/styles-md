@@ -28,6 +28,32 @@
     }
   },
   {
+    "id": "hatched-lodge",
+    "name": "Hatched Lodge",
+    "mood": "a mountain lodge printed in two inks",
+    "summary": "Umber ground, sand ink, and nothing else. Photographs are redrawn as vertical line screens, micro labels are tracked wide while the display line is tracked tight, and every transition takes 600ms.",
+    "tags": [
+      "dark",
+      "warm",
+      "editorial",
+      "hospitality",
+      "architecture",
+      "minimal",
+      "uppercase"
+    ],
+    "quality": "draft",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#2a2622",
+      "surface": "#37312a",
+      "fg": "#bfa980",
+      "muted": "#a08e6d",
+      "accent": "#d8bd8a",
+      "accentFg": "#2a2622",
+      "border": "#4a4238"
+    }
+  },
+  {
     "id": "lavender-pill",
     "name": "Lavender Pill",
     "mood": "a lavender candy shop at dusk",

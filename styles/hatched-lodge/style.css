@@ -1,0 +1,44 @@
+/* Hatched Lodge: a mountain lodge printed in two inks
+   styles-md style "hatched-lodge" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #2a2622;
+  --sm-color-surface: #37312a;
+  --sm-color-fg: #bfa980;
+  --sm-color-muted: #a08e6d;
+  --sm-color-accent: #d8bd8a;
+  --sm-color-accent-fg: #2a2622;
+  --sm-color-border: #4a4238;
+  --sm-font-sans: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sm-font-display: "Instrument Serif", "Times New Roman", Georgia, serif;
+  --sm-font-weight-body: 400;
+  --sm-font-weight-heading: 400;
+  --sm-heading-tracking: -0.06em;
+  --sm-text-xs: 10.24px;
+  --sm-text-sm: 12.8px;
+  --sm-text-base: 16px;
+  --sm-text-lg: 20px;
+  --sm-text-xl: 25px;
+  --sm-text-2xl: 31.25px;
+  --sm-text-3xl: 39.06px;
+  --sm-text-4xl: 48.83px;
+  --sm-space-1: 4px;
+  --sm-space-2: 8px;
+  --sm-space-3: 12px;
+  --sm-space-4: 16px;
+  --sm-space-6: 24px;
+  --sm-space-8: 32px;
+  --sm-space-12: 48px;
+  --sm-space-16: 64px;
+  --sm-space-24: 96px;
+  --sm-gutter: 24px;
+  --sm-section: 120px;
+  --sm-max-width: 1680px;
+  --sm-stroke-width: 1px;
+  --sm-radius-sm: 12px;
+  --sm-radius-md: 20px;
+  --sm-radius-lg: 40px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 600ms;
+  --sm-easing: cubic-bezier(0.25, 1, 0.5, 1);
+}

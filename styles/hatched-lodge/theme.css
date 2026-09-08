@@ -1,0 +1,27 @@
+/* Hatched Lodge: Tailwind v4 theme. Import after `@import "tailwindcss";` */
+@theme {
+  --color-bg: #2a2622;
+  --color-surface: #37312a;
+  --color-fg: #bfa980;
+  --color-muted: #a08e6d;
+  --color-accent: #d8bd8a;
+  --color-accent-fg: #2a2622;
+  --color-border: #4a4238;
+  --font-sans: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Instrument Serif", "Times New Roman", Georgia, serif;
+  --text-xs: 10.24px;
+  --text-sm: 12.8px;
+  --text-base: 16px;
+  --text-lg: 20px;
+  --text-xl: 25px;
+  --text-2xl: 31.25px;
+  --text-3xl: 39.06px;
+  --text-4xl: 48.83px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 40px;
+  --radius-full: 9999px;
+  --spacing: 4px;
+  --ease-default: cubic-bezier(0.25, 1, 0.5, 1);
+}
