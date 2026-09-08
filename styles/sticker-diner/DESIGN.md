@@ -8,6 +8,10 @@ mood: a hand-painted burger van at a summer fair
 summary: Cream page, enormous fat display type outlined in white, and rotated sticker badges. Sections meet on a wave rather than a straight edge, and every photo is a cut-out that overlaps the headline.
 tags: [light, loud, playful, food, retro, poster, marketing]
 quality: draft
+# The shared demo can carry the palette, but not a 216px headline, a cut-out
+# photo overlapping it or a wave between two sections. Flip is the style at the
+# size it was written for, so the style page leads with that instead.
+showDemo: false
 showcase:
   - label: Flip
     url: https://flip-wheat-six.vercel.app
