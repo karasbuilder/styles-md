@@ -1,0 +1,27 @@
+/* Pulp Transmission: Tailwind v4 theme. Import after `@import "tailwindcss";` */
+@theme {
+  --color-bg: #0a1526;
+  --color-surface: #16263f;
+  --color-fg: #f2ecea;
+  --color-muted: #93a1b5;
+  --color-accent: #f2565f;
+  --color-accent-fg: #0a1526;
+  --color-border: #2b3d59;
+  --font-sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Anybody", "Arial Black", Impact, sans-serif;
+  --text-xs: 10.24px;
+  --text-sm: 12.8px;
+  --text-base: 16px;
+  --text-lg: 20px;
+  --text-xl: 25px;
+  --text-2xl: 31.25px;
+  --text-3xl: 39.06px;
+  --text-4xl: 48.83px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 90px;
+  --radius-full: 9999px;
+  --spacing: 4px;
+  --ease-default: cubic-bezier(0.2, 0.8, 0.2, 1);
+}

@@ -109,6 +109,32 @@
     }
   },
   {
+    "id": "pulp-transmission",
+    "name": "Pulp Transmission",
+    "mood": "a comic broadcast from a dead planet",
+    "summary": "Deep navy and one flare of coral, inverted section by section. Ultra wide display caps fill the page edge to edge, halftone artwork sits in a radial glow, and technical marks hold the four corners.",
+    "tags": [
+      "dark",
+      "comic",
+      "poster",
+      "sci-fi",
+      "bold",
+      "uppercase",
+      "entertainment"
+    ],
+    "quality": "draft",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#0a1526",
+      "surface": "#16263f",
+      "fg": "#f2ecea",
+      "muted": "#93a1b5",
+      "accent": "#f2565f",
+      "accentFg": "#0a1526",
+      "border": "#2b3d59"
+    }
+  },
+  {
     "id": "recess-bulletin",
     "name": "Recess Bulletin",
     "mood": "a bulletin board at recess, all stickers",

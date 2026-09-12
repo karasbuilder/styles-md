@@ -1,0 +1,47 @@
+/* Pulp Transmission: a comic broadcast from a dead planet
+   styles-md style "pulp-transmission" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #0a1526;
+  --sm-color-surface: #16263f;
+  --sm-color-fg: #f2ecea;
+  --sm-color-muted: #93a1b5;
+  --sm-color-accent: #f2565f;
+  --sm-color-accent-fg: #0a1526;
+  --sm-color-border: #2b3d59;
+  --sm-font-sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sm-font-display: "Anybody", "Arial Black", Impact, sans-serif;
+  --sm-font-weight-body: 400;
+  --sm-font-weight-heading: 800;
+  --sm-heading-tracking: 0em;
+  --sm-text-xs: 10.24px;
+  --sm-text-sm: 12.8px;
+  --sm-text-base: 16px;
+  --sm-text-lg: 20px;
+  --sm-text-xl: 25px;
+  --sm-text-2xl: 31.25px;
+  --sm-text-3xl: 39.06px;
+  --sm-text-4xl: 48.83px;
+  --sm-space-1: 4px;
+  --sm-space-2: 8px;
+  --sm-space-3: 12px;
+  --sm-space-4: 16px;
+  --sm-space-6: 24px;
+  --sm-space-8: 32px;
+  --sm-space-12: 48px;
+  --sm-space-16: 64px;
+  --sm-space-24: 96px;
+  --sm-gutter: 24px;
+  --sm-section: 120px;
+  --sm-max-width: 1440px;
+  --sm-stroke-width: 1px;
+  --sm-radius-sm: 6px;
+  --sm-radius-md: 10px;
+  --sm-radius-lg: 90px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 350ms;
+  --sm-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --sm-shadow-sm: 0 1px 1px -1px rgba(0, 0, 0, 0.3), 0 2px 2px -2px rgba(0, 0, 0, 0.3);
+  --sm-shadow-md: 0 2px 3px -1px rgba(0, 0, 0, 0.3), 0 10px 10px -3px rgba(0, 0, 0, 0.3);
+  --sm-shadow-lg: 0 3px 11px -2px rgba(0, 0, 0, 0.28), 0 10px 50px -3px rgba(0, 0, 0, 0.3);
+}
