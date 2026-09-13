@@ -1,5 +1,33 @@
 [
   {
+    "id": "bright-atrium",
+    "name": "Bright Atrium",
+    "mood": "a bright office atrium at ten in the morning",
+    "summary": "White page, pale tint blocks and one working blue. Cards are softly rounded and lifted by a single diffuse shadow, chips stay square at 4px, and a friendly display face carries the headline with a light negative tracking.",
+    "tags": [
+      "light",
+      "bright",
+      "saas",
+      "product",
+      "friendly",
+      "pastel",
+      "marketing"
+    ],
+    "quality": "draft",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#ffffff",
+      "surface": "#f6f7f8",
+      "fg": "#14161a",
+      "muted": "#55585f",
+      "accent": "#1a63d8",
+      "accentFg": "#ffffff",
+      "border": "#d0d3d8",
+      "success": "#2f7d32",
+      "danger": "#c0362c"
+    }
+  },
+  {
     "id": "drafting-sheet",
     "name": "Drafting Sheet",
     "mood": "an architect's plot sheet on the desk",

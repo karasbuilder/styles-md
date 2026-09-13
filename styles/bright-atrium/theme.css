@@ -1,0 +1,29 @@
+/* Bright Atrium: Tailwind v4 theme. Import after `@import "tailwindcss";` */
+@theme {
+  --color-bg: #ffffff;
+  --color-surface: #f6f7f8;
+  --color-fg: #14161a;
+  --color-muted: #55585f;
+  --color-accent: #1a63d8;
+  --color-accent-fg: #ffffff;
+  --color-border: #d0d3d8;
+  --color-success: #2f7d32;
+  --color-danger: #c0362c;
+  --font-sans: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+  --text-xs: 11.11px;
+  --text-sm: 13.33px;
+  --text-base: 16px;
+  --text-lg: 19.2px;
+  --text-xl: 23.04px;
+  --text-2xl: 27.65px;
+  --text-3xl: 33.18px;
+  --text-4xl: 39.81px;
+  --radius-sm: 4px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --radius-full: 9999px;
+  --spacing: 4px;
+  --ease-default: cubic-bezier(0.4, 0, 0, 1);
+}

@@ -1,0 +1,49 @@
+/* Bright Atrium: a bright office atrium at ten in the morning
+   styles-md style "bright-atrium" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #ffffff;
+  --sm-color-surface: #f6f7f8;
+  --sm-color-fg: #14161a;
+  --sm-color-muted: #55585f;
+  --sm-color-accent: #1a63d8;
+  --sm-color-accent-fg: #ffffff;
+  --sm-color-border: #d0d3d8;
+  --sm-color-success: #2f7d32;
+  --sm-color-danger: #c0362c;
+  --sm-font-sans: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sm-font-display: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-weight-body: 400;
+  --sm-font-weight-heading: 700;
+  --sm-heading-tracking: -0.03em;
+  --sm-text-xs: 11.11px;
+  --sm-text-sm: 13.33px;
+  --sm-text-base: 16px;
+  --sm-text-lg: 19.2px;
+  --sm-text-xl: 23.04px;
+  --sm-text-2xl: 27.65px;
+  --sm-text-3xl: 33.18px;
+  --sm-text-4xl: 39.81px;
+  --sm-space-1: 4px;
+  --sm-space-2: 8px;
+  --sm-space-3: 12px;
+  --sm-space-4: 16px;
+  --sm-space-6: 24px;
+  --sm-space-8: 32px;
+  --sm-space-12: 48px;
+  --sm-space-16: 64px;
+  --sm-space-24: 96px;
+  --sm-gutter: 24px;
+  --sm-section: 96px;
+  --sm-max-width: 1280px;
+  --sm-stroke-width: 1px;
+  --sm-radius-sm: 4px;
+  --sm-radius-md: 20px;
+  --sm-radius-lg: 32px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 250ms;
+  --sm-easing: cubic-bezier(0.4, 0, 0, 1);
+  --sm-shadow-sm: 0 1px 2px rgba(9, 30, 66, 0.08);
+  --sm-shadow-md: 0 5px 20px -5px rgba(9, 30, 66, 0.14);
+  --sm-shadow-lg: 0 16px 44px -10px rgba(9, 30, 66, 0.18);
+}
