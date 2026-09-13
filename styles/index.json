@@ -1,5 +1,31 @@
 [
   {
+    "id": "drafting-sheet",
+    "name": "Drafting Sheet",
+    "mood": "an architect's plot sheet on the desk",
+    "summary": "Warm paper ground, ink grotesk set in tight uppercase, and one plot orange for annotation. Corners are square, rules are hairlines, and the page is bounded by ruler ticks and register marks like a sheet off a plotter.",
+    "tags": [
+      "light",
+      "technical",
+      "editorial",
+      "architecture",
+      "saas",
+      "uppercase",
+      "minimal"
+    ],
+    "quality": "draft",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#efede7",
+      "surface": "#cdcac1",
+      "fg": "#232320",
+      "muted": "#6b6a64",
+      "accent": "#c2380a",
+      "accentFg": "#ffffff",
+      "border": "#a6a39a"
+    }
+  },
+  {
     "id": "ember-darkroom",
     "name": "Ember Darkroom",
     "mood": "one object lit in a warm dark room",

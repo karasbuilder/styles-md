@@ -1,0 +1,47 @@
+/* Drafting Sheet: an architect's plot sheet on the desk
+   styles-md style "drafting-sheet" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #efede7;
+  --sm-color-surface: #cdcac1;
+  --sm-color-fg: #232320;
+  --sm-color-muted: #6b6a64;
+  --sm-color-accent: #c2380a;
+  --sm-color-accent-fg: #ffffff;
+  --sm-color-border: #a6a39a;
+  --sm-font-sans: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sm-font-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-weight-body: 500;
+  --sm-font-weight-heading: 600;
+  --sm-heading-tracking: -0.02em;
+  --sm-text-xs: 11.11px;
+  --sm-text-sm: 13.33px;
+  --sm-text-base: 16px;
+  --sm-text-lg: 19.2px;
+  --sm-text-xl: 23.04px;
+  --sm-text-2xl: 27.65px;
+  --sm-text-3xl: 33.18px;
+  --sm-text-4xl: 39.81px;
+  --sm-space-1: 4px;
+  --sm-space-2: 8px;
+  --sm-space-3: 12px;
+  --sm-space-4: 16px;
+  --sm-space-6: 24px;
+  --sm-space-8: 32px;
+  --sm-space-12: 48px;
+  --sm-space-16: 64px;
+  --sm-space-24: 96px;
+  --sm-gutter: 24px;
+  --sm-section: 96px;
+  --sm-max-width: 1440px;
+  --sm-stroke-width: 1px;
+  --sm-radius-sm: 0px;
+  --sm-radius-md: 0px;
+  --sm-radius-lg: 0px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 400ms;
+  --sm-easing: cubic-bezier(0.625, 0.05, 0, 1);
+  --sm-shadow-sm: 3px 3px 0 -1px #232320;
+  --sm-shadow-md: 0 6px 0 -2px #232320;
+  --sm-shadow-lg: 8px 8px 0 -2px #232320;
+}
