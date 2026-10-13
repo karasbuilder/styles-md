@@ -108,7 +108,7 @@ function apply() {
   countSr.textContent = `${visible} ${visible === 1 ? "style" : "styles"}${narrowed ? ` of ${cards.length}` : ""}`;
   railAll.setAttribute("aria-pressed", String(!narrowed));
   title.textContent = query ? "Search results" : selected.size ? "Filtered styles" : "All styles";
-  document.getElementById("sort-note")!.textContent = query ? "Best match first" : "Name A-Z";
+  document.getElementById("sort-note")!.textContent = query ? "Best match first" : "Pinned, then A-Z";
   active.hidden = !query && selected.size === 0;
   activeList.replaceChildren();
   if (query) addActiveFilter(`“${query}”`, "query");

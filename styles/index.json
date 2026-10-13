@@ -136,6 +136,35 @@
     }
   },
   {
+    "id": "midnight-sprint",
+    "name": "Midnight Sprint",
+    "mood": "a stadium tunnel after kickoff, a collector binder on the bench",
+    "summary": "Cream pebbled-leather opening, then ink-violet chapters under giant ghost headlines. Gold-foil collectible cards, white-bordered prints dropped at an angle and tiny mono captions give an athlete story its weight.",
+    "tags": [
+      "dark",
+      "sport",
+      "editorial",
+      "cinematic",
+      "purple",
+      "gold",
+      "collectible",
+      "portfolio"
+    ],
+    "quality": "draft",
+    "version": "1.0.0",
+    "color": {
+      "bg": "#0c0a12",
+      "surface": "#221836",
+      "fg": "#efe9df",
+      "muted": "#ada4bb",
+      "accent": "#e3b54c",
+      "accentFg": "#14101c",
+      "border": "#3f3355",
+      "success": "#b1d6a0",
+      "danger": "#f0939b"
+    }
+  },
+  {
     "id": "pastel-brutalist",
     "name": "Pastel Brutalist",
     "mood": "a sticker sheet that handles your invoices",

@@ -36,6 +36,13 @@ export function buildStyleSchema(z: typeof defaultZ) {
     quality: z.enum(["draft", "reviewed", "featured"]).default("draft"),
 
     /**
+     * Gallery order. Higher comes first, ties fall back to name A-Z, so a
+     * style that never sets it keeps its alphabetical place. Search results
+     * ignore it and rank by match.
+     */
+    priority: z.number().int().min(0).max(100).default(0),
+
+    /**
      * Whether the built-in demo page is offered as a preview source.
      *
      * It leads by default, because it is the one page that renders identical

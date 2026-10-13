@@ -2,7 +2,8 @@
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 
-const entries = (await getCollection("styles")).sort((a, b) => a.data.name.localeCompare(b.data.name));
+const entries = (await getCollection("styles")).sort((a, b) =>
+  b.data.priority - a.data.priority || a.data.name.localeCompare(b.data.name));
 const searchDocs = entries.map(({ data }) => ({
   id: data.id, name: data.name, mood: data.mood, summary: data.summary,
   tags: data.tags.join(" "),
@@ -101,7 +102,7 @@ const slug = (name: string) => `rail-${name.toLowerCase().replace(/\s+/g, "-")}`
       <div class="section-bar">
         <h2 id="results-title">All styles</h2>
         <div class="section-tools">
-          <span class="sort-note" id="sort-note">Name A-Z</span>
+          <span class="sort-note" id="sort-note">Pinned, then A-Z</span>
           <span class="section-count" id="count" aria-hidden="true">[{entries.length}]</span>
           <span class="sr-only" id="count-sr" role="status" aria-live="polite" aria-atomic="true">{entries.length} styles</span>
         </div>

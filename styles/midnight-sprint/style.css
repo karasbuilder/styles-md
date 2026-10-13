@@ -1,0 +1,46 @@
+/* Midnight Sprint: a stadium tunnel after kickoff, a collector binder on the bench
+   styles-md style "midnight-sprint" v1.0.0, CC-BY-4.0 */
+:root {
+  --sm-color-bg: #0c0a12;
+  --sm-color-surface: #221836;
+  --sm-color-fg: #efe9df;
+  --sm-color-muted: #ada4bb;
+  --sm-color-accent: #e3b54c;
+  --sm-color-accent-fg: #14101c;
+  --sm-color-border: #3f3355;
+  --sm-color-success: #b1d6a0;
+  --sm-color-danger: #f0939b;
+  --sm-font-sans: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --sm-font-mono: "Space Mono", Menlo, monospace;
+  --sm-font-display: "Anton", Impact, sans-serif;
+  --sm-font-weight-body: 400;
+  --sm-font-weight-heading: 400;
+  --sm-heading-tracking: 0.01em;
+  --sm-text-xs: 9.77px;
+  --sm-text-sm: 12.5px;
+  --sm-text-base: 16px;
+  --sm-text-lg: 20.48px;
+  --sm-text-xl: 26.21px;
+  --sm-text-2xl: 33.55px;
+  --sm-text-3xl: 42.95px;
+  --sm-text-4xl: 54.98px;
+  --sm-space-1: 8px;
+  --sm-space-2: 16px;
+  --sm-space-3: 24px;
+  --sm-space-4: 32px;
+  --sm-space-6: 48px;
+  --sm-space-8: 64px;
+  --sm-space-12: 96px;
+  --sm-space-16: 128px;
+  --sm-space-24: 192px;
+  --sm-gutter: 24px;
+  --sm-section: 128px;
+  --sm-max-width: 1600px;
+  --sm-stroke-width: 1px;
+  --sm-radius-sm: 2px;
+  --sm-radius-md: 4px;
+  --sm-radius-lg: 8px;
+  --sm-radius-full: 9999px;
+  --sm-duration: 400ms;
+  --sm-easing: cubic-bezier(0.22, 1, 0.36, 1);
+}

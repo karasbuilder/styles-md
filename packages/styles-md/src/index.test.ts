@@ -81,6 +81,13 @@ describe("schema", () => {
     expect(style.quality).toBe("draft");
   });
 
+  it("defaults priority to 0 and rejects a negative or fractional one", () => {
+    expect(styleFixture().priority).toBe(0);
+    expect(styleFixture({ priority: 10 }).priority).toBe(10);
+    expect(() => styleFixture({ priority: -1 })).toThrow();
+    expect(() => styleFixture({ priority: 1.5 })).toThrow();
+  });
+
   it("defaults showcase to an empty list so existing styles keep validating", () => {
     expect(styleFixture().showcase).toEqual([]);
   });

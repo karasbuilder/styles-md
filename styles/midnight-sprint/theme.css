@@ -1,0 +1,29 @@
+/* Midnight Sprint: Tailwind v4 theme. Import after `@import "tailwindcss";` */
+@theme {
+  --color-bg: #0c0a12;
+  --color-surface: #221836;
+  --color-fg: #efe9df;
+  --color-muted: #ada4bb;
+  --color-accent: #e3b54c;
+  --color-accent-fg: #14101c;
+  --color-border: #3f3355;
+  --color-success: #b1d6a0;
+  --color-danger: #f0939b;
+  --font-sans: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Space Mono", Menlo, monospace;
+  --font-display: "Anton", Impact, sans-serif;
+  --text-xs: 9.77px;
+  --text-sm: 12.5px;
+  --text-base: 16px;
+  --text-lg: 20.48px;
+  --text-xl: 26.21px;
+  --text-2xl: 33.55px;
+  --text-3xl: 42.95px;
+  --text-4xl: 54.98px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+  --spacing: 8px;
+  --ease-default: cubic-bezier(0.22, 1, 0.36, 1);
+}
